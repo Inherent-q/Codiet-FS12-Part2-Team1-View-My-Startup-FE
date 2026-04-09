@@ -1,15 +1,19 @@
 import { Routes, Route } from "react-router-dom";
+import GNB from "./components/GNB";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/select" element={<Select />} />
-      <Route path="/compare" element={<Compare />} />
-      <Route path="/investment" element={<Investment />} />
-      <Route path="/results" element={<Results />} />
-      <Route path="/detail" element={<Detail />} />
-    </Routes>
+    <>
+      <GNB />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/select" element={<Select />} />
+        <Route path="/compare" element={<Compare />} />
+        <Route path="/investment" element={<Investment />} />
+        <Route path="/results" element={<Results />} />
+        <Route path="/detail" element={<Detail />} />
+      </Routes>
+    </>
   );
 }
 
