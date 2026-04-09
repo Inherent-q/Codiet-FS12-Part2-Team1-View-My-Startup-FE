@@ -1,0 +1,111 @@
+/* ===== GNB (Global Navigation Bar) =====
+   Desktop : 1920px wide, 60px tall
+   Tablet  :  744px wide, 60px tall
+   Mobile  :  375px wide, 56px tall
+   ======================================= */
+
+.gnb {
+  width: 100%;
+  height: 60px;
+  background-color: var(--black-black_400);
+  border-bottom: 1px solid var(--black-black_100);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.gnb__inner {
+  width: 100%;
+  max-width: 1920px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  box-sizing: border-box;
+}
+
+/* ===== Logo ===== */
+.gnb__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.gnb__logo-img {
+  display: block;
+  height: 28px;
+  width: auto;
+}
+
+/* ===== Nav ===== */
+.gnb__nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.gnb__nav-item {
+  font-size: var(--text-14);
+  font-weight: var(--weight-regular);
+  color: var(--gray-gray_200);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.gnb__nav-item:hover {
+  color: var(--gray-gray_100);
+}
+
+.gnb__nav-item--active {
+  color: var(--white, #ffffff);
+  font-weight: var(--weight-medium);
+}
+
+/* ===== Tablet (≤ 768px) ===== */
+@media (max-width: 768px) {
+  .gnb {
+    height: 60px;
+  }
+
+  .gnb__inner {
+    padding: 0 24px;
+    gap: 32px;
+  }
+
+  .gnb__nav {
+    gap: 24px;
+  }
+
+  .gnb__nav-item {
+    font-size: 13px;
+  }
+}
+
+/* ===== Mobile (≤ 430px) ===== */
+@media (max-width: 430px) {
+  .gnb {
+    height: 56px;
+  }
+
+  .gnb__inner {
+    padding: 0 16px;
+    gap: 20px;
+  }
+
+  .gnb__logo-img {
+    height: 24px;
+  }
+
+  .gnb__nav {
+    gap: 16px;
+  }
+
+  .gnb__nav-item {
+    font-size: 12px;
+  }
+}
