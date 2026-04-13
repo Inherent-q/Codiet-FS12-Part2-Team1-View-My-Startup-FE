@@ -130,26 +130,101 @@
 }
 
 .modalOverlay {
-  position: fixed;
+  position: fixed; /* 1. 스크롤해도 화면에 고정 */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+  width: 100vw; /* 2. 가로 전체 */
+  height: 100vh; /* 3. 세로 전체 */
+  background: rgba(0, 0, 0, 0.5); /* 4. 배경 어둡게 */
+
+  display: flex; /* 5. 정중앙 배치를 위한 도구 시작 */
+  justify-content: center; /* 가로 가운데 */
+  align-items: center; /* 세로 가운데 */
+  z-index: 999; /* 6. 다른 요소보다 항상 위에 뜨게 함 */
 }
 
-.modalContent {
-  background-color: #2a2a2a;
-  padding: 40px;
+.modalContentlarge {
+  /* 세로로 쌓이게 함 */
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 24px;
   border-radius: 16px;
-  color: white;
-  text-align: center;
-  width: 400px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  background: #212121; /* 피그마에 있던 배경색 */
+
+  /* 모달 너비 설정 (피그마 수치에 맞게 조절) */
+  width: 100%;
+  max-width: 500px;
+}
+
+.top {
+  display: flex;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+.inputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.inputLabel {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.modalInput {
+  width: 100%;
+  padding: 16px 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: #212121;
+  border: 1px solid var(--gray-gray_200, #747474);
+  padding-right: 48px; /* 이미지가 들어갈 자리 비워주기 */
+  box-sizing: border-box; /* 패딩 때문에 박스 커지는 거 방지 */
+}
+
+.modalInput2 {
+  width: 100%;
+  height: 108px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: #212121;
+  border: 1px solid #747474;
+  resize: none;
+  box-sizing: border-box;
+  font-family: "Pretendard", sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+
+.modalTextarea {
+  height: 108px;
+  width: 100%;
+  padding: 16px 20px;
+  background: #212121;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%; /* 부모(inputContainer)의 세로 50% 지점 */
+  transform: translateY(
+    -50%
+  ); /* 이미지 자기 자신 높이의 절반만큼 위로 올려서 정중앙 */
+  width: 24px;
+  cursor: pointer;
+  z-index: 10;
 }
 
 .successMessage {

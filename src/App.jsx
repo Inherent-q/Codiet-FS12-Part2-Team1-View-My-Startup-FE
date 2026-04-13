@@ -3,6 +3,7 @@ import GNB from "./components/GNB";
 import "./Results/style/results.css";
 import { useState } from "react";
 import toggleIcon from "./assets/togglebtn.png";
+import togglepassword from "./assets/visiblebtn.png";
 
 function App() {
   return (
@@ -54,7 +55,15 @@ function Results() {
     "고용 인원 많은순",
     "고용 인원 적은순",
   ];
+  const [passwordVisible, setpasswordVisible] = useState(false);
+  const [passwordVisible2, setpasswordVisible2] = useState(false);
 
+  function passwordInput() {
+    setpasswordVisible(!passwordVisible);
+  }
+  function passwordInput2() {
+    setpasswordVisible2(!passwordVisible2);
+  }
   return (
     <div className="resultsContainer">
       <div className="sectionTitle">
@@ -66,7 +75,13 @@ function Results() {
 
       <div className="sectionTitle">
         <span className="mainTitle">비교 결과 확인하기</span>
-        <div className="dropdownContainer" onClick={() => setIsOpen(!isOpen)}>
+        {/* onClick을 일반 함수로 변경 */}
+        <div
+          className="dropdownContainer"
+          onClick={function () {
+            setIsOpen(!isOpen);
+          }}
+        >
           <span className="dropdownText">{selectedSort}</span>
           <img
             src={toggleIcon}
@@ -76,19 +91,22 @@ function Results() {
 
           {isOpen && (
             <ul className="dropdownList">
-              {sortOptions.map((option) => (
-                <li
-                  key={option}
-                  className="dropdownItem"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedSort(option);
-                    setIsOpen(false);
-                  }}
-                >
-                  {option}
-                </li>
-              ))}
+              {/* map 내부 함수를 일반 함수로 변경 */}
+              {sortOptions.map(function (option) {
+                return (
+                  <li
+                    key={option}
+                    className="dropdownItem"
+                    onClick={function (e) {
+                      e.stopPropagation();
+                      setSelectedSort(option);
+                      setIsOpen(false);
+                    }}
+                  >
+                    {option}
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>
@@ -146,17 +164,25 @@ function Results() {
           나의 기업에 투자하기
         </button>
       </div>
+
       {showModal && (
         <div className="modalOverlay">
-          <div className="modalContent large">
-            <button
-              className="closeModalButton"
-              onClick={() => setShowModal(false)}
-            >
-              X
-            </button>
+          <div className="modalContentlarge">
+            <div className="top">
+              <label className="mainTitle">기업에 투자하기</label>
+              <button
+                className="closeModalButton"
+                onClick={function () {
+                  setShowModal(false);
+                }}
+              >
+                X
+              </button>
+            </div>
 
-            <h2 className="modalTitle">기업에 투자하기</h2>
+            <div>
+              <label className="inputLabel">투자 기업 정보</label>
+            </div>
 
             <div className="inputGroup">
               <label className="inputLabel">투자자 이름</label>
@@ -171,7 +197,7 @@ function Results() {
               <label className="inputLabel">투자 금액</label>
               <input
                 className="modalInput"
-                type="number"
+                type="text"
                 placeholder="투자 금액을 입력해 주세요"
               />
             </div>
@@ -179,38 +205,64 @@ function Results() {
             <div className="inputGroup">
               <label className="inputLabel">투자 코멘트</label>
               <textarea
-                className="modalTextarea"
+                className="modalInput2"
                 placeholder="투자 코멘트를 입력해 주세요"
               />
             </div>
             <div className="inputGroup">
               <label className="inputLabel">비밀번호</label>
-              <input
-                className="modalInput"
-                type="password"
-                placeholder="비밀번호를 입력해 주세요"
-              />
+
+              {/* 인풋과 이미지만 묶어주는 전용 박스 추가 */}
+              <div className="inputContainer">
+                <input
+                  className="modalInput"
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="비밀번호를 입력해 주세요"
+                />
+                <img
+                  className="eyeIcon"
+                  onClick={function () {
+                    passwordInput();
+                  }}
+                  src={togglepassword}
+                  alt="눈"
+                />
+              </div>
             </div>
 
             <div className="inputGroup">
               <label className="inputLabel">비밀번호 확인</label>
-              <input
-                className="modalInput"
-                type="password"
-                placeholder="비밀번호를 다시 한 번 입력해 주세요"
-              />
+
+              {/* 인풋과 이미지만 묶어주는 전용 박스 추가 */}
+              <div className="inputContainer">
+                <input
+                  className="modalInput"
+                  type={passwordVisible2 ? "text" : "password"}
+                  placeholder="비밀번호를 다시 한 번 입력해주세요"
+                />
+                <img
+                  className="eyeIcon"
+                  onClick={function () {
+                    passwordInput2();
+                  }}
+                  src={togglepassword}
+                  alt="눈"
+                />
+              </div>
             </div>
 
             <div className="modalFooter">
               <button
                 className="orangeButton cancel"
-                onClick={() => setShowModal(false)}
+                onClick={function () {
+                  setShowModal(false);
+                }}
               >
                 취소
               </button>
               <button
                 className="orangeButton"
-                onClick={() => {
+                onClick={function () {
                   setShowModal(false);
                   setInvestModal(true);
                 }}
@@ -221,19 +273,24 @@ function Results() {
           </div>
         </div>
       )}
+
       {investModal && (
         <div className="modalOverlay">
           <div className="modalContent">
             <button
               className="closeModalButton"
-              onClick={() => setInvestModal(false)}
+              onClick={function () {
+                setInvestModal(false);
+              }}
             >
               X
             </button>
             <h3 className="successMessage">투자가 완료되었어요!</h3>
             <button
               className="orangeButton"
-              onClick={() => setInvestModal(false)}
+              onClick={function () {
+                setInvestModal(false);
+              }}
             >
               확인
             </button>
