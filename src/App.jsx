@@ -4,6 +4,7 @@ import "./Results/style/results.css";
 import { useState } from "react";
 import toggleIcon from "./assets/togglebtn.png";
 import togglepassword from "./assets/visiblebtn.png";
+import Detail from "./detail/Detail.jsx";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route path="/compare" element={<Compare />} />
         <Route path="/investment" element={<Investment />} />
         <Route path="/results" element={<Results />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
       </Routes>
     </>
   );
