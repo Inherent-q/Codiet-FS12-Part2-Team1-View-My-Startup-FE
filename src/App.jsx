@@ -1,7 +1,10 @@
 import { Routes, Route, Link } from "react-router-dom";
 import GNB from "./components/GNB";
+import Home from "./home/Home";
+import SelectPage from "./select/Select"; // (종찬) 추가
 import Detail from "./detail/Detail.jsx";
 import Results from "./Results/Results.jsx";
+import Investment from "./investment/Investment.jsx";
 
 function App() {
   return (
@@ -9,7 +12,7 @@ function App() {
       <GNB />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/select" element={<Select />} />
+        <Route path="/select" element={<SelectPage />} />
         <Route path="/compare" element={<Compare />} />
         <Route path="/investment" element={<Investment />} />
         <Route path="/results" element={<Results />} />
@@ -19,20 +22,8 @@ function App() {
   );
 }
 
-function Home() {
-  return <h1>기업 전체 리스트 조회 페이지</h1>;
-}
-
-function Select() {
-  return <h1>나의 기업 비교 선택 페이지</h1>;
-}
-
 function Compare() {
   return <h1>비교 현황 페이지</h1>;
-}
-
-function Investment() {
-  return <h1>투자 현황 페이지</h1>;
 }
 
 export default App;

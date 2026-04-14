@@ -51,13 +51,13 @@ export default function Detail() {
   };
 
   const fetchinfo = () => {
-    fetch(`http://localhost:8080/api/corporations/${id}`)
+    fetch(`http://localhost:3000/api/corporations/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setCorpdata(data);
       });
 
-    fetch(`http://localhost:8080/api/corporations/${id}/investors`)
+    fetch(`http://localhost:3000/api/corporations/${id}/investors`)
       .then((res) => res.json())
       .then((data) => {
         setInvestors(data);
@@ -68,9 +68,9 @@ export default function Detail() {
     fetchinfo();
   }, [id]);
 
-  const deleteInvest = (id) => {
+  const deleteInvest = () => {
     try {
-      const res = fetch(`http://localhost:8080/api/investors/${id}`, {
+      const res = fetch(`http://localhost:3000/api/investors/${id}`, {
         method: "DELETE",
       });
 
