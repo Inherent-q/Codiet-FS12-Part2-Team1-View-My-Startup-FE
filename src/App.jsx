@@ -3,7 +3,7 @@ import GNB from "./components/GNB";
 import SelectPage from "./select/Select"; // (종찬) 추가
 import Detail from "./detail/Detail.jsx";
 import Results from "./Results/Results.jsx";
-import Investment from "../src/components/Investment";
+import Investment from "./investment/Investment.jsx";
 
 function App() {
   return (
