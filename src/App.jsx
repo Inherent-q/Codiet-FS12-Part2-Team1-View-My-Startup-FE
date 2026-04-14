@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import GNB from "./components/GNB";
 import SelectPage from "./select/Select"; // (종찬) 추가
+import Detail from "./detail/Detail.jsx";
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Route path="/compare" element={<Compare />} />
         <Route path="/investment" element={<Investment />} />
         <Route path="/results" element={<Results />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
       </Routes>
     </>
   );
@@ -34,9 +35,6 @@ function Investment() {
 }
 function Results() {
   return <h1>비교 결과 페이지</h1>;
-}
-function Detail() {
-  return <h1>기업상세 페이지</h1>;
 }
 
 export default App;

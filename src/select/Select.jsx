@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getOrCreateSessionId, getSessionId } from "../utils/sessionManager";
+import searchIcon from "../assets/icons/search.svg";
 import "./style/select.css";
 
 const API_BASE_URL =
@@ -405,6 +406,25 @@ export default function SelectPage() {
     Math.ceil(filteredComparisonCandidates.length / MODAL_PAGE_SIZE),
   );
 
+  const visiblePageNumbers = useMemo(() => {
+    const maxVisible = 5;
+
+    if (comparisonTotalPages <= maxVisible) {
+      return Array.from({ length: comparisonTotalPages }, (_, i) => i + 1);
+    }
+
+    const half = Math.floor(maxVisible / 2);
+    let start = Math.max(1, comparisonModalPage - half);
+    let end = start + maxVisible - 1;
+
+    if (end > comparisonTotalPages) {
+      end = comparisonTotalPages;
+      start = end - maxVisible + 1;
+    }
+
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  }, [comparisonModalPage, comparisonTotalPages]);
+
   useEffect(() => {
     if (comparisonModalPage > comparisonTotalPages) {
       setComparisonModalPage(comparisonTotalPages);
@@ -439,11 +459,6 @@ export default function SelectPage() {
     });
   };
 
-  const comparisonSlots = Array.from(
-    { length: MAX_COMPARISON },
-    (_, index) => comparisonCompanies[index] || null,
-  );
-
   return (
     <div className="select-page">
       {error && (
@@ -465,6 +480,9 @@ export default function SelectPage() {
               onClick={resetAllSelections}
               disabled={isLoading}
             >
+              <span className="restart-icon" aria-hidden="true">
+                ↻
+              </span>
               전체 초기화
             </button>
           )}
@@ -534,35 +552,28 @@ export default function SelectPage() {
               </div>
             ) : (
               <div className="comparison-grid">
-                {comparisonSlots.map((company, idx) =>
-                  company ? (
-                    <article key={company.id} className="comparison-card">
-                      <button
-                        type="button"
-                        className="card-remove-btn"
-                        onClick={() => removeComparisonCompany(company.id)}
-                        disabled={isLoading}
-                        aria-label={`${getCompanyName(company)} 삭제`}
-                      >
-                        ×
-                      </button>
-                      <img
-                        src={getCompanyLogo(company)}
-                        alt={getCompanyName(company)}
-                        className="company-avatar"
-                      />
-                      <p className="company-name">{getCompanyName(company)}</p>
-                      <p className="company-category">
-                        {getCompanyCategory(company)}
-                      </p>
-                    </article>
-                  ) : (
-                    <article
-                      key={`empty-${idx}`}
-                      className="comparison-card comparison-card--empty"
+                {comparisonCompanies.map((company) => (
+                  <article key={company.id} className="comparison-card">
+                    <button
+                      type="button"
+                      className="card-remove-btn"
+                      onClick={() => removeComparisonCompany(company.id)}
+                      disabled={isLoading}
+                      aria-label={`${getCompanyName(company)} 삭제`}
+                    >
+                      -
+                    </button>
+                    <img
+                      src={getCompanyLogo(company)}
+                      alt={getCompanyName(company)}
+                      className="company-avatar"
                     />
-                  ),
-                )}
+                    <p className="company-name">{getCompanyName(company)}</p>
+                    <p className="company-category">
+                      {getCompanyCategory(company)}
+                    </p>
+                  </article>
+                ))}
               </div>
             )}
           </div>
@@ -597,10 +608,16 @@ export default function SelectPage() {
 
             <div className="modal-body">
               <div className="modal-search-row">
+                <img
+                  src={searchIcon}
+                  alt=""
+                  className="modal-search-icon"
+                  aria-hidden="true"
+                />
                 <input
                   className="modal-search-input"
                   type="text"
-                  placeholder="기업 검색"
+                  placeholder="검색어를 입력해주세요"
                   value={myCompanySearchKeyword}
                   onChange={(e) => setMyCompanySearchKeyword(e.target.value)}
                 />
@@ -660,7 +677,7 @@ export default function SelectPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="modal-header">
-              <h3 className="modal-title">비교 기업 선택하기</h3>
+              <h3 className="modal-title">비교할 기업 선택하기</h3>
               <button
                 type="button"
                 className="modal-close-btn"
@@ -672,10 +689,16 @@ export default function SelectPage() {
 
             <div className="modal-body">
               <div className="modal-search-row">
+                <img
+                  src={searchIcon}
+                  alt=""
+                  className="modal-search-icon"
+                  aria-hidden="true"
+                />
                 <input
                   className="modal-search-input"
                   type="text"
-                  placeholder="기업 검색"
+                  placeholder="검색어를 입력해주세요"
                   value={comparisonSearchKeyword}
                   onChange={(e) => {
                     setComparisonSearchKeyword(e.target.value);
@@ -820,7 +843,7 @@ export default function SelectPage() {
               </div>
 
               <p className="modal-hint">
-                비교 기업은 최대 5개까지 선택할 수 있습니다.
+                *비교할 기업은 최대 5개까지 선택 가능합니다.
               </p>
 
               <div className="modal-footer">
@@ -835,10 +858,7 @@ export default function SelectPage() {
                   >
                     {"<"}
                   </button>
-                  {Array.from(
-                    { length: comparisonTotalPages },
-                    (_, idx) => idx + 1,
-                  ).map((page) => (
+                  {visiblePageNumbers.map((page) => (
                     <button
                       key={page}
                       type="button"
@@ -861,7 +881,6 @@ export default function SelectPage() {
                     {">"}
                   </button>
                 </div>
-
                 <button
                   type="button"
                   className="confirm-add-btn"
