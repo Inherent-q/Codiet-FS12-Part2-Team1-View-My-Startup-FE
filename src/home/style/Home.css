@@ -68,39 +68,80 @@
 /* 정렬 */
 .sort-wrapper {
   position: relative;
-  display: flex;
-  align-items: center;
-  background-color: var(--black-black_400);
-  height: 48px;
-  border-radius: 10px;
-  border: 1px solid var(--gray-gray_200);
+  display: inline-block;
 }
 
-.sort-select {
-  appearance: none;
-  background-color: transparent;
-  border: none;
+/* 트리거 버튼 */
+.sort-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 264px;
+  height: 48px;
+  padding: 0 16px;
+  background-color: var(--black-black_400);
+  border: 1px solid var(--gray-gray_200);
   border-radius: 10px;
   color: var(--gray-gray_100);
   font-size: var(--text-14);
   font-family: var(--font-pretendard);
-  padding: 10px 36px 10px 10px;
   cursor: pointer;
-  outline: none;
-  min-width: 160px;
-}
-
-.sort-select option {
-  background-color: var(--black-black_200);
-  color: var(--white);
 }
 
 .sort-icon {
-  position: absolute;
-  right: 12px;
   width: 16px;
   height: 16px;
-  pointer-events: none;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.sort-icon.open {
+  transform: rotate(180deg);
+}
+
+.sort-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  width: 264px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 각 옵션 */
+.sort-option {
+  height: 40px;
+  padding: 0 10px;
+  background-color: var(--black-black_400);
+  border: 1px solid var(--gray-gray_200);
+  border-top: none;
+  color: var(--gray-gray_100);
+  font-size: var(--text-14);
+  font-family: var(--font-pretendard);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.sort-option.first {
+  border-top: 1px solid var(--gray-gray_200);
+  border-radius: 10px 10px 0 0;
+}
+
+.sort-option.last {
+  border-radius: 0 0 10px 10px;
+}
+
+.sort-option.selected {
+  color: var(--white);
+  font-weight: var(--weight-semibold);
+}
+
+.sort-option:hover {
+  background-color: var(--black-black_100);
+  color: var(--white);
 }
 
 /* 테이블 */
@@ -235,22 +276,12 @@
     gap: 12px;
   }
 
-  /* ✅ 189px, 40px으로 수정 */
-  .search-wrapper {
-    width: 189px;
-    height: 40px;
-  }
-
-  /* ✅ 146px, 40px으로 수정 */
-  .sort-wrapper {
+  .sort-trigger {
     width: 146px;
     height: 40px;
   }
-
-  .sort-select {
-    padding: 6px 8px;
-    min-width: unset;
-    width: 100%;
+  .sort-dropdown {
+    width: 146px;
   }
 
   .rank-cell,
@@ -290,14 +321,11 @@
     min-width: 0;
   }
 
-  .sort-wrapper {
-    flex-shrink: 0;
+  .sort-trigger {
     width: 130px;
   }
-
-  .sort-select {
-    width: 100%;
-    min-width: unset;
+  .sort-dropdown {
+    width: 130px;
   }
 
   .category-cell,

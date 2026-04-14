@@ -35,13 +35,13 @@ export default function Detail() {
   const totalPages = Math.ceil(investors.length / itemsPerPage);
 
   const fetchinfo = () => {
-    fetch(`http://localhost:8080/api/corporations/${id}`)
+    fetch(`http://localhost:3000/api/corporations/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setCorpdata(data);
       });
 
-    fetch(`http://localhost:8080/api/corporations/${id}/investors`)
+    fetch(`http://localhost:3000/api/corporations/${id}/investors`)
       .then((res) => res.json())
       .then((data) => {
         setInvestors(data);
@@ -53,7 +53,7 @@ export default function Detail() {
   }, [id]);
 
   const deleteInvest = () => {
-    fetch(`http://localhost:8080/api/investors/${id}`, {
+    fetch(`http://localhost:3000/api/investors/${id}`, {
       method: "DELETE",
     }).then((res) => {
       if (res.ok) {
