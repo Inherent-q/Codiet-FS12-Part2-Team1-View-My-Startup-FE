@@ -1,0 +1,285 @@
+.resultsContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 0;
+  font-family: "Pretendard", sans-serif;
+  min-height: calc(100vh - 60px);
+  box-sizing: border-box;
+}
+
+.sectionTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.mainTitle {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.dropdownContainer {
+  position: relative;
+  width: 168px;
+  height: 48px;
+  background: var(--black-black_400, #131313);
+  border: 1px solid var(--gray-gray_200, #747474);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px 0 16px;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 14px;
+}
+
+.dropdownText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdownIcon {
+  width: 21.5px;
+  height: 21.5px;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  width: 100%;
+  background: #131313;
+  border: 1px solid #747474;
+  border-radius: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.dropdownItem {
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  border-bottom: 1px solid #333;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.dropdownItem:hover {
+  background: #252525;
+}
+
+.selectedCard {
+  width: 100%;
+  height: 300px;
+  background: var(--black-black_300, #212121);
+  border: 1px solid #333;
+  border-radius: 4px;
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.tableWrapper {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 60px;
+  table-layout: auto;
+}
+
+.tableHeader {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.compareHeader th:nth-child(1) {
+  width: 15%;
+}
+.compareHeader th:nth-child(2) {
+  width: 35%;
+}
+.compareHeader th:nth-child(3),
+.compareHeader th:nth-child(4),
+.compareHeader th:nth-child(5),
+.compareHeader th:nth-child(6) {
+  width: 12.5%;
+}
+
+.rankHeader th:nth-child(1) {
+  width: 60px;
+}
+.rankHeader th:nth-child(2) {
+  width: 12%;
+}
+.rankHeader th:nth-child(3) {
+  width: 30%;
+}
+.rankHeader th:nth-child(4),
+.rankHeader th:nth-child(5),
+.rankHeader th:nth-child(6),
+.rankHeader th:nth-child(7) {
+  width: 13%;
+}
+
+.tableHeader tr {
+  background: #2e2e2e;
+}
+
+.tableHeader th:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.tableHeader th:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.tableHeader th {
+  padding: 10px 20px;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modalContentlarge {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 24px;
+  border-radius: 16px;
+  background: #212121;
+  width: 100%;
+  max-width: 500px;
+}
+
+.top {
+  display: flex;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.inputLabel {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.modalInput {
+  width: 100%;
+  padding: 16px 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: #212121;
+  border: 1px solid var(--gray-gray_200, #747474);
+  padding-right: 48px;
+  box-sizing: border-box;
+}
+
+.modalInput2 {
+  width: 100%;
+  height: 108px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: #212121;
+  border: 1px solid #747474;
+  resize: none;
+  box-sizing: border-box;
+  font-family: "Pretendard", sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+
+.modalTextarea {
+  height: 108px;
+  width: 100%;
+  padding: 16px 20px;
+  background: #212121;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.successMessage {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.orangeButton {
+  background-color: #ff5c35;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  padding: 12px 32px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.orangeButton:hover {
+  background-color: #eb5230;
+}
