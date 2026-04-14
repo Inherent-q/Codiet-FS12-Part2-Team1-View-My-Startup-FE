@@ -584,7 +584,7 @@ export default function SelectPage() {
         type="button"
         className="compare-submit-btn"
         disabled={!myCompany || comparisonCompanies.length === 0 || isLoading}
-        onClick={() => navigate("/compare")}
+        onClick={() => navigate("/results")}
       >
         기업 비교하기
       </button>
