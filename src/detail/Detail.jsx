@@ -35,6 +35,21 @@ export default function Detail() {
   // 전체 페이지 수
   const totalPages = Math.ceil(investors.length / itemsPerPage);
 
+  // 삭제 모달 props 변수
+  const [isDelModalOpen, setIsDelModalOpen] = useState(false);
+  const [selectedDelId, setSelectedDelId] = useState(null);
+
+  const handleDeleteClick = (id) => {
+    setSelectedDelId(id); // 삭제할 ID 저장
+    setIsDelModalOpen(true); // 모달 열기
+  };
+
+  const confirmDelete = () => {
+    console.log(`${selectedDelId} 삭제 진행됨`);
+    deleteInvest(selectedDelId);
+    setIsDelModalOpen(false); // 삭제 후 모달 닫기
+  };
+
   const fetchinfo = () => {
     fetch(`http://localhost:8080/api/corporations/${id}`)
       .then((res) => res.json())
@@ -53,14 +68,20 @@ export default function Detail() {
     fetchinfo();
   }, [id]);
 
-  const deleteInvest = () => {
-    fetch(`http://localhost:8080/api/investors/${id}`, {
-      method: "DELETE",
-    }).then((res) => {
+  const deleteInvest = (id) => {
+    try {
+      const res = fetch(`http://localhost:8080/api/investors/${id}`, {
+        method: "DELETE",
+      });
+
       if (res.ok) {
         fetchinfo();
+      } else {
+        console.error(res.status);
       }
-    });
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   const addInvest = () => {};
@@ -425,6 +446,7 @@ export default function Detail() {
                               borderBottomRightRadius: "10px",
                               cursor: "pointer",
                             }}
+                            onClick={() => handleDeleteClick(item.id)}
                           >
                             삭제하기
                           </button>
@@ -528,6 +550,12 @@ export default function Detail() {
           )}
         </div>
       </div>
+
+      <DeleteModal
+        isOpen={isDelModalOpen}
+        onClose={() => setIsDelModalOpen(false)}
+        onDelete={confirmDelete}
+      />
     </div>
   );
 }
