@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Investment.css";
-import toggleImage from "../assets/toggle.svg";
-import leftArrow from "../assets/arrow_left.svg";
-import rightArrow from "../assets/arrow_right.svg";
+import toggleImage from "../assets/icons/toggle.svg";
+import leftArrow from "../assets/icons/arrow_left.svg";
+import rightArrow from "../assets/icons/arrow_right.svg";
 
 const Investment = () => {
   const [corps, setCoprs] = useState([]);
