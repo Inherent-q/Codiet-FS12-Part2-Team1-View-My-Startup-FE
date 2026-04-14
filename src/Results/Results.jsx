@@ -1,0 +1,261 @@
+import { useState } from "react";
+import toggleIcon from "../assets/togglebtn.png";
+import togglepassword from "../assets/visiblebtn.png";
+import "./style/results.css";
+
+function Results() {
+  const [showModal, setShowModal] = useState(false);
+  const [investModal, setInvestModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedSort, setSelectedSort] = useState("누적 투자금액 높은순");
+  const sortOptions = [
+    "누적 투자금액 높은순",
+    "누적 투자금액 낮은순",
+    "매출액 높은순",
+    "매출액 낮은순",
+    "고용 인원 많은순",
+    "고용 인원 적은순",
+  ];
+  const [passwordVisible, setpasswordVisible] = useState(false);
+  const [passwordVisible2, setpasswordVisible2] = useState(false);
+
+  function passwordInput() {
+    setpasswordVisible(!passwordVisible);
+  }
+  function passwordInput2() {
+    setpasswordVisible2(!passwordVisible2);
+  }
+
+  return (
+    <div className="resultsContainer">
+      <div className="sectionTitle">
+        <span className="mainTitle">내가 선택한 기업</span>
+        <button className="orangeButton">다른 기업 비교하기</button>
+      </div>
+
+      <div className="selectedCard"></div>
+
+      <div className="sectionTitle">
+        <span className="mainTitle">비교 결과 확인하기</span>
+        <div
+          className="dropdownContainer"
+          onClick={function () {
+            setIsOpen(!isOpen);
+          }}
+        >
+          <span className="dropdownText">{selectedSort}</span>
+          <img
+            src={toggleIcon}
+            alt="Toggle Dropdown"
+            className="dropdownIcon"
+          />
+
+          {isOpen && (
+            <ul className="dropdownList">
+              {sortOptions.map(function (option) {
+                return (
+                  <li
+                    key={option}
+                    className="dropdownItem"
+                    onClick={function (e) {
+                      e.stopPropagation();
+                      setSelectedSort(option);
+                      setIsOpen(false);
+                    }}
+                  >
+                    {option}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      </div>
+
+      <table className="tableWrapper">
+        <thead className="tableHeader">
+          <tr>
+            <th>기업 명</th>
+            <th>기업 소개</th>
+            <th>카테고리</th>
+            <th>누적 투자 금액</th>
+            <th>매출액</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div className="sectionTitle" style={{ marginTop: "60px" }}>
+        <span className="mainTitle">기업 순위 확인하기</span>
+        <select className="sortDropdown">
+          <option value="investment_desc">누적 투자금액 높은순</option>
+          <option value="investment_asc">누적 투자금액 낮은순</option>
+          <option value="revenue_desc">매출액 높은순</option>
+          <option value="revenue_asc">매출액 낮은순</option>
+          <option value="employees_desc">고용 인원 많은순</option>
+          <option value="employees_asc">고용 인원 적은순</option>
+        </select>
+      </div>
+
+      <table className="tableWrapper">
+        <thead className="tableHeader">
+          <tr>
+            <th>순위</th>
+            <th>기업 명</th>
+            <th>기업 소개</th>
+            <th>카테고리</th>
+            <th>누적 투자 금액</th>
+            <th>매출액</th>
+            <th>고용 인원</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "60px" }}
+      >
+        <button
+          className="orangeButton"
+          onClick={function () {
+            setShowModal(true);
+          }}
+        >
+          나의 기업에 투자하기
+        </button>
+      </div>
+
+      {showModal && (
+        <div className="modalOverlay">
+          <div className="modalContentlarge">
+            <div className="top">
+              <label className="mainTitle">기업에 투자하기</label>
+              <button
+                className="closeModalButton"
+                onClick={function () {
+                  setShowModal(false);
+                }}
+              >
+                X
+              </button>
+            </div>
+
+            <div>
+              <label className="inputLabel">투자 기업 정보</label>
+            </div>
+
+            <div className="inputGroup">
+              <label className="inputLabel">투자자 이름</label>
+              <input
+                className="modalInput"
+                type="text"
+                placeholder="투자자 이름을 입력해 주세요"
+              />
+            </div>
+
+            <div className="inputGroup">
+              <label className="inputLabel">투자 금액</label>
+              <input
+                className="modalInput"
+                type="text"
+                placeholder="투자 금액을 입력해 주세요"
+              />
+            </div>
+
+            <div className="inputGroup">
+              <label className="inputLabel">투자 코멘트</label>
+              <textarea
+                className="modalInput2"
+                placeholder="투자 코멘트를 입력해 주세요"
+              />
+            </div>
+
+            <div className="inputGroup">
+              <label className="inputLabel">비밀번호</label>
+              <div className="inputContainer">
+                <input
+                  className="modalInput"
+                  type={passwordVisible ? "text" : "password"}
+                  placeholder="비밀번호를 입력해 주세요"
+                />
+                <img
+                  className="eyeIcon"
+                  onClick={function () {
+                    passwordInput();
+                  }}
+                  src={togglepassword}
+                  alt="눈"
+                />
+              </div>
+            </div>
+
+            <div className="inputGroup">
+              <label className="inputLabel">비밀번호 확인</label>
+              <div className="inputContainer">
+                <input
+                  className="modalInput"
+                  type={passwordVisible2 ? "text" : "password"}
+                  placeholder="비밀번호를 다시 한 번 입력해주세요"
+                />
+                <img
+                  className="eyeIcon"
+                  onClick={function () {
+                    passwordInput2();
+                  }}
+                  src={togglepassword}
+                  alt="눈"
+                />
+              </div>
+            </div>
+
+            <div className="modalFooter">
+              <button
+                className="orangeButton cancel"
+                onClick={function () {
+                  setShowModal(false);
+                }}
+              >
+                취소
+              </button>
+              <button
+                className="orangeButton"
+                onClick={function () {
+                  setShowModal(false);
+                  setInvestModal(true);
+                }}
+              >
+                투자하기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {investModal && (
+        <div className="modalOverlay">
+          <div className="modalContent">
+            <button
+              className="closeModalButton"
+              onClick={function () {
+                setInvestModal(false);
+              }}
+            >
+              X
+            </button>
+            <h3 className="successMessage">투자가 완료되었어요!</h3>
+            <button
+              className="orangeButton"
+              onClick={function () {
+                setInvestModal(false);
+              }}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default Results;
