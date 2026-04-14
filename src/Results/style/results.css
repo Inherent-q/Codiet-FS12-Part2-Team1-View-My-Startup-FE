@@ -105,28 +105,68 @@
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 60px;
-  table-layout: fixed;
+  table-layout: auto;
 }
 
 .tableHeader {
-  background-color: #222;
-  color: #aaa;
+  color: #fff;
+  font-family: Pretendard;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
-.tableHeader th,
-.tableRow td {
-  padding: 16px;
-  border-bottom: 1px solid #333;
-  text-align: left;
+.compareHeader th:nth-child(1) {
+  width: 15%;
+}
+.compareHeader th:nth-child(2) {
+  width: 35%;
+}
+.compareHeader th:nth-child(3),
+.compareHeader th:nth-child(4),
+.compareHeader th:nth-child(5),
+.compareHeader th:nth-child(6) {
+  width: 12.5%;
+}
+
+.rankHeader th:nth-child(1) {
+  width: 60px;
+}
+.rankHeader th:nth-child(2) {
+  width: 12%;
+}
+.rankHeader th:nth-child(3) {
+  width: 30%;
+}
+.rankHeader th:nth-child(4),
+.rankHeader th:nth-child(5),
+.rankHeader th:nth-child(6),
+.rankHeader th:nth-child(7) {
+  width: 13%;
+}
+
+.tableHeader tr {
+  background: #2e2e2e;
 }
 
 .tableHeader th:first-child {
-  padding-left: 24px;
+  border-radius: 4px 0 0 4px;
+}
+.tableHeader th:last-child {
+  border-radius: 0 4px 4px 0;
 }
 
-.tableRow:hover {
-  background-color: #252525;
+.tableHeader th {
+  padding: 10px 20px;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 .modalOverlay {

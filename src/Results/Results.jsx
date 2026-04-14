@@ -16,6 +16,16 @@ function Results() {
     "고용 인원 많은순",
     "고용 인원 적은순",
   ];
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [selectedSort2, setSelectedSort2] = useState("누적 투자금액 높은순");
+  const sortOptions2 = [
+    "누적 투자금액 높은순",
+    "누적 투자금액 낮은순",
+    "매출액 높은순",
+    "매출액 낮은순",
+    "고용 인원 많은순",
+    "고용 인원 적은순",
+  ];
   const [passwordVisible, setpasswordVisible] = useState(false);
   const [passwordVisible2, setpasswordVisible2] = useState(false);
 
@@ -73,13 +83,14 @@ function Results() {
       </div>
 
       <table className="tableWrapper">
-        <thead className="tableHeader">
+        <thead className="tableHeader compareHeader">
           <tr>
             <th>기업 명</th>
             <th>기업 소개</th>
             <th>카테고리</th>
             <th>누적 투자 금액</th>
             <th>매출액</th>
+            <th>고용 인원</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -87,18 +98,43 @@ function Results() {
 
       <div className="sectionTitle" style={{ marginTop: "60px" }}>
         <span className="mainTitle">기업 순위 확인하기</span>
-        <select className="sortDropdown">
-          <option value="investment_desc">누적 투자금액 높은순</option>
-          <option value="investment_asc">누적 투자금액 낮은순</option>
-          <option value="revenue_desc">매출액 높은순</option>
-          <option value="revenue_asc">매출액 낮은순</option>
-          <option value="employees_desc">고용 인원 많은순</option>
-          <option value="employees_asc">고용 인원 적은순</option>
-        </select>
+        <div
+          className="dropdownContainer"
+          onClick={function () {
+            setIsOpen2(!isOpen2);
+          }}
+        >
+          <span className="dropdownText">{selectedSort2}</span>
+          <img
+            src={toggleIcon}
+            alt="Toggle Dropdown"
+            className="dropdownIcon"
+          />
+
+          {isOpen2 && (
+            <ul className="dropdownList">
+              {sortOptions2.map(function (option2) {
+                return (
+                  <li
+                    key={option2}
+                    className="dropdownItem"
+                    onClick={function (e) {
+                      e.stopPropagation();
+                      setSelectedSort2(option2);
+                      setIsOpen2(false);
+                    }}
+                  >
+                    {option2}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
       </div>
 
       <table className="tableWrapper">
-        <thead className="tableHeader">
+        <thead className="tableHeader rankHeader">
           <tr>
             <th>순위</th>
             <th>기업 명</th>
