@@ -1,6 +1,7 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import GNB from "./components/GNB";
 import Detail from "./detail/Detail.jsx";
+import Results from "./Results/Results.jsx";
 
 function App() {
   return (
@@ -29,11 +30,9 @@ function Select() {
 function Compare() {
   return <h1>비교 현황 페이지</h1>;
 }
+
 function Investment() {
   return <h1>투자 현황 페이지</h1>;
-}
-function Results() {
-  return <h1>비교 결과 페이지</h1>;
 }
 
 export default App;
