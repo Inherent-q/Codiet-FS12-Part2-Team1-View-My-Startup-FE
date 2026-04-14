@@ -1,5 +1,6 @@
 import { useState } from "react";
 import toggleIcon from "../assets/togglebtn.png";
+import vectorIcon from "../assets/vector.png";
 import togglepassword from "../assets/visiblebtn.png";
 import "./style/results.css";
 
@@ -164,16 +165,16 @@ function Results() {
       {showModal && (
         <div className="modalOverlay">
           <div className="modalContentlarge">
-            <div className="top">
+            <div className="largemodalTop">
               <label className="mainTitle">기업에 투자하기</label>
-              <button
-                className="closeModalButton"
+              <img
+                src={vectorIcon}
+                alt="눈"
+                style={{ width: "20.333px", height: "20.333px" }}
                 onClick={function () {
                   setShowModal(false);
                 }}
-              >
-                X
-              </button>
+              />
             </div>
 
             <div>
