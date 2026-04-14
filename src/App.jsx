@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import GNB from "./components/GNB";
+import Home from "./home/Home";
 import Detail from "./detail/Detail.jsx";
 
 function App() {
@@ -16,10 +17,6 @@ function App() {
       </Routes>
     </>
   );
-}
-
-function Home() {
-  return <h1>기업 전체 리스트 조회 페이지</h1>;
 }
 
 function Select() {
