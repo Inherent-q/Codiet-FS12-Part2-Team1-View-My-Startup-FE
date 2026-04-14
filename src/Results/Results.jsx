@@ -169,7 +169,7 @@ function Results() {
               <label className="mainTitle">기업에 투자하기</label>
               <img
                 src={vectorIcon}
-                alt="눈"
+                alt="닫음"
                 style={{ width: "20.333px", height: "20.333px" }}
                 onClick={function () {
                   setShowModal(false);
@@ -271,14 +271,17 @@ function Results() {
       {investModal && (
         <div className="modalOverlay">
           <div className="modalContent">
-            <button
-              className="closeModalButton"
-              onClick={function () {
-                setInvestModal(false);
+            <img
+              src={vectorIcon}
+              alt="닫음"
+              style={{
+                width: "20.333px",
+                height: "20.333px",
               }}
-            >
-              X
-            </button>
+              onClick={function () {
+                setShowModal(false);
+              }}
+            />
             <h3 className="successMessage">투자가 완료되었어요!</h3>
             <button
               className="orangeButton"
