@@ -43,7 +43,7 @@ h1 {
   justify-content: space-between;
 }
 
-.sort-btn {
+.sort-text {
   color: var(--gray-gray_100, #d8d8d8);
   font-family: Pretendard;
   font-size: 14px;
@@ -52,7 +52,6 @@ h1 {
   line-height: normal;
   background: none;
   border: none;
-  cursor: pointer;
 }
 
 .dropdown-toggle {

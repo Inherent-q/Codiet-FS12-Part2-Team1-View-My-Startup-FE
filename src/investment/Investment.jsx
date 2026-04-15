@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Investment.css";
-import toggleImage from "../assets/icons/toggle.svg";
-import leftArrow from "../assets/icons/arrow_left.svg";
-import rightArrow from "../assets/icons/arrow_right.svg";
+import toggleImage from "../assets//toggle.svg";
+import leftArrow from "../assets/arrow_left.svg";
+import rightArrow from "../assets/arrow_right.svg";
 
 const Investment = () => {
   const [corps, setCoprs] = useState([]);
@@ -40,10 +40,35 @@ const Investment = () => {
   }, []);
 
   //정렬
+
+  const handleToggle = function () {
+    setToggle((toggle = !toggle));
+  };
+
+  const dorpdown = function () {
+    if (toggle === true) {
+      return (
+        <div>
+          <button>View My Startup 투자 금액 높은순</button>
+          <button>View My Startup 투자 금액 낮은순</button>
+          <button>실제 누적 투자 금액 높은순</button>
+          <button>실제 누적 투자 금액 낮은순</button>
+        </div>
+      );
+    } else {
+      return;
+    }
+  };
+
   //1. 토글 버튼 클릭시 드롭다운 열리고 닫히기
   //2. 드롭다운 열렸을 때 4가지 정렬 옵션 보여주기
+
   //3. 옵션 클릭하면 sort 변경되고, 드롭다운 닫힌다
   //4. 변경된 sort에 따라서 테이블 정렬이 바뀐다.
+
+  const handleSorting = function () {
+    setSort(...corps);
+  };
 
   //페이지네이션
 
@@ -74,9 +99,7 @@ const Investment = () => {
         <h1>투자 현황</h1>
         <div className="dropdown">
           <div className="dropdown-wrapper">
-            <button className="sort-btn">
-              View My Startup 투자 금액 높은순
-            </button>
+            <span className="sort-text">View My Startup 투자 금액 높은순</span>
             <button className="dropdown-toggle">
               <img src={toggleImage} />
             </button>
