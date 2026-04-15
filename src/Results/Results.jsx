@@ -277,20 +277,23 @@ function Results() {
               style={{
                 width: "20.333px",
                 height: "20.333px",
+                alignSelf: "flex-end",
               }}
               onClick={function () {
                 setShowModal(false);
               }}
             />
-            <h3 className="successMessage">투자가 완료되었어요!</h3>
-            <button
-              className="orangeButton"
-              onClick={function () {
-                setInvestModal(false);
-              }}
-            >
-              확인
-            </button>
+            <div className="buttonGroup">
+              <h3 className="successMessage">투자가 완료되었어요!</h3>
+              <button
+                className="orangeButton"
+                onClick={function () {
+                  setInvestModal(false);
+                }}
+              >
+                확인
+              </button>
+            </div>
           </div>
         </div>
       )}

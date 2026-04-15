@@ -270,13 +270,6 @@
   z-index: 10;
 }
 
-.successMessage {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 24px;
-  display: block;
-}
-
 .modalFooter {
   display: flex;
   justify-content: center;
@@ -308,7 +301,26 @@
 }
 
 .modalContent {
-  margin: 24px;
+  padding: 24px;
   background-color: #212121;
   border-radius: 16px;
+  width: 448px;
+  height: auto;
+  gap: 8px;
+}
+.buttonGroup {
+  display: inline-flex; /* 콘텐츠에 맞게 늘어나게 설정 */
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.successMessage {
+  color: #fff;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
