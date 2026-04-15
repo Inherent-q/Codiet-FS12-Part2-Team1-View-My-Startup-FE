@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { usePaginationFetch } from "../hooks/usePaginationFetch";
 import CompanyRow from "./components/CompanyRow";
+import Pagination from "../components/Pagination";
 import "./style/Home.css";
 import searchIcon from "./assets/ic_search.svg";
 import toggleIcon from "./assets/ic_toggle.svg";
@@ -168,33 +169,11 @@ export default function Home() {
 
         {/* 페이지네이션 */}
         {pagination && (
-          <div className="pagination-wrapper">
-            <div className="pagination">
-              <button
-                className="page-arrow"
-                disabled={page === 1}
-                onClick={() => setPage(page - 1)}
-              >
-                <img src={arrowLeft} alt="이전" />
-              </button>
-              {pageNumbers.map((p) => (
-                <button
-                  key={p}
-                  className={`page-btn ${p === page ? "active" : ""}`}
-                  onClick={() => setPage(p)}
-                >
-                  {p}
-                </button>
-              ))}
-              <button
-                className="page-arrow"
-                disabled={page === totalPages}
-                onClick={() => setPage(page + 1)}
-              >
-                <img src={arrowRight} alt="다음" />
-              </button>
-            </div>
-          </div>
+          <Pagination
+            page={page}
+            totalPages={pagination.totalPages}
+            onPageChange={setPage}
+          />
         )}
       </main>
     </div>
