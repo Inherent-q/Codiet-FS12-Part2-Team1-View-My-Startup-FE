@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import DeleteModal from "./DeleteModal.jsx";
+import AuthenticationModal from "./AuthenticationModal.jsx";
 
 export default function Detail() {
   const { id } = useParams();
@@ -453,6 +453,13 @@ export default function Detail() {
                         </div>
                       )}
                     </div>
+
+                    <AuthenticationModal
+                      isOpen={isDelModalOpen}
+                      onClose={() => setIsDelModalOpen(false)}
+                      onDelete={confirmDelete}
+                      ivestor={item}
+                    />
                   </div>
                 ))}
               </div>
@@ -550,12 +557,6 @@ export default function Detail() {
           )}
         </div>
       </div>
-
-      <DeleteModal
-        isOpen={isDelModalOpen}
-        onClose={() => setIsDelModalOpen(false)}
-        onDelete={confirmDelete}
-      />
     </div>
   );
 }
