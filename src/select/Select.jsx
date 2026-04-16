@@ -8,7 +8,7 @@ import "./style/select.css";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
-const USE_MOCK = import.meta.env.VITE_USE_MOCK !== "false";
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
 const MAX_COMPARISON = 5;
 const MODAL_PAGE_SIZE = 6;
 
@@ -66,9 +66,10 @@ export default function SelectPage() {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/companies`);
+      const response = await fetch(`${API_BASE_URL}/corporations`);
       if (!response.ok) throw new Error("기업 목록 조회 실패");
-      const data = await response.json();
+      const payload = await response.json();
+      const data = Array.isArray(payload) ? payload : payload?.data;
       setAllCompanies(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("기업 목록 API 실패, 목업 데이터로 대체합니다.", err);
@@ -79,18 +80,16 @@ export default function SelectPage() {
   const fetchMyCompany = async () => {
     try {
       const sessionId = getSessionId();
+      if (!sessionId) return;
       const response = await fetch(
-        `${API_BASE_URL}/my-selections?sessionId=${sessionId}`,
-        {
-          headers: { "X-Session-ID": sessionId },
-        },
+        `${API_BASE_URL}/my-selection?userSessionId=${sessionId}`,
       );
 
       if (!response.ok) return;
 
-      const data = await response.json();
-      if (data?.corp) {
-        setMyCompany(data.corp);
+      const payload = await response.json();
+      if (payload?.success && payload?.data?.corp) {
+        setMyCompany(payload.data.corp);
       }
     } catch (err) {
       console.error(err);
@@ -100,19 +99,17 @@ export default function SelectPage() {
   const fetchComparisonCompanies = async () => {
     try {
       const sessionId = getSessionId();
+      if (!sessionId) return;
       const response = await fetch(
-        `${API_BASE_URL}/comparison-selections?sessionId=${sessionId}`,
-        {
-          headers: { "X-Session-ID": sessionId },
-        },
+        `${API_BASE_URL}/comparison-selections?userSessionId=${sessionId}`,
       );
 
       if (!response.ok) return;
 
-      const data = await response.json();
-      if (Array.isArray(data)) {
+      const payload = await response.json();
+      if (payload?.success && Array.isArray(payload.data)) {
         setComparisonCompanies(
-          data.map((item) => ({
+          payload.data.map((item) => ({
             ...item.corp,
             _selectionId: item.id,
           })),
@@ -123,236 +120,113 @@ export default function SelectPage() {
     }
   };
 
-  const addMyCompany = async (company) => {
-    if (USE_MOCK) {
-      setMyCompany(company);
-      setIsMyCompanyModalOpen(false);
-      setMyCompanySearchKeyword("");
-      setError("");
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const sessionId = getSessionId();
-
-      const response = await fetch(`${API_BASE_URL}/my-selections`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Session-ID": sessionId,
-        },
-        body: JSON.stringify({ corpId: company.id }),
-      });
-
-      if (!response.ok) throw new Error("나의 기업 선택 실패");
-
-      const data = await response.json();
-      setMyCompany(data?.corp || company);
-      setIsMyCompanyModalOpen(false);
-      setMyCompanySearchKeyword("");
-      setError("");
-    } catch (err) {
-      console.error(err);
-      setMyCompany(company);
-      setIsMyCompanyModalOpen(false);
-      setMyCompanySearchKeyword("");
-      setError("API 저장은 실패했지만 화면에는 선택한 기업을 표시했습니다.");
-    } finally {
-      setIsLoading(false);
-    }
+  const addMyCompany = (company) => {
+    setMyCompany(company);
+    setIsMyCompanyModalOpen(false);
+    setMyCompanySearchKeyword("");
+    setError("");
   };
 
-  const clearMyCompany = async () => {
-    if (USE_MOCK) {
-      setMyCompany(null);
-      setComparisonCompanies([]);
-      setSelectedComparisonCompanies(new Set());
-      setError("");
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const sessionId = getSessionId();
-
-      const response = await fetch(
-        `${API_BASE_URL}/my-selections?sessionId=${sessionId}`,
-        {
-          method: "DELETE",
-          headers: { "X-Session-ID": sessionId },
-        },
-      );
-
-      if (!response.ok) throw new Error("나의 기업 해제 실패");
-
-      setMyCompany(null);
-      setComparisonCompanies([]);
-      setSelectedComparisonCompanies(new Set());
-      setError("");
-    } catch (err) {
-      console.error(err);
-      setMyCompany(null);
-      setComparisonCompanies([]);
-      setSelectedComparisonCompanies(new Set());
-      setError("API 해제는 실패했지만 화면에서는 선택을 해제했습니다.");
-    } finally {
-      setIsLoading(false);
-    }
+  const clearMyCompany = () => {
+    setMyCompany(null);
+    setComparisonCompanies([]);
+    setSelectedComparisonCompanies(new Set());
+    setError("");
   };
 
-  const addComparisonCompanies = async (companyIds) => {
+  const addComparisonCompanies = (companyIds) => {
     if (!companyIds.length) return;
 
-    if (USE_MOCK) {
-      const selected = allCompanies
-        .filter((company) => companyIds.includes(company.id))
-        .map((company) => ({ ...company, _selectionId: `mock-${company.id}` }));
+    const selected = allCompanies
+      .filter((company) => companyIds.includes(company.id))
+      .map((company) => ({ ...company, _selectionId: `local-${company.id}` }));
 
-      setComparisonCompanies((prev) => {
-        const prevIds = new Set(prev.map((c) => c.id));
-        const merged = [...prev];
-        selected.forEach((c) => {
-          if (!prevIds.has(c.id)) merged.push(c);
-        });
-        return merged;
+    setComparisonCompanies((prev) => {
+      const prevIds = new Set(prev.map((c) => c.id));
+      const merged = [...prev];
+      selected.forEach((c) => {
+        if (!prevIds.has(c.id)) merged.push(c);
       });
+      return merged;
+    });
 
-      setSelectedComparisonCompanies(new Set());
-      setComparisonSearchKeyword("");
-      setComparisonModalPage(1);
-      setIsComparisonModalOpen(false);
-      setError("");
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const sessionId = getSessionId();
-
-      const response = await fetch(`${API_BASE_URL}/comparison-selections`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Session-ID": sessionId,
-        },
-        body: JSON.stringify({ corpIds: companyIds }),
-      });
-
-      if (!response.ok) throw new Error("비교 기업 추가 실패");
-
-      const data = await response.json();
-      const newItems = Array.isArray(data) ? data : [data];
-
-      const normalized = newItems.map((item) => ({
-        ...item.corp,
-        _selectionId: item.id,
-      }));
-
-      setComparisonCompanies((prev) => {
-        const prevIds = new Set(prev.map((c) => c.id));
-        const merged = [...prev];
-        normalized.forEach((c) => {
-          if (!prevIds.has(c.id)) merged.push(c);
-        });
-        return merged;
-      });
-
-      setSelectedComparisonCompanies(new Set());
-      setComparisonSearchKeyword("");
-      setComparisonModalPage(1);
-      setIsComparisonModalOpen(false);
-      setError("");
-    } catch (err) {
-      console.error(err);
-      setError("비교 기업 추가에 실패했습니다.");
-    } finally {
-      setIsLoading(false);
-    }
+    setSelectedComparisonCompanies(new Set());
+    setComparisonSearchKeyword("");
+    setComparisonModalPage(1);
+    setIsComparisonModalOpen(false);
+    setError("");
   };
 
-  const removeComparisonCompany = async (companyId) => {
-    if (USE_MOCK) {
-      setComparisonCompanies((prev) => prev.filter((c) => c.id !== companyId));
-      setSelectedComparisonCompanies((prev) => {
-        const next = new Set(prev);
-        next.delete(companyId);
-        return next;
-      });
-      setError("");
-      return;
-    }
+  const removeComparisonCompany = (companyId) => {
+    setComparisonCompanies((prev) => prev.filter((c) => c.id !== companyId));
+    setSelectedComparisonCompanies((prev) => {
+      const next = new Set(prev);
+      next.delete(companyId);
+      return next;
+    });
+    setError("");
+  };
+
+  const resetAllSelections = () => {
+    setMyCompany(null);
+    setComparisonCompanies([]);
+    setSelectedComparisonCompanies(new Set());
+    setError("");
+  };
+
+  const handleCompareSubmit = async () => {
+    if (!myCompany || comparisonCompanies.length === 0) return;
 
     try {
       setIsLoading(true);
-      const sessionId = getSessionId();
+      setError("");
 
-      const target = comparisonCompanies.find((c) => c.id === companyId);
+      const sessionId = getSessionId() || getOrCreateSessionId();
 
-      if (target?._selectionId) {
-        const response = await fetch(
-          `${API_BASE_URL}/comparison-selections/${target._selectionId}`,
-          {
-            method: "DELETE",
-            headers: { "X-Session-ID": sessionId },
-          },
-        );
+      const mySelectionRes = await fetch(`${API_BASE_URL}/my-selection`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userSessionId: sessionId,
+          corpId: myCompany.id,
+        }),
+      });
 
-        if (!response.ok) throw new Error("비교 기업 삭제 실패");
+      if (!mySelectionRes.ok) {
+        throw new Error("나의 기업 저장 실패");
       }
 
-      setComparisonCompanies((prev) => prev.filter((c) => c.id !== companyId));
-      setError("");
-    } catch (err) {
-      console.error(err);
-      setError("비교 기업 삭제에 실패했습니다.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      const mySelectionPayload = await mySelectionRes.json();
+      if (!mySelectionPayload?.success) {
+        throw new Error("나의 기업 저장 응답 실패");
+      }
 
-  const resetAllSelections = async () => {
-    if (USE_MOCK) {
-      setMyCompany(null);
-      setComparisonCompanies([]);
-      setSelectedComparisonCompanies(new Set());
-      setError("");
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const sessionId = getSessionId();
-
-      await Promise.all(
-        comparisonCompanies
-          .filter((c) => c._selectionId)
-          .map((c) =>
-            fetch(`${API_BASE_URL}/comparison-selections/${c._selectionId}`, {
-              method: "DELETE",
-              headers: { "X-Session-ID": sessionId },
-            }),
-          ),
+      const comparisonSelectionRes = await fetch(
+        `${API_BASE_URL}/comparison-selections`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userSessionId: sessionId,
+            corpIds: comparisonCompanies.map((company) => company.id),
+          }),
+        },
       );
 
-      await fetch(`${API_BASE_URL}/my-selections?sessionId=${sessionId}`, {
-        method: "DELETE",
-        headers: { "X-Session-ID": sessionId },
-      });
+      if (!comparisonSelectionRes.ok) {
+        throw new Error("비교 기업 저장 실패");
+      }
 
-      setMyCompany(null);
-      setComparisonCompanies([]);
-      setSelectedComparisonCompanies(new Set());
+      const comparisonSelectionPayload = await comparisonSelectionRes.json();
+      if (!comparisonSelectionPayload?.success) {
+        throw new Error("비교 기업 저장 응답 실패");
+      }
 
-      await Promise.all([fetchMyCompany(), fetchComparisonCompanies()]);
-      setError("");
+      navigate("/results");
     } catch (err) {
       console.error(err);
-      setMyCompany(null);
-      setComparisonCompanies([]);
-      setSelectedComparisonCompanies(new Set());
       setError(
-        "전체 초기화 중 일부 API 실패가 있어 화면 기준으로 초기화했습니다.",
+        "기업 비교 데이터를 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.",
       );
     } finally {
       setIsLoading(false);
@@ -584,7 +458,7 @@ export default function SelectPage() {
         type="button"
         className="compare-submit-btn"
         disabled={!myCompany || comparisonCompanies.length === 0 || isLoading}
-        onClick={() => navigate("/results")}
+        onClick={handleCompareSubmit}
       >
         기업 비교하기
       </button>

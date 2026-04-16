@@ -15,7 +15,7 @@ export default function CompanyRow({ company, rank }) {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`/detail/${company.id}`);
+    navigate(`/detail/${company.id}`); // 기업 상세페이지로 이동
   };
 
   return (
