@@ -38,10 +38,12 @@ export default function Detail() {
   // 삭제 모달 props 변수
   const [isDelModalOpen, setIsDelModalOpen] = useState(false);
   const [selectedDelId, setSelectedDelId] = useState(null);
+  const [selectInvestor, setSelectInvestor] = useState({});
 
-  const handleDeleteClick = (id) => {
+  const handleDeleteClick = (id, invest) => {
     setSelectedDelId(id); // 삭제할 ID 저장
     setIsDelModalOpen(true); // 모달 열기
+    setSelectInvestor(invest); // 삭제할 투자 객체 전달
   };
 
   const confirmDelete = () => {
@@ -446,20 +448,13 @@ export default function Detail() {
                               borderBottomRightRadius: "10px",
                               cursor: "pointer",
                             }}
-                            onClick={() => handleDeleteClick(item.id)}
+                            onClick={() => handleDeleteClick(item.id, item)}
                           >
                             삭제하기
                           </button>
                         </div>
                       )}
                     </div>
-
-                    <AuthenticationModal
-                      isOpen={isDelModalOpen}
-                      onClose={() => setIsDelModalOpen(false)}
-                      onDelete={confirmDelete}
-                      ivestor={item}
-                    />
                   </div>
                 ))}
               </div>
@@ -557,6 +552,13 @@ export default function Detail() {
           )}
         </div>
       </div>
+
+      <AuthenticationModal
+        isOpen={isDelModalOpen}
+        onClose={() => setIsDelModalOpen(false)}
+        onDelete={confirmDelete}
+        delInvestor={selectInvestor}
+      />
     </div>
   );
 }

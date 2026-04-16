@@ -1,6 +1,13 @@
 import React from "react";
+import ic_delete from "../assets/ic_delete.svg";
+import visiblebtn from "../assets/visiblebtn.png";
 
-export default function DeleteModal({ isOpen, onClose, onDelete }) {
+export default function WrongPWModal({
+  isOpen,
+  onClose,
+  onDelete,
+  delInvestor,
+}) {
   if (!isOpen) return null;
 
   return (
@@ -27,7 +34,7 @@ export default function DeleteModal({ isOpen, onClose, onDelete }) {
           borderRadius: "16px",
         }}
       >
-        삭제됩니다.
+        비밀번호가 잘못되었습니다.
       </div>
     </div>
   );
