@@ -2,12 +2,7 @@ import React from "react";
 import ic_delete from "../assets/ic_delete.svg";
 import visiblebtn from "../assets/visiblebtn.png";
 
-export default function WrongPWModal({
-  isOpen,
-  onClose,
-  onDelete,
-  delInvestor,
-}) {
+export default function WrongPWModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
@@ -28,13 +23,57 @@ export default function WrongPWModal({
       <div
         style={{
           width: "500px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "32px",
+          justifyContent: "center",
+          alignItems: "center",
           backgroundColor: "#212121",
           color: "#FFF",
+          fontSize: "15px",
           padding: "24px",
           borderRadius: "16px",
         }}
       >
-        비밀번호가 잘못되었습니다.
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <img
+            src={ic_delete}
+            style={{
+              width: "24px",
+              height: "24px",
+              cursor: "pointer",
+            }}
+            onClick={onClose}
+          />
+        </div>
+
+        <p>잘못된 비밀번호로 삭제에 실패하셨습니다.</p>
+
+        <button
+          type="button"
+          style={{
+            width: "194px",
+            height: "48px",
+            padding: "13px 48px",
+            borderRadius: "50px",
+            border: "none",
+            backgroundColor: "#EB5230",
+            color: "#FFF",
+            fontSize: "16px",
+            fontWeight: "600",
+            marginTop: "16px",
+            cursor: "pointer",
+          }}
+          onClick={onClose}
+        >
+          확인
+        </button>
       </div>
     </div>
   );

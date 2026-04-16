@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ic_delete from "../assets/ic_delete.svg";
 import visiblebtn from "../assets/visiblebtn.png";
 import DeleteModal from "./DeleteModal";
@@ -11,6 +11,49 @@ export default function AuthenticationModal({
   delInvestor,
 }) {
   if (!isOpen) return null;
+
+  // 비밀번호 관리 useState
+  const [password, setPassword] = useState("");
+  // 페이지 분기 useState
+  const [modalType, setModalType] = useState(null);
+  // 비밀번호 visiblebtn 클릭 시 입력 글자 암호화 토글
+  const [showPassword, setShowPassword] = useState(false);
+
+  // 인증 form 제출 시 작동 함수
+  const handleAuth = () => {
+    if (delInvestor && delInvestor.password === password) {
+      setModalType("success");
+    } else {
+      setModalType("fail");
+    }
+  };
+
+  // 화면 닫을 시 작동 함수
+  const handleCloseAll = () => {
+    setModalType(null);
+    setPassword("");
+    onClose();
+  };
+
+  //폼 제출 결과 모달타입이 성공인 경우,
+  if (modalType === "success") {
+    return (
+      <DeleteModal
+        isOpen={isOpen}
+        onClose={handleCloseAll}
+        onDelete={() => {
+          onDelete();
+          alert("삭제되었습니다!");
+          handleCloseAll();
+        }}
+      />
+    );
+  }
+
+  //폼 제출 결과 모달타입이 실패인 경우,
+  if (modalType === "fail") {
+    return <WrongPWModal isOpen={isOpen} onClose={handleCloseAll} />;
+  }
 
   return (
     <div
@@ -73,6 +116,7 @@ export default function AuthenticationModal({
             alignItems: "center",
             gap: "16px",
           }}
+          onSubmit={(e) => e.preventDefault()}
         >
           <div style={{ width: "100%" }}>
             <p
@@ -99,9 +143,16 @@ export default function AuthenticationModal({
               }}
             >
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="패스워드를 입력해주세요"
-                style={{ background: "none", border: "none", fontSize: "14px" }}
+                style={{
+                  width: "90%",
+                  background: "none",
+                  border: "none",
+                  fontSize: "14px",
+                }}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <img
                 src={visiblebtn}
@@ -110,6 +161,7 @@ export default function AuthenticationModal({
                   height: "24px",
                   cursor: "pointer",
                 }}
+                onClick={() => setShowPassword(!showPassword)}
               />
             </div>
           </div>
@@ -129,19 +181,12 @@ export default function AuthenticationModal({
               marginTop: "16px",
               cursor: "pointer",
             }}
-            onClick={() => {
-              investor.password === e.target.value ? (
-                <DeleteModal onClose={onClose} onDelete={onDelete} />
-              ) : (
-                <WrongPWModal onClose={onClose} />
-              );
-            }}
+            onClick={handleAuth}
           >
             삭제하기
           </button>
         </form>
       </div>
-      <button></button>
     </div>
   );
 }
