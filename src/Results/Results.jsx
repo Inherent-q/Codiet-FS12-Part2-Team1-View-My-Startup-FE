@@ -4,11 +4,16 @@ import vectorIcon from "../assets/vector.png";
 import togglepassword from "../assets/onpassword.png";
 import toggleoffpassword from "../assets/offpassword.png";
 import "./style/results.css";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 function Results() {
+  const navigate = useNavigate();
+  const returnSelect = function () {
+    navigate("/select");
+  };
   const [mySelection, setMySelection] = useState(null);
   const [comparisonSelections, setComparisonSelections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -97,7 +102,9 @@ function Results() {
     <div className="resultsContainer">
       <div className="sectionTitle">
         <span className="mainTitle">내가 선택한 기업</span>
-        <button className="orangeButton">다른 기업 비교하기</button>
+        <button className="orangeButton" onClick={returnSelect}>
+          다른 기업 비교하기
+        </button>
       </div>
 
       <div className="selectedCard">
