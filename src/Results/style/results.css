@@ -309,7 +309,7 @@
   gap: 8px;
 }
 .buttonGroup {
-  display: inline-flex; /* 콘텐츠에 맞게 늘어나게 설정 */
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   gap: 32px;

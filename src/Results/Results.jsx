@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toggleIcon from "../assets/togglebtn.png";
 import vectorIcon from "../assets/vector.png";
-import togglepassword from "../assets/visiblebtn.png";
+import togglepassword from "../assets/onpassword.png";
+import toggleoffpassword from "../assets/offpassword.png";
 import "./style/results.css";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+
 function Results() {
+  const [mySelection, setMySelection] = useState(null);
+  const [comparisonSelections, setComparisonSelections] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [investModal, setInvestModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -36,6 +44,54 @@ function Results() {
   function passwordInput2() {
     setpasswordVisible2(!passwordVisible2);
   }
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setIsLoading(true);
+        setError("");
+
+        const userSessionId = localStorage.getItem("my_startup_session_id");
+        if (!userSessionId) {
+          setError("세션 정보가 없습니다. /select에서 다시 선택해 주세요.");
+          return;
+        }
+
+        const [myRes, compRes] = await Promise.all([
+          fetch(`${API_BASE_URL}/my-selection?userSessionId=${userSessionId}`),
+          fetch(
+            `${API_BASE_URL}/comparison-selections?userSessionId=${userSessionId}`,
+          ),
+        ]);
+
+        if (!myRes.ok || !compRes.ok) throw new Error("fetch failed");
+
+        const myPayload = await myRes.json();
+        const compPayload = await compRes.json();
+
+        setMySelection(myPayload?.success ? myPayload.data : null);
+        setComparisonSelections(
+          compPayload?.success && Array.isArray(compPayload.data)
+            ? compPayload.data
+            : [],
+        );
+      } catch (error) {
+        console.error("Data fetch error:", error);
+        setError("결과 데이터를 불러오지 못했습니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    load();
+  }, []);
+
+  const myCorp = mySelection?.corp ?? null;
+  const compareCorps = comparisonSelections
+    .map((item) => item.corp)
+    .filter(Boolean);
+
+  if (isLoading) return <div className="resultsContainer">불러오는 중...</div>;
+  if (error) return <div className="resultsContainer">{error}</div>;
 
   return (
     <div className="resultsContainer">
@@ -44,7 +100,16 @@ function Results() {
         <button className="orangeButton">다른 기업 비교하기</button>
       </div>
 
-      <div className="selectedCard"></div>
+      <div className="selectedCard">
+        {myCorp ? (
+          <>
+            <p>{myCorp.name}</p>
+            <p>{myCorp.category}</p>
+          </>
+        ) : (
+          <p>선택된 기업이 없습니다.</p>
+        )}
+      </div>
 
       <div className="sectionTitle">
         <span className="mainTitle">비교 결과 확인하기</span>
@@ -94,7 +159,18 @@ function Results() {
             <th>고용 인원</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {compareCorps.map((corp) => (
+            <tr key={corp.id}>
+              <td>{corp.name}</td>
+              <td>{corp.description}</td>
+              <td>{corp.category}</td>
+              <td>{corp.accInvest}</td>
+              <td>{corp.revenue}</td>
+              <td>{corp.hire}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       <div className="sectionTitle" style={{ marginTop: "60px" }}>
@@ -146,7 +222,19 @@ function Results() {
             <th>고용 인원</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {compareCorps.map((corp, idx) => (
+            <tr key={`rank-${corp.id}`}>
+              <td>{idx + 1}위</td>
+              <td>{corp.name}</td>
+              <td>{corp.description}</td>
+              <td>{corp.category}</td>
+              <td>{corp.accInvest}</td>
+              <td>{corp.revenue}</td>
+              <td>{corp.hire}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       <div
@@ -220,7 +308,7 @@ function Results() {
                   onClick={function () {
                     passwordInput();
                   }}
-                  src={togglepassword}
+                  src={passwordVisible ? togglepassword : toggleoffpassword}
                   alt="눈"
                 />
               </div>
@@ -239,7 +327,7 @@ function Results() {
                   onClick={function () {
                     passwordInput2();
                   }}
-                  src={togglepassword}
+                  src={passwordVisible2 ? togglepassword : toggleoffpassword}
                   alt="눈"
                 />
               </div>
