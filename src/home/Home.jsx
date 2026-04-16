@@ -5,8 +5,6 @@ import Pagination from "../components/Pagination";
 import "./style/Home.css";
 import searchIcon from "./assets/ic_search.svg";
 import toggleIcon from "./assets/ic_toggle.svg";
-import arrowLeft from "./assets/ic_arrow_left.svg";
-import arrowRight from "./assets/ic_arrow_right.svg";
 
 const SORT_OPTIONS = [
   { label: "매출액 높은순", sortBy: "revenue", sortOrder: "desc" },
@@ -95,16 +93,12 @@ export default function Home() {
 
             {/* 커스텀 드롭다운 */}
             <div className="sort-wrapper" ref={dropdownRef}>
-              <button
+              <button type="button"
                 className="sort-trigger"
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
               >
                 <span>{currentOption.label}</span>
-                <img
-                  src={toggleIcon}
-                  alt=""
-                  className={`sort-icon ${isDropdownOpen ? "open" : ""}`}
-                />
+                <img src={toggleIcon} alt="" className={"sort-icon"} />
               </button>
 
               {isDropdownOpen && (
@@ -116,13 +110,16 @@ export default function Home() {
                       opt.sortBy === sortBy && opt.sortOrder === sortOrder;
 
                     return (
-                      <button
+                      <button type="button"
                         key={`${opt.sortBy}_${opt.sortOrder}`}
-                        className={`sort-option
-                          ${isFirst ? "first" : ""}
-                          ${isLast ? "last" : ""}
-                          ${isSelected ? "selected" : ""}
-                        `}
+                        className={[
+                          "sort-option",
+                          isFirst ? "first" : "",
+                          isLast ? "last" : "",
+                          isSelected ? "selected" : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
                         onClick={() => handleSortSelect(opt)}
                       >
                         {opt.label}
