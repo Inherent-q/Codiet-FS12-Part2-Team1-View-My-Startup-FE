@@ -720,11 +720,11 @@ export default function SelectPage() {
                 *비교할 기업은 최대 5개까지 선택 가능합니다.
               </p>
 
-              <div className="modal-footer">
-                <div className="pagination">
+              <div className="select-modal-footer">
+                <div className="select-pagination">
                   <button
                     type="button"
-                    className="page-btn"
+                    className="select-page-btn"
                     onClick={() =>
                       setComparisonModalPage((prev) => Math.max(1, prev - 1))
                     }
@@ -736,7 +736,7 @@ export default function SelectPage() {
                     <button
                       key={page}
                       type="button"
-                      className={`page-btn ${page === comparisonModalPage ? "is-active" : ""}`}
+                      className={`select-page-btn ${page === comparisonModalPage ? "select-is-active" : ""}`}
                       onClick={() => setComparisonModalPage(page)}
                     >
                       {page}
@@ -744,7 +744,7 @@ export default function SelectPage() {
                   ))}
                   <button
                     type="button"
-                    className="page-btn"
+                    className="select-page-btn"
                     onClick={() =>
                       setComparisonModalPage((prev) =>
                         Math.min(comparisonTotalPages, prev + 1),
