@@ -1,5 +1,6 @@
 import { useState } from "react";
 import toggleIcon from "../assets/togglebtn.png";
+import vectorIcon from "../assets/vector.png";
 import togglepassword from "../assets/visiblebtn.png";
 import "./style/results.css";
 
@@ -164,16 +165,16 @@ function Results() {
       {showModal && (
         <div className="modalOverlay">
           <div className="modalContentlarge">
-            <div className="top">
+            <div className="largemodalTop">
               <label className="mainTitle">기업에 투자하기</label>
-              <button
-                className="closeModalButton"
+              <img
+                src={vectorIcon}
+                alt="닫음"
+                style={{ width: "20.333px", height: "20.333px" }}
                 onClick={function () {
                   setShowModal(false);
                 }}
-              >
-                X
-              </button>
+              />
             </div>
 
             <div>
@@ -270,23 +271,29 @@ function Results() {
       {investModal && (
         <div className="modalOverlay">
           <div className="modalContent">
-            <button
-              className="closeModalButton"
+            <img
+              src={vectorIcon}
+              alt="닫음"
+              style={{
+                width: "20.333px",
+                height: "20.333px",
+                alignSelf: "flex-end",
+              }}
               onClick={function () {
                 setInvestModal(false);
               }}
-            >
-              X
-            </button>
-            <h3 className="successMessage">투자가 완료되었어요!</h3>
-            <button
-              className="orangeButton"
-              onClick={function () {
-                setInvestModal(false);
-              }}
-            >
-              확인
-            </button>
+            />
+            <div className="buttonGroup">
+              <h3 className="successMessage">투자가 완료되었어요!</h3>
+              <button
+                className="orangeButton"
+                onClick={function () {
+                  setInvestModal(false);
+                }}
+              >
+                확인
+              </button>
+            </div>
           </div>
         </div>
       )}
