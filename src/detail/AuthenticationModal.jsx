@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ic_delete from "../assets/ic_delete.svg";
-import visiblebtn from "../assets/visiblebtn.png";
+import onpassword from "../assets/onpassword.png";
 import DeleteModal from "./DeleteModal";
 import WrongPWModal from "./WrongPWModal";
 
@@ -155,7 +155,7 @@ export default function AuthenticationModal({
                 onChange={(e) => setPassword(e.target.value)}
               />
               <img
-                src={visiblebtn}
+                src={onpassword}
                 style={{
                   width: "24px",
                   height: "24px",

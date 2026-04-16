@@ -1,6 +1,5 @@
 import React from "react";
 import ic_delete from "../assets/ic_delete.svg";
-import visiblebtn from "../assets/visiblebtn.png";
 
 export default function WrongPWModal({ isOpen, onClose }) {
   if (!isOpen) return null;
