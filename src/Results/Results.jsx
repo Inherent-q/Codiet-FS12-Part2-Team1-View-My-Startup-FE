@@ -280,7 +280,7 @@ function Results() {
                 alignSelf: "flex-end",
               }}
               onClick={function () {
-                setShowModal(false);
+                setInvestModal(false);
               }}
             />
             <div className="buttonGroup">
