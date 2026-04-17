@@ -1,0 +1,188 @@
+.base {
+  display: flex;
+  flex-direction: column;
+  gap: 55px;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 40px auto;
+  width: 1200px;
+}
+
+.profile-section {
+  width: 100%;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding-bottom: 32px;
+  border-bottom: solid 1px #2e2e2e;
+}
+
+.profile-detail {
+  display: flex;
+  gap: 24px;
+}
+
+.profile-box {
+  width: 385px;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  padding: 36px 24px;
+  background-color: #282828;
+  border-radius: 10px;
+}
+
+.profile-description {
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: #282828;
+  border-radius: 10px;
+}
+
+.addInvest-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 24px;
+  border-bottom: solid 1px #2e2e2e;
+  margin-bottom: 16px;
+}
+.addInvest-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  padding: 8px 24px;
+  border-radius: 50px;
+  background: #eb5230;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.table-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.table-header {
+  display: flex;
+  gap: 10px;
+  background-color: #282828;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.table-column {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 84px;
+  padding: 10px;
+}
+
+.table-column2 {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 884px;
+  padding: 10px;
+}
+
+.table-body {
+  background-color: #282828;
+  border-radius: 4px;
+  color: #d8d8d8;
+}
+
+.table-list {
+  display: flex;
+  border-bottom: solid 1px #2e2e2e;
+  gap: 10px;
+}
+
+.table-row {
+  display: flex;
+  justify-content: center;
+  height: 64px;
+  width: 84px;
+  padding: 15px 16px;
+  align-items: center;
+}
+
+.table-row2 {
+  display: flex;
+  height: 64px;
+  width: 884px;
+  padding: 15px 16px;
+  align-items: center;
+}
+
+.tablebtn-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.more-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 900;
+  color: #c5c5c5;
+  padding: 15px 16px;
+}
+
+.drop-box {
+  position: absolute;
+  top: 45px;
+  right: 5px;
+  border: none;
+  width: 144px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #d8d8d8;
+}
+
+.dropbox-btn1 {
+  height: 40px;
+  background-color: #131313;
+  border: solid 1px #747474;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  cursor: pointer;
+}
+
+.dropbox-btn2 {
+  height: 40px;
+  background-color: #131313;
+  border: solid 1px #747474;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+}
+
+.noinvest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 150px;
+  text-align: center;
+  color: #747474;
+}

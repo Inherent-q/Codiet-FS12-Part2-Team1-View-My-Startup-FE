@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import AuthenticationModal from "./AuthenticationModal.jsx";
+import "./style/detail.css";
 
 export default function Detail() {
   const { id } = useParams();
@@ -34,6 +36,23 @@ export default function Detail() {
   // 전체 페이지 수
   const totalPages = Math.ceil(investors.length / itemsPerPage);
 
+  // 삭제 모달 props 변수
+  const [isDelModalOpen, setIsDelModalOpen] = useState(false);
+  const [selectedDelId, setSelectedDelId] = useState(null);
+  const [selectInvestor, setSelectInvestor] = useState({});
+
+  const handleDeleteClick = (id, invest) => {
+    setSelectedDelId(id); // 삭제할 ID 저장
+    setIsDelModalOpen(true); // 모달 열기
+    setSelectInvestor(invest); // 삭제할 투자 객체 전달
+  };
+
+  const confirmDelete = () => {
+    console.log(`${selectedDelId} 삭제 진행됨`);
+    deleteInvest(selectedDelId);
+    setIsDelModalOpen(false); // 삭제 후 모달 닫기
+  };
+
   const fetchinfo = () => {
     fetch(`http://localhost:3000/api/corporations/${id}`)
       .then((res) => res.json())
@@ -52,41 +71,28 @@ export default function Detail() {
     fetchinfo();
   }, [id]);
 
-  const deleteInvest = () => {
-    fetch(`http://localhost:3000/api/investors/${id}`, {
-      method: "DELETE",
-    }).then((res) => {
+  const deleteInvest = (targetId) => {
+    try {
+      const res = fetch(`http://localhost:3000/api/investors/${targetId}`, {
+        method: "DELETE",
+      });
+
       if (res.ok) {
         fetchinfo();
+      } else {
+        console.error(res.status);
       }
-    });
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   const addInvest = () => {};
 
   return (
     // 상단 프로필 섹션
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "55px",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        margin: "40px auto",
-        width: "1200px",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          gap: "18px",
-          alignItems: "center",
-          paddingBottom: "32px",
-          borderBottom: "solid 1px #2E2E2E",
-        }}
-      >
+    <div className="base">
+      <div className="profile-section">
         <img
           src={corpdata?.img}
           style={{ width: "100px", height: "100px", borderRadius: "50%" }}
@@ -107,24 +113,10 @@ export default function Detail() {
           </p>
         </div>
       </div>
+
       {/* 상단 누적투자금액/매출액/고용인원 섹션 */}
-      <div
-        style={{
-          display: "flex",
-          gap: "24px",
-        }}
-      >
-        <p
-          style={{
-            width: "385px",
-            height: "90px",
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "36px 24px",
-            backgroundColor: "#282828",
-            borderRadius: "10px",
-          }}
-        >
+      <div className="profile-detail">
+        <p className="profile-box">
           <span style={{ color: "#D8D8D8", fontWeight: "400" }}>
             누적 투자 금액
           </span>
@@ -132,378 +124,188 @@ export default function Detail() {
             {Math.floor(corpdata?.accInvest / 100000000)}억 원
           </span>
         </p>
-        <p
-          style={{
-            width: "385px",
-            height: "90px",
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "36px 24px",
-            backgroundColor: "#282828",
-            borderRadius: "10px",
-          }}
-        >
+        <p className="profile-box">
           <span style={{ color: "#D8D8D8", fontWeight: "400" }}>매출액</span>
           <span style={{ color: "#FFF", fontWeight: "600" }}>
             {Math.floor(corpdata?.revenue / 100000000)}억 원
           </span>
         </p>
-        <p
-          style={{
-            width: "385px",
-            height: "90px",
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "36px 24px",
-            backgroundColor: "#282828",
-            borderRadius: "10px",
-          }}
-        >
+        <p className="profile-box">
           <span style={{ color: "#D8D8D8", fontWeight: "400" }}>고용 인원</span>
           <span style={{ color: "#FFF", fontWeight: "600" }}>
             {corpdata?.hire}명
           </span>
         </p>
       </div>
+
       {/* 기업 소개 섹션 */}
-      <div
-        style={{
-          width: "100%",
-          padding: "24px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-          backgroundColor: "#282828",
-          borderRadius: "10px",
-        }}
-      >
+      <div className="profile-description">
         <p style={{ color: "#FFF", fontWeight: "600" }}>기업 소개</p>
         <p style={{ color: "#D8D8D8", fontWeight: "400", fontSize: "14px" }}>
           {corpdata?.description}
         </p>
       </div>
+
       {/* 기업투자하기 섹션 */}
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            paddingBottom: "24px",
-            borderBottom: "solid 1px #2E2E2E",
-          }}
-        >
+      <div style={{ width: "100%" }}>
+        <div className="addInvest-section">
           <span style={{ fontSize: "20px", fontWeight: "700" }}>
             View My Startup에서 받은 투자
           </span>
-          <button
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "40px",
-              padding: "8px 24px",
-              borderRadius: "50px",
-              background: "#EB5230",
-              border: "none",
-              fontWeight: "600",
-              cursor: "pointer",
-            }}
-            onClick={() => addInvest}
-          >
+          <button className="addInvest-btn" onClick={() => addInvest}>
             기업투자하기
           </button>
         </div>
-        <div style={{ fontSize: "20px", fontWeight: "700" }}>
+        <div
+          style={{ fontSize: "20px", fontWeight: "700", marginBottom: "16px" }}
+        >
           총 {Math.floor(totalInvest / 100000000)}억 원
         </div>
-        {/* 투자자 표 섹션 */}
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-            fontSize: "14px",
-          }}
-        >
-          {/* 1. 표 헤더 */}
-          <div
-            style={{
-              display: "flex",
-              gap: "10px",
-              backgroundColor: "#282828",
-              borderRadius: "4px",
-              fontSize: "14px",
-              fontWeight: "500",
-            }}
-          >
-            <span
-              style={{
-                height: "40px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "84px",
-                padding: "10px",
-              }}
-            >
-              투자자 이름
-            </span>
-            <span
-              style={{
-                height: "40px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "84px",
-                padding: "10px",
-              }}
-            >
-              순위
-            </span>
-            <span
-              style={{
-                height: "40px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "84px",
-                padding: "10px",
-              }}
-            >
-              투자 금액
-            </span>
-            <span
-              style={{
-                height: "40px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "884px",
-                padding: "10px",
-              }}
-            >
-              투자 코멘트
-            </span>
-          </div>
 
-          {/* 2. 리스트 렌더링 */}
-          <div
-            style={{
-              backgroundColor: "#282828",
-              borderRadius: "4px",
-              color: "#D8D8D8",
-            }}
-          >
-            {currentItems.map((item, index) => (
-              <div
-                key={item.id}
-                style={{
-                  display: "flex",
-                  borderBottom: "solid 1px #2E2E2E",
-                  gap: "10px",
-                  alignSelf: "stretch",
-                }}
-              >
-                <span
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    height: "64px",
-                    width: "84px",
-                    padding: "15px 16px",
-                    alignItems: "center",
-                  }}
-                >
-                  {item.name}
-                </span>
-                <span
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    height: "64px",
-                    width: "84px",
-                    padding: "15px 16px",
-                    alignItems: "center",
-                  }}
-                >
-                  {(currentPage - 1) * itemsPerPage + index + 1}위
-                </span>
-                <span
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    height: "64px",
-                    width: "84px",
-                    padding: "15px 16px",
-                    alignItems: "center",
-                  }}
-                >
-                  {Math.floor(item.amount / 100000000)}억 원
-                </span>
-                <span
-                  style={{
-                    display: "flex",
-                    height: "64px",
-                    width: "884px",
-                    padding: "15px 16px",
-                    alignItems: "center",
-                  }}
-                >
-                  {item.comment}
-                </span>
-                {/* 더보기 버튼 */}
+        {/* 투자자 표 섹션 */}
+        <div className="table-section">
+          {investors.length > 0 ? (
+            <>
+              {/* 1. 표 헤더 */}
+              <div className="table-header">
+                <span className="table-column">투자자 이름</span>
+                <span className="table-column">순위</span>
+                <span className="table-column">투자 금액</span>
+                <span className="table-column2">투자 코멘트</span>
+              </div>
+
+              {/* 2. 리스트 렌더링 */}
+              <div className="table-body">
+                {currentItems.map((item, index) => (
+                  <div key={item.id} className="table-list">
+                    <span className="table-row">{item.name}</span>
+                    <span className="table-row">
+                      {(currentPage - 1) * itemsPerPage + index + 1}위
+                    </span>
+                    <span className="table-row">
+                      {Math.floor(item.amount / 100000000)}억 원
+                    </span>
+                    <span className="table-row2">{item.comment}</span>
+
+                    {/* 더보기 버튼 */}
+                    <div className="tablebtn-section">
+                      <button
+                        className="more-btn"
+                        onClick={() => toggleDropdown(item.id)}
+                      >
+                        ⋮
+                      </button>
+
+                      {/* 드롭 다운 메뉴 */}
+                      {isOpen === item.id && (
+                        <div className="drop-box">
+                          <button className="dropbox-btn1">수정하기</button>
+                          <button
+                            className="dropbox-btn2"
+                            onClick={() => {
+                              handleDeleteClick(item.id, item);
+                              setIsOpenId(null);
+                            }}
+                          >
+                            삭제하기
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* 3. 페이지네이션 UI */}
+              {totalPages > 0 && (
                 <div
                   style={{
-                    position: "relative",
                     display: "flex",
                     justifyContent: "center",
-                    alignItems: "center",
+                    gap: "8px",
                   }}
                 >
                   <button
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                     style={{
-                      background: "none",
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "8px",
                       border: "none",
-                      cursor: "pointer",
-                      fontSize: "22px",
-                      fontWeight: "900",
-                      color: "#C5C5C5",
+                      backgroundColor: "#2E2E2E",
+                      color: "#747474",
+                      fontSize: "18px",
+                      fontWeight: "400",
                     }}
-                    onClick={() => toggleDropdown(item.id)}
                   >
-                    ⋮
+                    &lt;
                   </button>
-
-                  {/* 드롭 다운 메뉴 */}
-                  {isOpen === item.id && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: "45px",
-                        right: "5px",
-                        border: "none",
-                        width: "144px",
-                        zIndex: 100,
-                        display: "flex",
-                        flexDirection: "column",
-                        overflow: "hidden",
-                        color: "#D8D8D8",
-                      }}
+                  {[...Array(totalPages)].map((_, i) => (
+                    <button
+                      key={i + 1}
+                      onClick={() => setCurrentPage(i + 1)}
+                      style={
+                        currentPage === i + 1
+                          ? {
+                              width: "48px",
+                              height: "48px",
+                              borderRadius: "8px",
+                              border: "none",
+                              backgroundColor: "#EB5230",
+                              color: "#FFF",
+                              fontSize: "18px",
+                              fontWeight: "400",
+                            }
+                          : {
+                              width: "48px",
+                              height: "48px",
+                              borderRadius: "8px",
+                              border: "none",
+                              backgroundColor: "#2E2E2E",
+                              color: "#747474",
+                              fontSize: "18px",
+                              fontWeight: "400",
+                            }
+                      }
                     >
-                      <button
-                        style={{
-                          height: "40px",
-                          backgroundColor: "#131313",
-                          border: "solid 1px #747474",
-                          borderTopLeftRadius: "10px",
-                          borderTopRightRadius: "10px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        수정하기
-                      </button>
-                      <button
-                        style={{
-                          height: "40px",
-                          backgroundColor: "#131313",
-                          border: "solid 1px #747474",
-                          borderTop: "none",
-                          borderBottomLeftRadius: "10px",
-                          borderBottomRightRadius: "10px",
-                          cursor: "pointer",
-                        }}
-                      >
-                        삭제하기
-                      </button>
-                    </div>
-                  )}
+                      {i + 1}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() =>
+                      setCurrentPage((p) => Math.min(p + 1, totalPages))
+                    }
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "8px",
+                      border: "none",
+                      backgroundColor: "#2E2E2E",
+                      color: "#747474",
+                      fontSize: "18px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    &gt;
+                  </button>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          {/* 3. 페이지네이션 UI */}
-          {totalPages > 0 && (
-            <div
-              style={{ display: "flex", justifyContent: "center", gap: "8px" }}
-            >
-              <button
-                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "8px",
-                  border: "none",
-                  backgroundColor: "#2E2E2E",
-                  color: "#747474",
-                  fontSize: "18px",
-                  fontWeight: "400",
-                }}
-              >
-                &lt;
-              </button>
-              {[...Array(totalPages)].map((_, i) => (
-                <button
-                  key={i + 1}
-                  onClick={() => setCurrentPage(i + 1)}
-                  style={
-                    currentPage === i + 1
-                      ? {
-                          width: "48px",
-                          height: "48px",
-                          borderRadius: "8px",
-                          border: "none",
-                          backgroundColor: "#EB5230",
-                          color: "#FFF",
-                          fontSize: "18px",
-                          fontWeight: "400",
-                        }
-                      : {
-                          width: "48px",
-                          height: "48px",
-                          borderRadius: "8px",
-                          border: "none",
-                          backgroundColor: "#2E2E2E",
-                          color: "#747474",
-                          fontSize: "18px",
-                          fontWeight: "400",
-                        }
-                  }
-                >
-                  {i + 1}
-                </button>
-              ))}
-              <button
-                onClick={() =>
-                  setCurrentPage((p) => Math.min(p + 1, totalPages))
-                }
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "8px",
-                  border: "none",
-                  backgroundColor: "#2E2E2E",
-                  color: "#747474",
-                  fontSize: "18px",
-                  fontWeight: "400",
-                }}
-              >
-                &gt;
-              </button>
+              )}
+            </>
+          ) : (
+            <div className="noinvest">
+              아직 투자한 기업이 없어요, <br />
+              버튼을 눌러 기업에 투자해보세요!
             </div>
           )}
         </div>
       </div>
+
+      <AuthenticationModal
+        isOpen={isDelModalOpen}
+        onClose={() => setIsDelModalOpen(false)}
+        onDelete={confirmDelete}
+        delInvestor={selectInvestor}
+      />
     </div>
   );
 }
