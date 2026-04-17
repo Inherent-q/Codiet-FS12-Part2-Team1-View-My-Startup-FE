@@ -1,4 +1,4 @@
-// src/utils/sessionManager.js
+// 로컬스토리지 sessionId 저장
 
 const SESSION_ID_KEY = "my_startup_session_id";
 

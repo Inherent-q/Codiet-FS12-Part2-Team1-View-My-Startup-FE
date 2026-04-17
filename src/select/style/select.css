@@ -515,7 +515,7 @@
   color: #eb5230;
 }
 
-.modal-footer {
+.select-modal-footer {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -523,14 +523,14 @@
   gap: 12px;
 }
 
-.pagination {
+.select-pagination {
   display: flex;
   align-items: center;
   gap: 4px;
   justify-self: center;
 }
 
-.page-btn {
+.select-page-btn {
   width: 22px;
   height: 22px;
   border: 0;
@@ -541,12 +541,12 @@
   cursor: pointer;
 }
 
-.page-btn.is-active {
+.select-page-btn.select-is-active {
   background: #eb5230;
   color: #ffffff;
 }
 
-.page-btn:disabled {
+.select-page-btn:disabled {
   background: #262a31;
   color: #666b74;
   cursor: not-allowed;
