@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import toggleIcon from "../assets/togglebtn.png";
 import vectorIcon from "../assets/vector.png";
-import togglepassword from "../assets/onpassword.svg";
-import toggleoffpassword from "../assets/offpassword.svg";
+import togglepassword from "../assets/onpassword.png";
+import toggleoffpassword from "../assets/offpassword.png";
 import "./style/results.css";
 import { useNavigate } from "react-router-dom";
 
