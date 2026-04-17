@@ -169,6 +169,7 @@
   line-height: normal;
 }
 
+/* 여기부턴 모달 스타일입니다! */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -203,6 +204,18 @@
 .largemodalTop {
   display: flex;
   justify-content: space-between;
+}
+
+.investInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.infoContainer {
+  display: flex;
+  gap: 9px;
+  align-items: center;
 }
 
 .inputGroup {
@@ -294,7 +307,6 @@
 }
 
 .cancel {
-  background-color:;
   border: 1px solid #eb5230;
   background-color: #212121;
   color: #eb5230;
