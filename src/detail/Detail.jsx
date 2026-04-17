@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AuthenticationModal from "./AuthenticationModal.jsx";
+import Pagination from "../compare/components/Pagination.jsx";
 import "./style/detail.css";
 
 export default function Detail() {
@@ -216,80 +217,12 @@ export default function Detail() {
                 ))}
               </div>
 
-              {/* 3. 페이지네이션 UI */}
-              {totalPages > 0 && (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "8px",
-                  }}
-                >
-                  <button
-                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "8px",
-                      border: "none",
-                      backgroundColor: "#2E2E2E",
-                      color: "#747474",
-                      fontSize: "18px",
-                      fontWeight: "400",
-                    }}
-                  >
-                    &lt;
-                  </button>
-                  {[...Array(totalPages)].map((_, i) => (
-                    <button
-                      key={i + 1}
-                      onClick={() => setCurrentPage(i + 1)}
-                      style={
-                        currentPage === i + 1
-                          ? {
-                              width: "48px",
-                              height: "48px",
-                              borderRadius: "8px",
-                              border: "none",
-                              backgroundColor: "#EB5230",
-                              color: "#FFF",
-                              fontSize: "18px",
-                              fontWeight: "400",
-                            }
-                          : {
-                              width: "48px",
-                              height: "48px",
-                              borderRadius: "8px",
-                              border: "none",
-                              backgroundColor: "#2E2E2E",
-                              color: "#747474",
-                              fontSize: "18px",
-                              fontWeight: "400",
-                            }
-                      }
-                    >
-                      {i + 1}
-                    </button>
-                  ))}
-                  <button
-                    onClick={() =>
-                      setCurrentPage((p) => Math.min(p + 1, totalPages))
-                    }
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "8px",
-                      border: "none",
-                      backgroundColor: "#2E2E2E",
-                      color: "#747474",
-                      fontSize: "18px",
-                      fontWeight: "400",
-                    }}
-                  >
-                    &gt;
-                  </button>
-                </div>
-              )}
+              {/* 3. 페이지네이션 UI : 컴포넌트 분리 */}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
             </>
           ) : (
             <div className="noinvest">
