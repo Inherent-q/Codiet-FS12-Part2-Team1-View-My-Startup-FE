@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import toggleIcon from "../assets/togglebtn.png";
 import vectorIcon from "../assets/vector.png";
-import togglepassword from "../assets/onpassword.png";
-import toggleoffpassword from "../assets/offpassword.png";
+import togglepassword from "../assets/onpassword.svg";
+import toggleoffpassword from "../assets/offpassword.svg";
 import "./style/results.css";
 import { useNavigate } from "react-router-dom";
 
@@ -385,7 +385,7 @@ function Results() {
               <div className="inputContainer">
                 <input
                   className="modalInput"
-                  type={passwordVisible ? "text" : "password"}
+                  type={passwordVisible ? "password" : "text"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="비밀번호를 입력해 주세요"
@@ -406,7 +406,7 @@ function Results() {
               <div className="inputContainer">
                 <input
                   className="modalInput"
-                  type={passwordVisible2 ? "text" : "password"}
+                  type={passwordVisible2 ? "password" : "text"}
                   value={passwordConfirm}
                   onChange={(e) => setPasswordConfirm(e.target.value)}
                   placeholder="비밀번호를 다시 한 번 입력해주세요"

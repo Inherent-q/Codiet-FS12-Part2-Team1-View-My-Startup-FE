@@ -169,6 +169,7 @@
   line-height: normal;
 }
 
+/* 여기부턴 모달 스타일입니다! */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -203,6 +204,18 @@
 .largemodalTop {
   display: flex;
   justify-content: space-between;
+}
+
+.investInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.infoContainer {
+  display: flex;
+  gap: 9px;
+  align-items: center;
 }
 
 .inputGroup {
@@ -322,16 +335,4 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-}
-
-.investInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.infoContainer {
-  display: flex;
-  gap: 9px;
-  align-items: center;
 }
