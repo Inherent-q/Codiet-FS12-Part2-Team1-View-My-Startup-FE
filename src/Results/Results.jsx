@@ -49,6 +49,38 @@ function Results() {
   function passwordInput2() {
     setpasswordVisible2(!passwordVisible2);
   }
+
+  const [investorName, setInvestorName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [comment, setComment] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const handleInvest = () => {
+    const checkList = [
+      { value: investorName, label: "투자자 이름" },
+      { value: amount, label: "투자 금액" },
+      { value: comment, label: "투자 코멘트" },
+      { value: password, label: "비밀번호" },
+      { value: passwordConfirm, label: "비밀번호 확인" },
+    ];
+
+    for (const item of checkList) {
+      if (!item.value || item.value.trim() === "") {
+        alert(`${item.label} 항목이 비어있습니다. 입력해 주세요!`);
+        return;
+      }
+    }
+
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    setShowModal(false);
+    setInvestModal(true);
+  };
+
   useEffect(() => {
     const load = async () => {
       try {
@@ -110,6 +142,7 @@ function Results() {
       <div className="selectedCard">
         {myCorp ? (
           <>
+            <img src={myCorp.img} alt={myCorp.name} />
             <p>{myCorp.name}</p>
             <p>{myCorp.category}</p>
           </>
@@ -169,6 +202,7 @@ function Results() {
         <tbody>
           {compareCorps.map((corp) => (
             <tr key={corp.id}>
+              <img src={corp.img} alt={corp.name} />
               <td>{corp.name}</td>
               <td>{corp.description}</td>
               <td>{corp.category}</td>
@@ -233,6 +267,7 @@ function Results() {
           {compareCorps.map((corp, idx) => (
             <tr key={`rank-${corp.id}`}>
               <td>{idx + 1}위</td>
+              <img src={corp.img} alt={corp.name} />
               <td>{corp.name}</td>
               <td>{corp.description}</td>
               <td>{corp.category}</td>
@@ -272,8 +307,45 @@ function Results() {
               />
             </div>
 
-            <div>
+            <div className="investInfo">
               <label className="inputLabel">투자 기업 정보</label>
+              <div className="infoContainer">
+                <img
+                  src={myCorp.img}
+                  alt={myCorp.name}
+                  style={{
+                    width: "40.615px",
+                    height: "40.615px",
+                    borderRadius: "50%", // 반드시 50%
+                    overflow: "hidden",
+                    background: `url(${myCorp.img}) lightgray 50% / cover no-repeat`,
+                  }}
+                />
+                <span
+                  style={{
+                    color: "#FFF",
+                    fontFamily: "Pretendard",
+                    fontSize: "18px",
+                    fontStyle: "normal",
+                    fontWeight: "500",
+                    lineHeight: "normal",
+                  }}
+                >
+                  {myCorp.name}
+                </span>
+                <span
+                  style={{
+                    color: "#747474",
+                    fontFamily: "Pretendard",
+                    fontSize: "16px",
+                    fontStyle: "normal",
+                    fontWeight: "400",
+                    lineHeight: "normal",
+                  }}
+                >
+                  {myCorp.category}
+                </span>
+              </div>
             </div>
 
             <div className="inputGroup">
@@ -281,6 +353,8 @@ function Results() {
               <input
                 className="modalInput"
                 type="text"
+                value={investorName}
+                onChange={(e) => setInvestorName(e.target.value)}
                 placeholder="투자자 이름을 입력해 주세요"
               />
             </div>
@@ -290,6 +364,8 @@ function Results() {
               <input
                 className="modalInput"
                 type="text"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
                 placeholder="투자 금액을 입력해 주세요"
               />
             </div>
@@ -298,6 +374,8 @@ function Results() {
               <label className="inputLabel">투자 코멘트</label>
               <textarea
                 className="modalInput2"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
                 placeholder="투자 코멘트를 입력해 주세요"
               />
             </div>
@@ -308,6 +386,8 @@ function Results() {
                 <input
                   className="modalInput"
                   type={passwordVisible ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="비밀번호를 입력해 주세요"
                 />
                 <img
@@ -327,6 +407,8 @@ function Results() {
                 <input
                   className="modalInput"
                   type={passwordVisible2 ? "text" : "password"}
+                  value={passwordConfirm}
+                  onChange={(e) => setPasswordConfirm(e.target.value)}
                   placeholder="비밀번호를 다시 한 번 입력해주세요"
                 />
                 <img
@@ -349,13 +431,7 @@ function Results() {
               >
                 취소
               </button>
-              <button
-                className="orangeButton"
-                onClick={function () {
-                  setShowModal(false);
-                  setInvestModal(true);
-                }}
-              >
+              <button className="orangeButton" onClick={handleInvest}>
                 투자하기
               </button>
             </div>

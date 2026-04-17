@@ -323,3 +323,15 @@
   font-weight: 400;
   line-height: normal;
 }
+
+.investInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.infoContainer {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
