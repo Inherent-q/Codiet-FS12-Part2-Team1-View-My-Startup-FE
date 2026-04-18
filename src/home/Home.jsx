@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { usePaginationFetch } from "../hooks/usePaginationFetch";
-import CompanyRow from "./components/CompanyRow";
+import CompanyRow from "./components/companyRow";
 import Pagination from "../components/Pagination";
-import "./style/Home.css";
+import "./style/home.css";
 import searchIcon from "./assets/ic_search.svg";
 import toggleIcon from "./assets/ic_toggle.svg";
 
@@ -16,6 +16,9 @@ const SORT_OPTIONS = [
 ];
 
 const PAGE_GROUP_SIZE = 5;
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 export default function Home() {
   const {
@@ -31,7 +34,7 @@ export default function Home() {
     handleSearch,
     handleSortBy,
     handleSortOrder,
-  } = usePaginationFetch("http://localhost:3000/api/corporations");
+  } = usePaginationFetch(`${API_BASE_URL}/corporations`);
 
   // 드롭다운 열림/닫힘
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -93,7 +96,8 @@ export default function Home() {
 
             {/* 커스텀 드롭다운 */}
             <div className="sort-wrapper" ref={dropdownRef}>
-              <button type="button"
+              <button
+                type="button"
                 className="sort-trigger"
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
               >
@@ -110,7 +114,8 @@ export default function Home() {
                       opt.sortBy === sortBy && opt.sortOrder === sortOrder;
 
                     return (
-                      <button type="button"
+                      <button
+                        type="button"
                         key={`${opt.sortBy}_${opt.sortOrder}`}
                         className={[
                           "sort-option",

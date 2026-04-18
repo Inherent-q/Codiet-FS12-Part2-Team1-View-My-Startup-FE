@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+import { ModalProvider } from "./context/ModalContext";
 import GNB from "./components/GNB";
 import Home from "./home/Home";
 import SelectPage from "./select/Select"; // (종찬) 추가
@@ -9,7 +10,7 @@ import ComparisonStatus from "./compare/ComparisonStatus";
 
 function App() {
   return (
-    <>
+    <ModalProvider>
       <GNB />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -19,7 +20,7 @@ function App() {
         <Route path="/results" element={<Results />} />
         <Route path="/detail/:id" element={<Detail />} />
       </Routes>
-    </>
+    </ModalProvider>
   );
 }
 

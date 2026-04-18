@@ -1,0 +1,188 @@
+.editModal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.editModal-container {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 24px;
+  border-radius: 16px;
+  background: #212121;
+  width: 100%;
+  max-width: 500px;
+}
+
+.editModal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editModal-title {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.editModal-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.editModal-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.editModal-label {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.editModal-corpInfo {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+.editModal-corpImg {
+  width: 40.615px;
+  height: 40.615px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.editModal-corpName {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.editModal-corpCategory {
+  color: #747474;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.editModal-input {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: #212121;
+  border: 1px solid #747474;
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 16px;
+  box-sizing: border-box;
+  padding-right: 48px;
+}
+
+.editModal-input::placeholder {
+  color: #747474;
+}
+
+.editModal-textarea {
+  width: 100%;
+  height: 108px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: #212121;
+  border: 1px solid #747474;
+  resize: none;
+  box-sizing: border-box;
+  font-family: Pretendard;
+  font-size: 16px;
+  color: #fff;
+}
+
+.editModal-textarea::placeholder {
+  color: #747474;
+}
+
+.editModal-passwordWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.editModal-eyeButton {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.editModal-eyeButton img {
+  width: 24px;
+  height: 24px;
+}
+
+.editModal-buttonGroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-left: 27.5px;
+  margin-right: 27.5px;
+}
+
+.editModal-cancelButton,
+.editModal-submitButton {
+  border-radius: 50px;
+  padding: 13px 48px;
+  font-family: Pretendard;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  height: 48px;
+  min-width: 180px;
+  border: none;
+}
+
+.editModal-cancelButton {
+  background-color: #212121;
+  color: #eb5230;
+  border: 1px solid #eb5230;
+}
+
+.editModal-submitButton {
+  background-color: #eb5230;
+  color: #fff;
+}

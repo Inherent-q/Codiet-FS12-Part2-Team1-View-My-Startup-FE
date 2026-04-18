@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import ic_delete from "../assets/ic_delete.svg";
 import onpassword from "../assets/onpassword.png";
-import DeleteModal from "./DeleteModal";
-import WrongPWModal from "./WrongPWModal";
+import { useModal } from "../context/ModalContext";
 
 export default function AuthenticationModal({
   isOpen,
@@ -10,50 +9,22 @@ export default function AuthenticationModal({
   onDelete,
   delInvestor,
 }) {
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const { showResult, showError } = useModal();
+
   if (!isOpen) return null;
 
-  // 비밀번호 관리 useState
-  const [password, setPassword] = useState("");
-  // 페이지 분기 useState
-  const [modalType, setModalType] = useState(null);
-  // 비밀번호 visiblebtn 클릭 시 입력 글자 암호화 토글
-  const [showPassword, setShowPassword] = useState(false);
-
-  // 인증 form 제출 시 작동 함수
   const handleAuth = () => {
     if (delInvestor && delInvestor.password === password) {
-      setModalType("success");
+      showResult("삭제됩니다.", () => {
+        onDelete();
+        onClose();
+      });
     } else {
-      setModalType("fail");
+      showError("잘못된 비밀번호로 삭제에 실패하셨습니다.");
     }
   };
-
-  // 화면 닫을 시 작동 함수
-  const handleCloseAll = () => {
-    setModalType(null);
-    setPassword("");
-    onClose();
-  };
-
-  //폼 제출 결과 모달타입이 성공인 경우,
-  if (modalType === "success") {
-    return (
-      <DeleteModal
-        isOpen={isOpen}
-        onClose={handleCloseAll}
-        onDelete={() => {
-          onDelete();
-          alert("삭제되었습니다!");
-          handleCloseAll();
-        }}
-      />
-    );
-  }
-
-  //폼 제출 결과 모달타입이 실패인 경우,
-  if (modalType === "fail") {
-    return <WrongPWModal isOpen={isOpen} onClose={handleCloseAll} />;
-  }
 
   return (
     <div
@@ -99,11 +70,7 @@ export default function AuthenticationModal({
           </p>
           <img
             src={ic_delete}
-            style={{
-              width: "24px",
-              height: "24px",
-              cursor: "pointer",
-            }}
+            style={{ width: "24px", height: "24px", cursor: "pointer" }}
             onClick={onClose}
           />
         </div>
@@ -156,11 +123,7 @@ export default function AuthenticationModal({
               />
               <img
                 src={onpassword}
-                style={{
-                  width: "24px",
-                  height: "24px",
-                  cursor: "pointer",
-                }}
+                style={{ width: "24px", height: "24px", cursor: "pointer" }}
                 onClick={() => setShowPassword(!showPassword)}
               />
             </div>
