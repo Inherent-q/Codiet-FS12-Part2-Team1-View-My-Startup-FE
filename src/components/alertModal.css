@@ -1,4 +1,4 @@
-.result-modal .modal-overlay {
+.alert-modal .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,21 +11,21 @@
   z-index: 1000;
 }
 
-.result-modal .modal-container {
+.alert-modal .modal-container {
   width: 500px;
   display: flex;
   flex-direction: column;
   gap: 32px;
   justify-content: center;
   align-items: center;
-  background-color: #212121;
-  color: #fff;
+  background-color: var(--black-black_200);
+  color: var(--white);
   font-size: 15px;
   padding: 24px;
   border-radius: 16px;
 }
 
-.result-modal .modal-header {
+.alert-modal .modal-header {
   width: 100%;
   height: 32px;
   display: flex;
@@ -33,21 +33,21 @@
   align-items: center;
 }
 
-.result-modal .close-icon {
+.alert-modal .close-icon {
   width: 32px;
   height: 32px;
   cursor: pointer;
   flex-shrink: 0;
 }
 
-.result-modal .confirm-button {
+.alert-modal .confirm-button {
   width: 194px;
   height: 48px;
   padding: 13px 48px;
   border-radius: 50px;
   border: none;
-  background-color: #eb5230;
-  color: #fff;
+  background-color: var(--brand-brand_orange);
+  color: var(--white);
   font-size: 16px;
   font-weight: 600;
   margin-top: 16px;

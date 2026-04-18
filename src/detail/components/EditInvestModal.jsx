@@ -3,6 +3,7 @@ import "../style/editInvestModal.css";
 import icShow from "../../assets/onpassword.png";
 import icHide from "../../assets/offpassword.png";
 import vectorIcon from "../../assets/vector.png";
+import { useModal } from "../../context/ModalContext";
 
 export default function EditInvestModal({
   corpdata,
@@ -13,25 +14,26 @@ export default function EditInvestModal({
 }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { showError } = useModal();
 
   if (!editTarget) return null;
 
   const handleSubmit = () => {
     // 빈값 검증
     if (!editTarget.name.trim()) {
-      alert("투자자 이름을 입력해주세요.");
+      showError("투자자 이름을 입력해주세요.");
       return;
     }
     if (!editTarget.amount) {
-      alert("투자 금액을 입력해주세요.");
+      showError("투자 금액을 입력해주세요.");
       return;
     }
     if (!editTarget.comment.trim()) {
-      alert("투자 코멘트를 입력해주세요.");
+      showError("투자 코멘트를 입력해주세요.");
       return;
     }
     if (!password.trim()) {
-      alert("비밀번호를 입력해주세요.");
+      showError("비밀번호를 입력해주세요.");
       return;
     }
 
@@ -83,7 +85,7 @@ export default function EditInvestModal({
             placeholder="투자 금액을 입력해 주세요"
             value={editTarget.amount}
             onChange={(e) =>
-              setEditTarget({ ...editTarget, amount: Number(e.target.value) }) 
+              setEditTarget({ ...editTarget, amount: Number(e.target.value) })
             }
           />
         </div>

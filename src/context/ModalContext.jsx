@@ -1,47 +1,37 @@
-import { createContext, useContext, useState } from "react";
-import ResultModal from "../components/ResultModal";
-import ErrorModal from "../components/ErrorModal";
+import { createContext, useContext, useState, useCallback } from "react";
+import AlertModal from "../components/AlertModal";
 
 /**
  * 전역 모달 상태를 관리하기 위한 Context
- * - Result(성공/확인) 모달과 Error(실패) 모달을 통합 관리
+ * - AlertModal을 통해 성공/실패 모달 통합 관리
  */
 const ModalContext = createContext(null);
 
 export function ModalProvider({ children }) {
   const [modal, setModal] = useState(null);
 
-  const showResult = (message, onConfirm) => {
+  const showResult = useCallback((message, onConfirm) => {
     setModal({ type: "result", message, onConfirm });
-  };
+  }, []);
 
-  const showError = (message) => {
+  const showError = useCallback((message) => {
     setModal({ type: "error", message });
-  };
+  }, []);
 
-  const closeModal = () => setModal(null);
+  const closeModal = useCallback(() => setModal(null), []);
 
   return (
     <ModalContext.Provider value={{ showResult, showError }}>
       {children}
 
-      {/* 제출/수정/삭제 성공 모달 */}
-      {modal?.type === "result" && (
-        <ResultModal
+      {modal && (
+        <AlertModal
           isOpen={true}
           message={modal.message}
           onConfirm={() => {
             modal.onConfirm?.();
             closeModal();
           }}
-          onClose={closeModal}
-        />
-      )}
-      {/* 제출/수정/삭제 실패 모달 */}
-      {modal?.type === "error" && (
-        <ErrorModal
-          isOpen={true}
-          message={modal.message}
           onClose={closeModal}
         />
       )}
