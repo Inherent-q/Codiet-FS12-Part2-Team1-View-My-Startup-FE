@@ -50,6 +50,12 @@
   height: 24px;
 }
 
+.editModal-closeIcon {
+  width: 20.333px;
+  height: 20.333px;
+  cursor: pointer;
+}
+
 .editModal-section {
   display: flex;
   flex-direction: column;

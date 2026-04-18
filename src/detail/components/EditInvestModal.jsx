@@ -5,7 +5,7 @@ import icHide from "../../assets/offpassword.png";
 import vectorIcon from "../../assets/vector.png";
 import { useModal } from "../../context/ModalContext";
 
-export default function EditInvestModal({
+export default function EditModal({
   corpdata,
   editTarget,
   setEditTarget,
@@ -49,7 +49,7 @@ export default function EditInvestModal({
           <img
             src={vectorIcon}
             alt="닫음"
-            style={{ width: "20.333px", height: "20.333px", cursor: "pointer" }}
+            className="editModal-closeIcon"
             onClick={onClose}
           />
         </div>
@@ -58,7 +58,11 @@ export default function EditInvestModal({
         <div className="editModal-section">
           <label className="editModal-label">투자 기업 정보</label>
           <div className="editModal-corpInfo">
-            <img src={corpdata?.img} className="editModal-corpImg" />
+            <img
+              src={corpdata?.img}
+              className="editModal-corpImg"
+              alt={corpdata?.name}
+            />
             <span className="editModal-corpName">{corpdata?.name}</span>
             <span className="editModal-corpCategory">{corpdata?.category}</span>
           </div>
@@ -84,9 +88,15 @@ export default function EditInvestModal({
             className="editModal-input"
             placeholder="투자 금액을 입력해 주세요"
             value={editTarget.amount}
-            onChange={(e) =>
-              setEditTarget({ ...editTarget, amount: Number(e.target.value) })
-            }
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "" || !isNaN(Number(value))) {
+                setEditTarget({
+                  ...editTarget,
+                  amount: value === "" ? "" : Number(value),
+                });
+              }
+            }}
           />
         </div>
 
