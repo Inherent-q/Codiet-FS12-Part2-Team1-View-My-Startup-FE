@@ -101,11 +101,15 @@
   flex-shrink: 0;
 }
 
-.tableWrapper {
+.tableWrapperCompare {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 60px;
-  table-layout: auto;
+}
+.tableWrapperRank {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 60px;
 }
 
 .tableHeader {
@@ -115,6 +119,108 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  margin-bottom: 10px;
+}
+
+.tableWrapperCompare tbody td {
+  background-color: #212121;
+  color: #fff;
+  padding: 16px;
+  height: 64px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tableWrapperRank tbody td {
+  background-color: #212121;
+  color: #fff;
+  padding: 16px;
+  height: 64px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.spacer-row {
+  height: 20px;
+}
+
+.tableWrapperCompare td:first-child {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tableWrapperRank td:nth-child(2) {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tableWrapperCompare tbody tr {
+  border-bottom: 1px solid #4b4b4b;
+}
+.tableWrapperCompare tbody tr:last-child {
+  border-bottom: none;
+  border-top: 1px solid #4b4b4b;
+}
+
+.tableWrapperRank tbody tr {
+  border-bottom: 1px solid #4b4b4b;
+}
+.tableWrapperRank tbody tr:last-child {
+  border-bottom: none;
+  border-top: 1px solid #4b4b4b;
+}
+
+.tableWrapperCompare tbody tr:first-child td:first-child {
+  border-top-left-radius: 4px;
+}
+
+.tableWrapperCompare tbody tr:first-child td:last-child {
+  border-top-right-radius: 4px;
+}
+
+.tableWrapperCompare tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 4px;
+}
+
+.tableWrapperCompare tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 4px;
+}
+
+.tableWrapperRank tbody tr:first-child td:first-child {
+  border-top-left-radius: 4px;
+}
+
+.tableWrapperRank tbody tr:first-child td:last-child {
+  border-top-right-radius: 4px;
+}
+
+.tableWrapperRank tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 4px;
+}
+
+.tableWrapperRank tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 4px;
+}
+
+.tableWrapperCompare tbody td:first-child img {
+  width: 32.492px;
+  height: 32.492px;
+  border-radius: 50px;
+}
+
+.tableWrapperRank tbody td:nth-child(2) img {
+  width: 32.492px;
+  height: 32.492px;
+  border-radius: 50px;
 }
 
 .compareHeader th:nth-child(1) {
@@ -134,10 +240,10 @@
   width: 60px;
 }
 .rankHeader th:nth-child(2) {
-  width: 12%;
+  width: 15%;
 }
 .rankHeader th:nth-child(3) {
-  width: 30%;
+  width: 27%;
 }
 .rankHeader th:nth-child(4),
 .rankHeader th:nth-child(5),

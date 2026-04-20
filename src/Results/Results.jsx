@@ -130,6 +130,55 @@ function Results() {
   if (isLoading) return <div className="resultsContainer">불러오는 중...</div>;
   if (error) return <div className="resultsContainer">{error}</div>;
 
+  const allTargetCorps = [myCorp, ...compareCorps];
+
+  const sortData = allTargetCorps.sort(function (a, b) {
+    switch (selectedSort) {
+      case "누적 투자금액 높은순":
+        return b.accInvest - a.accInvest;
+      case "누적 투자금액 낮은순":
+        return a.accInvest - b.accInvest;
+      case "매출액 높은순":
+        return b.revenue - a.revenue;
+
+      case "매출액 낮은순":
+        return a.revenue - b.revenue;
+
+      case "고용 인원 많은순":
+        return b.hire - a.hire;
+
+      case "고용 인원 적은순":
+        return a.hire - b.hire;
+
+      default:
+        return 0;
+    }
+  });
+
+  const allTargetCorps2 = [myCorp, ...compareCorps];
+  const sortData2 = allTargetCorps2.sort(function (a, b) {
+    switch (selectedSort2) {
+      case "누적 투자금액 높은순":
+        return b.accInvest - a.accInvest;
+      case "누적 투자금액 낮은순":
+        return a.accInvest - b.accInvest;
+      case "매출액 높은순":
+        return b.revenue - a.revenue;
+
+      case "매출액 낮은순":
+        return a.revenue - b.revenue;
+
+      case "고용 인원 많은순":
+        return b.hire - a.hire;
+
+      case "고용 인원 적은순":
+        return a.hire - b.hire;
+
+      default:
+        return 0;
+    }
+  });
+
   return (
     <div className="resultsContainer">
       <div className="sectionTitle">
@@ -142,9 +191,40 @@ function Results() {
       <div className="selectedCard">
         {myCorp ? (
           <>
-            <img src={myCorp.img} alt={myCorp.name} />
-            <p>{myCorp.name}</p>
-            <p>{myCorp.category}</p>
+            <img
+              src={myCorp.img}
+              alt={myCorp.name}
+              style={{
+                width: "81.231px",
+                height: "81.231px",
+                borderRadius: "50%",
+                marginBottom: "10px",
+              }}
+            />
+            <p
+              style={{
+                color: "#FFF",
+                fontFamily: "Pretendard",
+                fontSize: "20px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                lineHeight: "normal",
+              }}
+            >
+              {myCorp.name}
+            </p>
+            <p
+              style={{
+                color: "var(--gray-gray_200, #747474)",
+                fontFamily: "Pretendard",
+                fontSize: "18px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                lineHeight: "normal",
+              }}
+            >
+              {myCorp.category}
+            </p>
           </>
         ) : (
           <p>선택된 기업이 없습니다.</p>
@@ -188,10 +268,10 @@ function Results() {
         </div>
       </div>
 
-      <table className="tableWrapper">
+      <table className="tableWrapperCompare">
         <thead className="tableHeader compareHeader">
           <tr>
-            <th>기업 명</th>
+            <th class="company-name-cell">기업 명</th>
             <th>기업 소개</th>
             <th>카테고리</th>
             <th>누적 투자 금액</th>
@@ -199,11 +279,14 @@ function Results() {
             <th>고용 인원</th>
           </tr>
         </thead>
+        <tr class="spacer-row"></tr>
         <tbody>
-          {compareCorps.map((corp) => (
+          {sortData.map((corp) => (
             <tr key={corp.id}>
-              <img src={corp.img} alt={corp.name} />
-              <td>{corp.name}</td>
+              <td>
+                <img src={corp.img} alt={corp.name} />
+                {corp.name}
+              </td>
               <td>{corp.description}</td>
               <td>{corp.category}</td>
               <td>{corp.accInvest}</td>
@@ -251,7 +334,7 @@ function Results() {
         </div>
       </div>
 
-      <table className="tableWrapper">
+      <table className="tableWrapperRank">
         <thead className="tableHeader rankHeader">
           <tr>
             <th>순위</th>
@@ -263,12 +346,15 @@ function Results() {
             <th>고용 인원</th>
           </tr>
         </thead>
+        <tr class="spacer-row"></tr>
         <tbody>
-          {compareCorps.map((corp, idx) => (
+          {sortData2.map((corp, idx) => (
             <tr key={`rank-${corp.id}`}>
               <td>{idx + 1}위</td>
-              <img src={corp.img} alt={corp.name} />
-              <td>{corp.name}</td>
+              <td>
+                <img src={corp.img} alt={corp.name} />
+                {corp.name}
+              </td>
               <td>{corp.description}</td>
               <td>{corp.category}</td>
               <td>{corp.accInvest}</td>
