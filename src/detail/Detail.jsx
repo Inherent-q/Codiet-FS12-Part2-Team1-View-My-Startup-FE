@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useModal } from "../context/ModalContext";
 import AuthenticationModal from "./AuthenticationModal.jsx";
+import EditInvestModal from "./components/EditInvestModal.jsx";
 import "./style/detail.css";
 
 export default function Detail() {
+  const { showResult, showError } = useModal();
   const { id } = useParams();
   const [corpdata, setCorpdata] = useState(null);
   const [investors, setInvestors] = useState([]);
@@ -41,6 +44,10 @@ export default function Detail() {
   const [selectedDelId, setSelectedDelId] = useState(null);
   const [selectInvestor, setSelectInvestor] = useState({});
 
+  // 수정 모달 state
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editTarget, setEditTarget] = useState(null);
+
   const handleDeleteClick = (id, invest) => {
     setSelectedDelId(id); // 삭제할 ID 저장
     setIsDelModalOpen(true); // 모달 열기
@@ -51,6 +58,44 @@ export default function Detail() {
     console.log(`${selectedDelId} 삭제 진행됨`);
     deleteInvest(selectedDelId);
     setIsDelModalOpen(false); // 삭제 후 모달 닫기
+  };
+
+  const handleEditClick = (item) => {
+    setEditTarget({ ...item });
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSubmit = async (password) => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/investors/${editTarget.id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: editTarget.name,
+            amount: editTarget.amount,
+            comment: editTarget.comment,
+            password: password,
+          }),
+        },
+      );
+
+      if (res.ok) {
+        showResult("수정이 완료되었습니다.", () => {
+          setIsEditModalOpen(false);
+          setEditTarget(null);
+          fetchinfo();
+        });
+      } else if (res.status === 401) {
+        showError("비밀번호가 일치하지 않습니다.");
+      } else {
+        showError("수정에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error(error.message);
+      showError("오류가 발생했습니다.");
+    }
   };
 
   const fetchinfo = () => {
@@ -199,7 +244,15 @@ export default function Detail() {
                       {/* 드롭 다운 메뉴 */}
                       {isOpen === item.id && (
                         <div className="drop-box">
-                          <button className="dropbox-btn1">수정하기</button>
+                          <button
+                            className="dropbox-btn1"
+                            onClick={() => {
+                              handleEditClick(item);
+                              setIsOpenId(null);
+                            }}
+                          >
+                            수정하기
+                          </button>
                           <button
                             className="dropbox-btn2"
                             onClick={() => {
@@ -306,6 +359,19 @@ export default function Detail() {
         onDelete={confirmDelete}
         delInvestor={selectInvestor}
       />
+
+      {isEditModalOpen && (
+        <EditInvestModal
+          corpdata={corpdata}
+          editTarget={editTarget}
+          setEditTarget={setEditTarget}
+          onClose={() => {
+            setIsEditModalOpen(false);
+            setEditTarget(null);
+          }}
+          onSubmit={handleEditSubmit}
+        />
+      )}
     </div>
   );
 }
