@@ -5,6 +5,7 @@ import togglepassword from "../assets/onpassword.png";
 import toggleoffpassword from "../assets/offpassword.png";
 import "./style/results.css";
 import { useNavigate } from "react-router-dom";
+import { formatAmount } from "../home/utils/format";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
@@ -14,6 +15,7 @@ function Results() {
   const returnSelect = function () {
     navigate("/select");
   };
+
   const [mySelection, setMySelection] = useState(null);
   const [comparisonSelections, setComparisonSelections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -76,9 +78,36 @@ function Results() {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
+    if (!myCorp || !myCorp.id) {
+      alert("투자할 기업 정보가 없습니다. 다시 시도해 주세요.");
+      return;
+    }
 
-    setShowModal(false);
-    setInvestModal(true);
+    const investorData = {
+      name: investorName,
+      amount: Number(amount),
+      password: password,
+      comment: comment,
+      corpId: myCorp.id,
+      updatedAt: new Date(),
+    };
+    fetch(`${API_BASE_URL}/investors`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(investorData),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("서버 저장 실패");
+        return res.json();
+      })
+      .then((data) => {
+        console.log("DB 저장 완료:", data);
+        setShowModal(false);
+        setInvestModal(true);
+      })
+      .catch((err) => {
+        alert("등록에 실패했습니다: " + err.message);
+      });
   };
 
   useEffect(() => {
@@ -271,7 +300,7 @@ function Results() {
       <table className="tableWrapperCompare">
         <thead className="tableHeader compareHeader">
           <tr>
-            <th class="company-name-cell">기업 명</th>
+            <th>기업 명</th>
             <th>기업 소개</th>
             <th>카테고리</th>
             <th>누적 투자 금액</th>
@@ -279,19 +308,22 @@ function Results() {
             <th>고용 인원</th>
           </tr>
         </thead>
-        <tr class="spacer-row"></tr>
+
         <tbody>
+          <tr className="spacer-row"></tr>
           {sortData.map((corp) => (
             <tr key={corp.id}>
               <td>
-                <img src={corp.img} alt={corp.name} />
-                {corp.name}
+                <div className="imageName">
+                  <img src={corp.img} alt={corp.name} />
+                  {corp.name}
+                </div>
               </td>
               <td>{corp.description}</td>
               <td>{corp.category}</td>
-              <td>{corp.accInvest}</td>
-              <td>{corp.revenue}</td>
-              <td>{corp.hire}</td>
+              <td>{formatAmount(corp.accInvest)}</td>
+              <td>{formatAmount(corp.revenue)}</td>
+              <td>{corp.hire}명</td>
             </tr>
           ))}
         </tbody>
@@ -346,20 +378,22 @@ function Results() {
             <th>고용 인원</th>
           </tr>
         </thead>
-        <tr class="spacer-row"></tr>
         <tbody>
+          <tr className="spacer-row"></tr>
           {sortData2.map((corp, idx) => (
             <tr key={`rank-${corp.id}`}>
               <td>{idx + 1}위</td>
               <td>
-                <img src={corp.img} alt={corp.name} />
-                {corp.name}
+                <div className="imageName">
+                  <img src={corp.img} alt={corp.name} />
+                  {corp.name}
+                </div>
               </td>
               <td>{corp.description}</td>
               <td>{corp.category}</td>
-              <td>{corp.accInvest}</td>
-              <td>{corp.revenue}</td>
-              <td>{corp.hire}</td>
+              <td>{formatAmount(corp.accInvest)}</td>
+              <td>{formatAmount(corp.revenue)}</td>
+              <td>{corp.hire}명</td>
             </tr>
           ))}
         </tbody>
@@ -402,7 +436,7 @@ function Results() {
                   style={{
                     width: "40.615px",
                     height: "40.615px",
-                    borderRadius: "50%", // 반드시 50%
+                    borderRadius: "50%",
                     overflow: "hidden",
                     background: `url(${myCorp.img}) lightgray 50% / cover no-repeat`,
                   }}
@@ -471,7 +505,7 @@ function Results() {
               <div className="inputContainer">
                 <input
                   className="modalInput"
-                  type={passwordVisible ? "password" : "text"}
+                  type={passwordVisible ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="비밀번호를 입력해 주세요"
@@ -492,7 +526,7 @@ function Results() {
               <div className="inputContainer">
                 <input
                   className="modalInput"
-                  type={passwordVisible2 ? "password" : "text"}
+                  type={passwordVisible2 ? "text" : "password"}
                   value={passwordConfirm}
                   onChange={(e) => setPasswordConfirm(e.target.value)}
                   placeholder="비밀번호를 다시 한 번 입력해주세요"
