@@ -22,6 +22,12 @@
   font-weight: 700;
 }
 
+.profile-category {
+  color: #747474;
+  font-size: 20px;
+  font-weight: 500;
+}
+
 .profile-detail {
   width: 100%;
   display: flex;
@@ -39,6 +45,18 @@
   padding: 36px 24px;
   background-color: #282828;
   border-radius: 10px;
+}
+
+.profilebox-label {
+  color: #d8d8d8;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.profilebox-context {
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .profile-description {
@@ -60,6 +78,12 @@
   border-bottom: solid 1px #2e2e2e;
   margin-bottom: 16px;
 }
+
+.addInvest-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
 .addInvest-btn {
   display: flex;
   justify-content: center;
