@@ -107,7 +107,7 @@
 /* ===== Tablet (≤ 744px) ===== */
 @media (max-width: 744px) {
   .rank-cell {
-    display: none;
+    display: none; /* 순위 숨김 */
   }
 
   .company-row:first-child .name-cell {

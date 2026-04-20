@@ -1,15 +1,6 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../style/CompanyRow.css";
-
-// 숫자 억 원 단위로 변환
-function formatAmount(value) {
-  const num = Number(value);
-  if (num >= 100000000) {
-    return `${Math.floor(num / 100000000).toLocaleString()}억 원`;
-  }
-  return `${num.toLocaleString()}원`;
-}
+import { formatAmount } from "../utils/format";
+import "../style/companyRow.css";
 
 export default function CompanyRow({ company, rank }) {
   const navigate = useNavigate();
@@ -27,21 +18,18 @@ export default function CompanyRow({ company, rank }) {
       onKeyDown={(e) => e.key === "Enter" && handleNavigate()}
     >
       <td className="rank-cell">{rank}위</td>
-
       <td className="name-cell">
         <div className="name-inner">
           <div className="company-logo">
             {company.img ? (
               <img src={company.img} alt={company.name} />
             ) : (
-              <span>{company.name[0]}</span>
+              <span>{company.name?.[0] ?? "?"}</span>
             )}
           </div>
-
           <span className="company-name">{company.name}</span>
         </div>
       </td>
-
       <td className="desc-cell">{company.description}</td>
       <td className="category-cell">{company.category}</td>
       <td className="number-cell">{formatAmount(company.accInvest)}</td>

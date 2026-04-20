@@ -1,9 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toggleIcon from "../assets/togglebtn.png";
-import togglepassword from "../assets/visiblebtn.png";
+import vectorIcon from "../assets/vector.png";
+import togglepassword from "../assets/onpassword.png";
+import toggleoffpassword from "../assets/offpassword.png";
 import "./style/results.css";
+import { useNavigate } from "react-router-dom";
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 function Results() {
+  const navigate = useNavigate();
+  const returnSelect = function () {
+    navigate("/select");
+  };
+  const [mySelection, setMySelection] = useState(null);
+  const [comparisonSelections, setComparisonSelections] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [investModal, setInvestModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -36,14 +50,106 @@ function Results() {
     setpasswordVisible2(!passwordVisible2);
   }
 
+  const [investorName, setInvestorName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [comment, setComment] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const handleInvest = () => {
+    const checkList = [
+      { value: investorName, label: "투자자 이름" },
+      { value: amount, label: "투자 금액" },
+      { value: comment, label: "투자 코멘트" },
+      { value: password, label: "비밀번호" },
+      { value: passwordConfirm, label: "비밀번호 확인" },
+    ];
+
+    for (const item of checkList) {
+      if (!item.value || item.value.trim() === "") {
+        alert(`${item.label} 항목이 비어있습니다. 입력해 주세요!`);
+        return;
+      }
+    }
+
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    setShowModal(false);
+    setInvestModal(true);
+  };
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setIsLoading(true);
+        setError("");
+
+        const userSessionId = localStorage.getItem("my_startup_session_id");
+        if (!userSessionId) {
+          setError("세션 정보가 없습니다. /select에서 다시 선택해 주세요.");
+          return;
+        }
+
+        const [myRes, compRes] = await Promise.all([
+          fetch(`${API_BASE_URL}/my-selection?userSessionId=${userSessionId}`),
+          fetch(
+            `${API_BASE_URL}/comparison-selections?userSessionId=${userSessionId}`,
+          ),
+        ]);
+
+        if (!myRes.ok || !compRes.ok) throw new Error("fetch failed");
+
+        const myPayload = await myRes.json();
+        const compPayload = await compRes.json();
+
+        setMySelection(myPayload?.success ? myPayload.data : null);
+        setComparisonSelections(
+          compPayload?.success && Array.isArray(compPayload.data)
+            ? compPayload.data
+            : [],
+        );
+      } catch (error) {
+        console.error("Data fetch error:", error);
+        setError("결과 데이터를 불러오지 못했습니다.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    load();
+  }, []);
+
+  const myCorp = mySelection?.corp ?? null;
+  const compareCorps = comparisonSelections
+    .map((item) => item.corp)
+    .filter(Boolean);
+
+  if (isLoading) return <div className="resultsContainer">불러오는 중...</div>;
+  if (error) return <div className="resultsContainer">{error}</div>;
+
   return (
     <div className="resultsContainer">
       <div className="sectionTitle">
         <span className="mainTitle">내가 선택한 기업</span>
-        <button className="orangeButton">다른 기업 비교하기</button>
+        <button className="orangeButton" onClick={returnSelect}>
+          다른 기업 비교하기
+        </button>
       </div>
 
-      <div className="selectedCard"></div>
+      <div className="selectedCard">
+        {myCorp ? (
+          <>
+            <img src={myCorp.img} alt={myCorp.name} />
+            <p>{myCorp.name}</p>
+            <p>{myCorp.category}</p>
+          </>
+        ) : (
+          <p>선택된 기업이 없습니다.</p>
+        )}
+      </div>
 
       <div className="sectionTitle">
         <span className="mainTitle">비교 결과 확인하기</span>
@@ -93,7 +199,19 @@ function Results() {
             <th>고용 인원</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {compareCorps.map((corp) => (
+            <tr key={corp.id}>
+              <img src={corp.img} alt={corp.name} />
+              <td>{corp.name}</td>
+              <td>{corp.description}</td>
+              <td>{corp.category}</td>
+              <td>{corp.accInvest}</td>
+              <td>{corp.revenue}</td>
+              <td>{corp.hire}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       <div className="sectionTitle" style={{ marginTop: "60px" }}>
@@ -145,7 +263,20 @@ function Results() {
             <th>고용 인원</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {compareCorps.map((corp, idx) => (
+            <tr key={`rank-${corp.id}`}>
+              <td>{idx + 1}위</td>
+              <img src={corp.img} alt={corp.name} />
+              <td>{corp.name}</td>
+              <td>{corp.description}</td>
+              <td>{corp.category}</td>
+              <td>{corp.accInvest}</td>
+              <td>{corp.revenue}</td>
+              <td>{corp.hire}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       <div
@@ -164,20 +295,57 @@ function Results() {
       {showModal && (
         <div className="modalOverlay">
           <div className="modalContentlarge">
-            <div className="top">
+            <div className="largemodalTop">
               <label className="mainTitle">기업에 투자하기</label>
-              <button
-                className="closeModalButton"
+              <img
+                src={vectorIcon}
+                alt="닫음"
+                style={{ width: "20.333px", height: "20.333px" }}
                 onClick={function () {
                   setShowModal(false);
                 }}
-              >
-                X
-              </button>
+              />
             </div>
 
-            <div>
+            <div className="investInfo">
               <label className="inputLabel">투자 기업 정보</label>
+              <div className="infoContainer">
+                <img
+                  src={myCorp.img}
+                  alt={myCorp.name}
+                  style={{
+                    width: "40.615px",
+                    height: "40.615px",
+                    borderRadius: "50%", // 반드시 50%
+                    overflow: "hidden",
+                    background: `url(${myCorp.img}) lightgray 50% / cover no-repeat`,
+                  }}
+                />
+                <span
+                  style={{
+                    color: "#FFF",
+                    fontFamily: "Pretendard",
+                    fontSize: "18px",
+                    fontStyle: "normal",
+                    fontWeight: "500",
+                    lineHeight: "normal",
+                  }}
+                >
+                  {myCorp.name}
+                </span>
+                <span
+                  style={{
+                    color: "#747474",
+                    fontFamily: "Pretendard",
+                    fontSize: "16px",
+                    fontStyle: "normal",
+                    fontWeight: "400",
+                    lineHeight: "normal",
+                  }}
+                >
+                  {myCorp.category}
+                </span>
+              </div>
             </div>
 
             <div className="inputGroup">
@@ -185,6 +353,8 @@ function Results() {
               <input
                 className="modalInput"
                 type="text"
+                value={investorName}
+                onChange={(e) => setInvestorName(e.target.value)}
                 placeholder="투자자 이름을 입력해 주세요"
               />
             </div>
@@ -194,6 +364,8 @@ function Results() {
               <input
                 className="modalInput"
                 type="text"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
                 placeholder="투자 금액을 입력해 주세요"
               />
             </div>
@@ -202,6 +374,8 @@ function Results() {
               <label className="inputLabel">투자 코멘트</label>
               <textarea
                 className="modalInput2"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
                 placeholder="투자 코멘트를 입력해 주세요"
               />
             </div>
@@ -211,7 +385,9 @@ function Results() {
               <div className="inputContainer">
                 <input
                   className="modalInput"
-                  type={passwordVisible ? "text" : "password"}
+                  type={passwordVisible ? "password" : "text"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="비밀번호를 입력해 주세요"
                 />
                 <img
@@ -219,7 +395,7 @@ function Results() {
                   onClick={function () {
                     passwordInput();
                   }}
-                  src={togglepassword}
+                  src={passwordVisible ? togglepassword : toggleoffpassword}
                   alt="눈"
                 />
               </div>
@@ -230,7 +406,9 @@ function Results() {
               <div className="inputContainer">
                 <input
                   className="modalInput"
-                  type={passwordVisible2 ? "text" : "password"}
+                  type={passwordVisible2 ? "password" : "text"}
+                  value={passwordConfirm}
+                  onChange={(e) => setPasswordConfirm(e.target.value)}
                   placeholder="비밀번호를 다시 한 번 입력해주세요"
                 />
                 <img
@@ -238,7 +416,7 @@ function Results() {
                   onClick={function () {
                     passwordInput2();
                   }}
-                  src={togglepassword}
+                  src={passwordVisible2 ? togglepassword : toggleoffpassword}
                   alt="눈"
                 />
               </div>
@@ -253,13 +431,7 @@ function Results() {
               >
                 취소
               </button>
-              <button
-                className="orangeButton"
-                onClick={function () {
-                  setShowModal(false);
-                  setInvestModal(true);
-                }}
-              >
+              <button className="orangeButton" onClick={handleInvest}>
                 투자하기
               </button>
             </div>
@@ -270,23 +442,29 @@ function Results() {
       {investModal && (
         <div className="modalOverlay">
           <div className="modalContent">
-            <button
-              className="closeModalButton"
+            <img
+              src={vectorIcon}
+              alt="닫음"
+              style={{
+                width: "20.333px",
+                height: "20.333px",
+                alignSelf: "flex-end",
+              }}
               onClick={function () {
                 setInvestModal(false);
               }}
-            >
-              X
-            </button>
-            <h3 className="successMessage">투자가 완료되었어요!</h3>
-            <button
-              className="orangeButton"
-              onClick={function () {
-                setInvestModal(false);
-              }}
-            >
-              확인
-            </button>
+            />
+            <div className="buttonGroup">
+              <h3 className="successMessage">투자가 완료되었어요!</h3>
+              <button
+                className="orangeButton"
+                onClick={function () {
+                  setInvestModal(false);
+                }}
+              >
+                확인
+              </button>
+            </div>
           </div>
         </div>
       )}

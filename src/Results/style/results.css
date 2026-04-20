@@ -169,6 +169,7 @@
   line-height: normal;
 }
 
+/* 여기부턴 모달 스타일입니다! */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -193,8 +194,28 @@
   max-width: 500px;
 }
 
-.top {
+.modalContent {
   display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background-color: #eb5230;
+}
+
+.largemodalTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.investInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.infoContainer {
+  display: flex;
+  gap: 9px;
+  align-items: center;
 }
 
 .inputGroup {
@@ -262,24 +283,56 @@
   z-index: 10;
 }
 
-.successMessage {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 24px;
-  display: block;
+.modalFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-left: 27.5px;
+  margin-right: 27.5px;
 }
 
 .orangeButton {
-  background-color: #ff5c35;
+  background-color: #eb5230;
   color: white;
   border: none;
-  border-radius: 100px;
-  padding: 12px 32px;
+  border-radius: 50px;
+  padding: 13px 48px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  width: max-content;
+  height: 48px;
+  flex-shrink: 0;
+  min-width: 180px;
 }
 
-.orangeButton:hover {
-  background-color: #eb5230;
+.cancel {
+  border: 1px solid #eb5230;
+  background-color: #212121;
+  color: #eb5230;
+}
+
+.modalContent {
+  padding: 24px;
+  background-color: #212121;
+  border-radius: 16px;
+  width: 448px;
+  height: auto;
+  gap: 8px;
+}
+.buttonGroup {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.successMessage {
+  color: #fff;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
