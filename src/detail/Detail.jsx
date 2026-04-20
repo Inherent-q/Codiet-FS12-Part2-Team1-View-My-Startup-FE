@@ -106,9 +106,7 @@ export default function Detail() {
             flexDirection: "column",
           }}
         >
-          <p style={{ fontSize: "24px", fontWeight: "700" }}>
-            {corpdata?.name}
-          </p>
+          <p className="profile-name">{corpdata?.name}</p>
           <p style={{ color: "#747474", fontSize: "20px", fontWeight: "500" }}>
             {corpdata?.category}
           </p>
