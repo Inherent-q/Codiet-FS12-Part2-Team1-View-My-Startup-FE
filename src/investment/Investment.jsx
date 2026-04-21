@@ -38,6 +38,14 @@ const Investment = () => {
     [sort, order, curPage],
   );
 
+  //정렬 변경되면 1페이지로 돌아가기
+  useEffect(
+    function () {
+      setCurPage(1);
+    },
+    [sort, order],
+  );
+
   // 투자 현황 없을 떄 문구
 
   const noData = function () {
