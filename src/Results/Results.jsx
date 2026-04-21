@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import toggleIcon from "../assets/togglebtn.png";
 import vectorIcon from "../assets/vector.png";
-import togglepassword from "../assets/onpassword.png";
-import toggleoffpassword from "../assets/offpassword.png";
 import "./style/results.css";
 import { useNavigate } from "react-router-dom";
 import { formatAmount } from "../home/utils/format";
+import InvestModal from "./components/InvestModal";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
@@ -42,73 +41,6 @@ function Results() {
     "고용 인원 많은순",
     "고용 인원 적은순",
   ];
-  const [passwordVisible, setpasswordVisible] = useState(false);
-  const [passwordVisible2, setpasswordVisible2] = useState(false);
-
-  function passwordInput() {
-    setpasswordVisible(!passwordVisible);
-  }
-  function passwordInput2() {
-    setpasswordVisible2(!passwordVisible2);
-  }
-
-  const [investorName, setInvestorName] = useState("");
-  const [amount, setAmount] = useState("");
-  const [comment, setComment] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-
-  const handleInvest = () => {
-    const checkList = [
-      { value: investorName, label: "투자자 이름" },
-      { value: amount, label: "투자 금액" },
-      { value: comment, label: "투자 코멘트" },
-      { value: password, label: "비밀번호" },
-      { value: passwordConfirm, label: "비밀번호 확인" },
-    ];
-
-    for (const item of checkList) {
-      if (!item.value || item.value.trim() === "") {
-        alert(`${item.label} 항목이 비어있습니다. 입력해 주세요!`);
-        return;
-      }
-    }
-
-    if (password !== passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-    if (!myCorp || !myCorp.id) {
-      alert("투자할 기업 정보가 없습니다. 다시 시도해 주세요.");
-      return;
-    }
-
-    const investorData = {
-      name: investorName,
-      amount: Number(amount),
-      password: password,
-      comment: comment,
-      corpId: myCorp.id,
-      updatedAt: new Date(),
-    };
-    fetch(`${API_BASE_URL}/investors`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(investorData),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("서버 저장 실패");
-        return res.json();
-      })
-      .then((data) => {
-        console.log("DB 저장 완료:", data);
-        setShowModal(false);
-        setInvestModal(true);
-      })
-      .catch((err) => {
-        alert("등록에 실패했습니다: " + err.message);
-      });
-  };
 
   useEffect(() => {
     const load = async () => {
@@ -413,150 +345,14 @@ function Results() {
       </div>
 
       {showModal && (
-        <div className="modalOverlay">
-          <div className="modalContentlarge">
-            <div className="largemodalTop">
-              <label className="mainTitle">기업에 투자하기</label>
-              <img
-                src={vectorIcon}
-                alt="닫음"
-                style={{ width: "20.333px", height: "20.333px" }}
-                onClick={function () {
-                  setShowModal(false);
-                }}
-              />
-            </div>
-
-            <div className="investInfo">
-              <label className="inputLabel">투자 기업 정보</label>
-              <div className="infoContainer">
-                <img
-                  src={myCorp.img}
-                  alt={myCorp.name}
-                  style={{
-                    width: "40.615px",
-                    height: "40.615px",
-                    borderRadius: "50%",
-                    overflow: "hidden",
-                    background: `url(${myCorp.img}) lightgray 50% / cover no-repeat`,
-                  }}
-                />
-                <span
-                  style={{
-                    color: "#FFF",
-                    fontFamily: "Pretendard",
-                    fontSize: "18px",
-                    fontStyle: "normal",
-                    fontWeight: "500",
-                    lineHeight: "normal",
-                  }}
-                >
-                  {myCorp.name}
-                </span>
-                <span
-                  style={{
-                    color: "#747474",
-                    fontFamily: "Pretendard",
-                    fontSize: "16px",
-                    fontStyle: "normal",
-                    fontWeight: "400",
-                    lineHeight: "normal",
-                  }}
-                >
-                  {myCorp.category}
-                </span>
-              </div>
-            </div>
-
-            <div className="inputGroup">
-              <label className="inputLabel">투자자 이름</label>
-              <input
-                className="modalInput"
-                type="text"
-                value={investorName}
-                onChange={(e) => setInvestorName(e.target.value)}
-                placeholder="투자자 이름을 입력해 주세요"
-              />
-            </div>
-
-            <div className="inputGroup">
-              <label className="inputLabel">투자 금액</label>
-              <input
-                className="modalInput"
-                type="text"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="투자 금액을 입력해 주세요"
-              />
-            </div>
-
-            <div className="inputGroup">
-              <label className="inputLabel">투자 코멘트</label>
-              <textarea
-                className="modalInput2"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="투자 코멘트를 입력해 주세요"
-              />
-            </div>
-
-            <div className="inputGroup">
-              <label className="inputLabel">비밀번호</label>
-              <div className="inputContainer">
-                <input
-                  className="modalInput"
-                  type={passwordVisible ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="비밀번호를 입력해 주세요"
-                />
-                <img
-                  className="eyeIcon"
-                  onClick={function () {
-                    passwordInput();
-                  }}
-                  src={passwordVisible ? togglepassword : toggleoffpassword}
-                  alt="눈"
-                />
-              </div>
-            </div>
-
-            <div className="inputGroup">
-              <label className="inputLabel">비밀번호 확인</label>
-              <div className="inputContainer">
-                <input
-                  className="modalInput"
-                  type={passwordVisible2 ? "text" : "password"}
-                  value={passwordConfirm}
-                  onChange={(e) => setPasswordConfirm(e.target.value)}
-                  placeholder="비밀번호를 다시 한 번 입력해주세요"
-                />
-                <img
-                  className="eyeIcon"
-                  onClick={function () {
-                    passwordInput2();
-                  }}
-                  src={passwordVisible2 ? togglepassword : toggleoffpassword}
-                  alt="눈"
-                />
-              </div>
-            </div>
-
-            <div className="modalFooter">
-              <button
-                className="orangeButton cancel"
-                onClick={function () {
-                  setShowModal(false);
-                }}
-              >
-                취소
-              </button>
-              <button className="orangeButton" onClick={handleInvest}>
-                투자하기
-              </button>
-            </div>
-          </div>
-        </div>
+        <InvestModal
+          myCorp={myCorp}
+          onClose={() => setShowModal(false)}
+          onInvestSuccess={() => {
+            setShowModal(false);
+            setInvestModal(true);
+          }}
+        />
       )}
 
       {investModal && (

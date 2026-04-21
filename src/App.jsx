@@ -4,7 +4,7 @@ import GNB from "./components/GNB";
 import Home from "./home/Home";
 import SelectPage from "./select/Select"; // (종찬) 추가
 import Detail from "./detail/Detail.jsx";
-import Results from "./Results/Results.jsx";
+import Results from "./results/Results.jsx";
 import Investment from "./investment/Investment.jsx";
 import ComparisonStatus from "./compare/ComparisonStatus";
 
