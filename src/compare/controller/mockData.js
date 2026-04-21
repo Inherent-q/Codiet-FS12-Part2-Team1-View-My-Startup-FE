@@ -2,7 +2,7 @@ export const MOCK_COMPANIES = [
   {
     id: 1,
     name: "뤼이드",
-    logo: "/icons/뤼이드.png",
+    logo: "../assets/뤼이드.png",
     logoContain: true,
     logoInitial: "R",
     logoColor: "#1B3A6B",
@@ -14,7 +14,7 @@ export const MOCK_COMPANIES = [
   {
     id: 2,
     name: "매스프레소",
-    logo: "/icons/매스프레소.png",
+    logo: "../assets/매스프레소.png",
     logoInitial: "M",
     logoColor: "#FF6B35",
     description: "수학 문제 풀이 AI 앱 '콴다'를 운영하는 에듀테크 스타트업입니다. 전 세계 학생들의 학습을 돕고 있습니다.",
@@ -25,7 +25,7 @@ export const MOCK_COMPANIES = [
   {
     id: 3,
     name: "코드잇",
-    logo: "/icons/코드잇.png",
+    logo: "../assets/코드잇.png",
     logoInitial: "C",
     logoColor: "#7B3FE4",
     description: "온라인 코딩 교육 서비스를 운영하는 에듀테크 스타트업입니다. 코딩 교육에 대한 수준 높은 커리큘럼을 제공합니다.",
@@ -36,7 +36,7 @@ export const MOCK_COMPANIES = [
   {
     id: 4,
     name: "엘리스",
-    logo: "/icons/엘리스.png",
+    logo: "../assets/엘리스.png",
     logoContain: true,
     logoInitial: "E",
     logoColor: "#6B3FE4",
@@ -48,7 +48,7 @@ export const MOCK_COMPANIES = [
   {
     id: 5,
     name: "아이헤이트플라잉버드",
-    logo: "/icons/밀당PT.png",
+    logo: "../assets/밀당PT.png",
     logoInitial: "아",
     logoColor: "#1A1A1A",
     description: "1:1 퍼스널 트레이닝 매칭 플랫폼을 운영하는 헬스테크 스타트업입니다. 전문 트레이너와 고객을 연결합니다.",
@@ -59,7 +59,7 @@ export const MOCK_COMPANIES = [
   {
     id: 6,
     name: "클래스101",
-    logo: "/icons/클래스101.png",
+    logo: "../assets/클래스101.png",
     logoContain: true,
     logoInitial: "K",
     logoColor: "#FF4444",
@@ -71,7 +71,7 @@ export const MOCK_COMPANIES = [
   {
     id: 7,
     name: "스파르타코딩클럽",
-    logo: "/icons/스파르타코딩클럽.png",
+    logo: "../assets/스파르타코딩클럽.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "S",
@@ -84,7 +84,7 @@ export const MOCK_COMPANIES = [
   {
     id: 8,
     name: "채널톡",
-    logo: "/icons/채널톡.jpg",
+    logo: "../assets/채널톡.jpg",
     logoContain: true,
     logoFull: true,
     logoInitial: "채",
@@ -97,7 +97,7 @@ export const MOCK_COMPANIES = [
   {
     id: 9,
     name: "탈잉",
-    logo: "/icons/탈잉.png",
+    logo: "../assets/탈잉.png",
     logoContain: true,
     logoInitial: "T",
     logoColor: "#00C4B4",
@@ -109,7 +109,7 @@ export const MOCK_COMPANIES = [
   {
     id: 10,
     name: "뤼이드",
-    logo: "/icons/뤼이드.png",
+    logo: "../assets/뤼이드.png",
     logoContain: true,
     logoInitial: "R",
     logoColor: "#1B3A6B",
@@ -121,7 +121,7 @@ export const MOCK_COMPANIES = [
   {
     id: 11,
     name: "토스",
-    logo: "/icons/토스.png",
+    logo: "../assets/토스.png",
     logoContain: true,
     logoFull: true,
     logoInitial: "T",
@@ -134,7 +134,7 @@ export const MOCK_COMPANIES = [
   {
     id: 12,
     name: "뱅크샐러드",
-    logo: "/icons/뱅크샐러드.jpeg",
+    logo: "../assets/뱅크샐러드.jpeg",
     logoContain: true,
     logoFull: true,
     logoInitial: "B",
@@ -147,7 +147,7 @@ export const MOCK_COMPANIES = [
   {
     id: 13,
     name: "마켓컬리",
-    logo: "/icons/마켓컬리.png",
+    logo: "../assets/마켓컬리.png",
     logoContain: true,
     logoInitial: "M",
     logoColor: "#5F0080",
@@ -159,7 +159,7 @@ export const MOCK_COMPANIES = [
   {
     id: 14,
     name: "오늘의집",
-    logo: "/icons/오늘의집.jpg",
+    logo: "../assets/오늘의집.jpg",
     logoContain: true,
     logoInitial: "O",
     logoColor: "#4CAF50",
@@ -171,7 +171,7 @@ export const MOCK_COMPANIES = [
   {
     id: 15,
     name: "당근마켓",
-    logo: "/icons/당근마켓.svg",
+    logo: "../assets/당근마켓.svg",
     logoContain: true,
     logoInitial: "D",
     logoColor: "#FF6F0F",
@@ -183,7 +183,7 @@ export const MOCK_COMPANIES = [
   {
     id: 16,
     name: "야놀자",
-    logo: "/icons/야놀자.png",
+    logo: "../assets/야놀자.png",
     logoContain: true,
     logoInitial: "Y",
     logoColor: "#FF4081",
@@ -195,7 +195,7 @@ export const MOCK_COMPANIES = [
   {
     id: 17,
     name: "직방",
-    logo: "/icons/직방.png",
+    logo: "../assets/직방.png",
     logoContain: true,
     logoFull: true,
     logoInitial: "J",
@@ -208,7 +208,7 @@ export const MOCK_COMPANIES = [
   {
     id: 18,
     name: "무신사",
-    logo: "/icons/무신사.png",
+    logo: "../assets/무신사.png",
     logoContain: true,
     logoInitial: "M",
     logoColor: "#222222",
@@ -220,7 +220,7 @@ export const MOCK_COMPANIES = [
   {
     id: 19,
     name: "닥터다이어리",
-    logo: "/icons/닥터다이어리.jpg",
+    logo: "../assets/닥터다이어리.jpg",
     logoContain: true,
     logoInitial: "D",
     logoColor: "#26A69A",
@@ -232,7 +232,7 @@ export const MOCK_COMPANIES = [
   {
     id: 20,
     name: "눔",
-    logo: "/icons/눔.jpg",
+    logo: "../assets/눔.jpg",
     logoContain: true,
     logoInitial: "N",
     logoColor: "#FF7043",
@@ -244,7 +244,7 @@ export const MOCK_COMPANIES = [
   {
     id: 21,
     name: "크래프톤",
-    logo: "/icons/크래프톤.png",
+    logo: "../assets/크래프톤.png",
     logoContain: true,
     logoInitial: "K",
     logoColor: "#1A1A2E",
@@ -266,7 +266,7 @@ export const MOCK_COMPANIES = [
   {
     id: 23,
     name: "버킷플레이스",
-    logo: "/icons/오늘의집.jpg",
+    logo: "../assets/오늘의집.jpg",
     logoContain: true,
     logoInitial: "B",
     logoColor: "#3CB371",
@@ -278,7 +278,7 @@ export const MOCK_COMPANIES = [
   {
     id: 24,
     name: "두나무",
-    logo: "/icons/두나무.jpg",
+    logo: "../assets/두나무.jpg",
     logoContain: true,
     logoInitial: "D",
     logoColor: "#F7A600",
@@ -290,7 +290,7 @@ export const MOCK_COMPANIES = [
   {
     id: 25,
     name: "비바리퍼블리카",
-    logo: "/icons/토스.png",
+    logo: "../assets/토스.png",
     logoContain: true,
     logoFull: true,
     logoInitial: "V",
@@ -303,7 +303,7 @@ export const MOCK_COMPANIES = [
   {
     id: 26,
     name: "컬리",
-    logo: "/icons/마켓컬리.png",
+    logo: "../assets/마켓컬리.png",
     logoContain: true,
     logoInitial: "K",
     logoColor: "#6A0DAD",
@@ -315,7 +315,7 @@ export const MOCK_COMPANIES = [
   {
     id: 27,
     name: "원티드랩",
-    logo: "/icons/원티드랩.png",
+    logo: "../assets/원티드랩.png",
     logoContain: true,
     logoInitial: "W",
     logoColor: "#355CE9",
@@ -327,7 +327,7 @@ export const MOCK_COMPANIES = [
   {
     id: 28,
     name: "리멤버",
-    logo: "/icons/리멤버.png",
+    logo: "../assets/리멤버.png",
     logoContain: true,
     logoInitial: "R",
     logoColor: "#2B5CE6",
@@ -339,7 +339,7 @@ export const MOCK_COMPANIES = [
   {
     id: 29,
     name: "카카오페이",
-    logo: "/icons/카카오페이.png",
+    logo: "../assets/카카오페이.png",
     logoContain: true,
     logoMax: true,
     logoBg: "#F7E600",
@@ -353,7 +353,7 @@ export const MOCK_COMPANIES = [
   {
     id: 30,
     name: "쏘카",
-    logo: "/icons/쏘카.png",
+    logo: "../assets/쏘카.png",
     logoContain: true,
     logoInitial: "S",
     logoColor: "#00C4B4",
@@ -365,7 +365,7 @@ export const MOCK_COMPANIES = [
   {
     id: 31,
     name: "타다",
-    logo: "/icons/타다.jpeg",
+    logo: "../assets/타다.jpeg",
     logoContain: true,
     logoMax: true,
     logoInitial: "T",
@@ -378,7 +378,7 @@ export const MOCK_COMPANIES = [
   {
     id: 32,
     name: "플렉스",
-    logo: "/icons/플렉스.png",
+    logo: "../assets/플렉스.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "F",
@@ -391,7 +391,7 @@ export const MOCK_COMPANIES = [
   {
     id: 33,
     name: "센드버드",
-    logo: "/icons/센드버드.png",
+    logo: "../assets/센드버드.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "S",
@@ -404,7 +404,7 @@ export const MOCK_COMPANIES = [
   {
     id: 34,
     name: "몰로코",
-    logo: "/icons/몰로코.png",
+    logo: "../assets/몰로코.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "M",
@@ -417,7 +417,7 @@ export const MOCK_COMPANIES = [
   {
     id: 35,
     name: "에이블리",
-    logo: "/icons/에이블리.png",
+    logo: "../assets/에이블리.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "A",
@@ -430,7 +430,7 @@ export const MOCK_COMPANIES = [
   {
     id: 36,
     name: "지그재그",
-    logo: "/icons/지그재그.png",
+    logo: "../assets/지그재그.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "Z",
@@ -443,7 +443,7 @@ export const MOCK_COMPANIES = [
   {
     id: 37,
     name: "브랜디",
-    logo: "/icons/브랜디.png",
+    logo: "../assets/브랜디.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "B",
@@ -456,7 +456,7 @@ export const MOCK_COMPANIES = [
   {
     id: 38,
     name: "식스샵",
-    logo: "/icons/식스샵.png",
+    logo: "../assets/식스샵.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "6",
@@ -469,7 +469,7 @@ export const MOCK_COMPANIES = [
   {
     id: 39,
     name: "리디",
-    logo: "/icons/리디.jpg",
+    logo: "../assets/리디.jpg",
     logoContain: true,
     logoMax: true,
     logoInitial: "R",
@@ -482,7 +482,7 @@ export const MOCK_COMPANIES = [
   {
     id: 40,
     name: "왓챠",
-    logo: "/icons/왓챠.png",
+    logo: "../assets/왓챠.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "W",
@@ -495,7 +495,7 @@ export const MOCK_COMPANIES = [
   {
     id: 41,
     name: "노트폴리오",
-    logo: "/icons/노트폴리오.png",
+    logo: "../assets/노트폴리오.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "N",
@@ -508,7 +508,7 @@ export const MOCK_COMPANIES = [
   {
     id: 42,
     name: "점핏",
-    logo: "/icons/점핏.png",
+    logo: "../assets/점핏.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "J",
@@ -521,7 +521,7 @@ export const MOCK_COMPANIES = [
   {
     id: 43,
     name: "카닥",
-    logo: "/icons/카닥.png",
+    logo: "../assets/카닥.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "K",
@@ -534,7 +534,7 @@ export const MOCK_COMPANIES = [
   {
     id: 44,
     name: "클래스유",
-    logo: "/icons/클래스유.png",
+    logo: "../assets/클래스유.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "C",
@@ -547,7 +547,7 @@ export const MOCK_COMPANIES = [
   {
     id: 45,
     name: "패스트파이브",
-    logo: "/icons/패스트파이브.png",
+    logo: "../assets/패스트파이브.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "F",
@@ -560,7 +560,7 @@ export const MOCK_COMPANIES = [
   {
     id: 46,
     name: "스푼라디오",
-    logo: "/icons/스푼.png",
+    logo: "../assets/스푼.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "S",
@@ -573,7 +573,7 @@ export const MOCK_COMPANIES = [
   {
     id: 47,
     name: "오피지지",
-    logo: "/icons/OPGG.png",
+    logo: "../assets/OPGG.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "O",
@@ -586,7 +586,7 @@ export const MOCK_COMPANIES = [
   {
     id: 48,
     name: "아이디어스",
-    logo: "/icons/아이디어스.png",
+    logo: "../assets/아이디어스.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "A",
@@ -599,7 +599,7 @@ export const MOCK_COMPANIES = [
   {
     id: 49,
     name: "트레바리",
-    logo: "/icons/트레바리.jpeg",
+    logo: "../assets/트레바리.jpeg",
     logoContain: true,
     logoMax: true,
     logoInitial: "T",
@@ -612,7 +612,7 @@ export const MOCK_COMPANIES = [
   {
     id: 50,
     name: "퍼블리",
-    logo: "/icons/퍼블리.png",
+    logo: "../assets/퍼블리.png",
     logoContain: true,
     logoMax: true,
     logoInitial: "P",

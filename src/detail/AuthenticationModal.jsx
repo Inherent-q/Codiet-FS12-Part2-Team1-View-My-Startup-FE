@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ic_delete from "../assets/ic_delete.svg";
-import onpassword from "../assets/onpassword.png";
+import icShow from "../assets/onpassword.png";
+import icHide from "../assets/offpassword.png";
 import { useModal } from "../context/ModalContext";
 
 export default function AuthenticationModal({
@@ -11,6 +12,7 @@ export default function AuthenticationModal({
 }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const { showResult, showError } = useModal();
 
   if (!isOpen) return null;
@@ -105,7 +107,7 @@ export default function AuthenticationModal({
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "16px 20px",
-                border: "1px solid #747474",
+                border: isFocused ? "1.5px solid #EB5230" : "1px solid #747474",
                 borderRadius: "10px",
               }}
             >
@@ -116,13 +118,16 @@ export default function AuthenticationModal({
                   width: "90%",
                   background: "none",
                   border: "none",
+                  outline: "none",
                   fontSize: "14px",
                 }}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
               />
               <img
-                src={onpassword}
+                src={showPassword ? icShow : icHide}
                 style={{ width: "24px", height: "24px", cursor: "pointer" }}
                 onClick={() => setShowPassword(!showPassword)}
               />
