@@ -19,7 +19,11 @@ export default function AlertModal({ isOpen, onClose, onConfirm, message }) {
 
           <p className="modal-message">{message}</p>
 
-          <button type="button" className="confirm-button" onClick={onConfirm ?? onClose}>
+          <button
+            type="button"
+            className="confirm-button"
+            onClick={onConfirm ?? onClose}
+          >
             확인
           </button>
         </div>

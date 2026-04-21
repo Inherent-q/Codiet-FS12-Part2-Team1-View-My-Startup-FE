@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import { SORT_OPTIONS } from "../constants/sortOptions";
 import toggleIcon from "../assets/ic_toggle.svg";
 
+// 부모에서 넘긴 ref를 컴포넌트 내부 DOM에 연결
 const SortDropdown = forwardRef(function SortDropdown(
   { isOpen, onToggle, sortBy, sortOrder, onSelect },
   ref,
@@ -29,7 +30,7 @@ const SortDropdown = forwardRef(function SortDropdown(
                 opt.sortOrder === sortOrder &&
                 "selected",
             ]
-              .filter(Boolean)
+              .filter(Boolean) // truthy만
               .join(" ");
 
             return (

@@ -6,7 +6,7 @@ const PAGE_GROUP_SIZE = 5;
 
 export default function Pagination({ page, totalPages, onPageChange }) {
   if (!totalPages || totalPages <= 1) return null;
-  
+
   const pageGroupStart =
     Math.floor((page - 1) / PAGE_GROUP_SIZE) * PAGE_GROUP_SIZE + 1;
   const pageGroupEnd = Math.min(

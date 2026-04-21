@@ -90,6 +90,7 @@ export default function EditModal({
             value={editTarget.amount}
             onChange={(e) => {
               const value = e.target.value;
+              // 숫자만 입력 허용
               if (value === "" || !isNaN(Number(value))) {
                 setEditTarget({
                   ...editTarget,
