@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "../style/editInvestModal.css";
-import icShow from "../../assets/onpassword.png";
-import icHide from "../../assets/offpassword.png";
-import vectorIcon from "../../assets/vector.png";
+import icShow from "../../assets/onpassword.svg";
+import icHide from "../../assets/offpassword.svg";
+import vectorIcon from "../../assets/ic_delete.svg";
 import { useModal } from "../../context/ModalContext";
+import { validateEditInvest } from "../../utils/validation";
 
 export default function EditModal({
   corpdata,
@@ -19,21 +20,15 @@ export default function EditModal({
   if (!editTarget) return null;
 
   const handleSubmit = () => {
-    // 빈값 검증
-    if (!editTarget.name.trim()) {
-      showError("투자자 이름을 입력해주세요.");
-      return;
-    }
-    if (!editTarget.amount) {
-      showError("투자 금액을 입력해주세요.");
-      return;
-    }
-    if (!editTarget.comment.trim()) {
-      showError("투자 코멘트를 입력해주세요.");
-      return;
-    }
-    if (!password.trim()) {
-      showError("비밀번호를 입력해주세요.");
+    // 유효성 검증
+    const error = validateEditInvest({
+      name: editTarget.name,
+      amount: editTarget.amount,
+      comment: editTarget.comment,
+      password,
+    });
+    if (error) {
+      showError(error);
       return;
     }
 
@@ -90,6 +85,7 @@ export default function EditModal({
             value={editTarget.amount}
             onChange={(e) => {
               const value = e.target.value;
+              // 숫자만 입력 허용
               if (value === "" || !isNaN(Number(value))) {
                 setEditTarget({
                   ...editTarget,
