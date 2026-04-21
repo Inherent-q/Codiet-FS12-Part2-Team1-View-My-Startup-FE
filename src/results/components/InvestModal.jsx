@@ -2,6 +2,7 @@ import { useState } from "react";
 import vectorIcon from "../../assets/vector.png";
 import togglepassword from "../../assets/onpassword.png";
 import toggleoffpassword from "../../assets/offpassword.png";
+import { validateNewInvest } from "../../utils/validation";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
@@ -24,36 +25,16 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const handleInvest = () => {
-    const checkList = [
-      { value: investorName, label: "투자자 이름" },
-      { value: amount, label: "투자 금액" },
-      { value: comment, label: "투자 코멘트" },
-      { value: password, label: "비밀번호" },
-      { value: passwordConfirm, label: "비밀번호 확인" },
-    ];
-
-    for (const item of checkList) {
-      if (!item.value || item.value.trim() === "") {
-        alert(`${item.label} 항목이 비어있습니다. 입력해 주세요!`);
-        return;
-      }
-    }
-    if (isNaN(amount) || Number(amount) <= 0) {
-      alert("투자 금액은 숫자만 입력 가능하며, 0보다 커야 합니다!");
-      return;
-    }
-
-    if (password.length < 8) {
-      alert("비밀번호는 최소 8자리 이상이어야 합니다!");
-      return;
-    }
-
-    if (password !== passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-    if (!myCorp || !myCorp.id) {
-      alert("투자할 기업 정보가 없습니다. 다시 시도해 주세요.");
+    const error = validateNewInvest({
+      name: investorName,
+      amount,
+      comment,
+      password,
+      passwordConfirm,
+      myCorp,
+    });
+    if (error) {
+      alert(error);
       return;
     }
 
