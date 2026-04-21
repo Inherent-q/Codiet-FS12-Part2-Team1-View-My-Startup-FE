@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import ic_delete from "../assets/ic_delete.svg";
+import icShow from "../assets/onpassword.png";
+import icHide from "../assets/offpassword.png";
 import { useParams } from "react-router-dom";
 import { useModal } from "../context/ModalContext";
 import AuthenticationModal from "./AuthenticationModal.jsx";
 import Pagination from "../compare/components/Pagination.jsx";
 import EditInvestModal from "./components/EditInvestModal.jsx";
+import InvestModal from "../results/components/investModal.jsx";
 import "./style/detail.css";
+import "../results/style/results.css";
 
 export default function Detail() {
   const { showResult, showError } = useModal();
@@ -51,7 +56,7 @@ export default function Detail() {
 
   // 추가 모달 state
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [AddTarget, setAddTarget] = useState(null);
+  const [isAddModalSuccess, setIsAddModalSuccess] = useState(false);
 
   const handleDeleteClick = (id, invest) => {
     setSelectedDelId(id); // 삭제할 ID 저장
@@ -214,7 +219,10 @@ export default function Detail() {
       <div style={{ width: "100%" }}>
         <div className="addInvest-section">
           <span className="addInvest-title">View My Startup에서 받은 투자</span>
-          <button className="addInvest-btn" onClick={() => addInvest}>
+          <button
+            className="addInvest-btn"
+            onClick={() => setIsAddModalOpen(true)}
+          >
             기업투자하기
           </button>
         </div>
@@ -320,6 +328,47 @@ export default function Detail() {
           }}
           onSubmit={handleEditSubmit}
         />
+      )}
+
+      {isAddModalOpen && (
+        <InvestModal
+          myCorp={corpdata}
+          onClose={() => setIsAddModalOpen(false)}
+          onInvestSuccess={() => {
+            setIsAddModalOpen(false);
+            setIsAddModalSuccess(true);
+          }}
+        />
+      )}
+
+      {isAddModalSuccess && (
+        <div className="modalOverlay">
+          <div className="modalContent">
+            <img
+              src={ic_delete}
+              alt="닫음"
+              style={{
+                width: "20.333px",
+                height: "20.333px",
+                alignSelf: "flex-end",
+              }}
+              onClick={function () {
+                setIsAddModalSuccess(false);
+              }}
+            />
+            <div className="buttonGroup">
+              <h3 className="successMessage">투자가 완료되었어요!</h3>
+              <button
+                className="orangeButton"
+                onClick={function () {
+                  setIsAddModalSuccess(false);
+                }}
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
