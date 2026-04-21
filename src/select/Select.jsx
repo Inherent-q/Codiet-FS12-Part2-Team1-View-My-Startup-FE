@@ -1,14 +1,11 @@
-﻿import { MOCK_CORPS } from "../mock/mockCorps"; //목업 데이터(종찬)
-
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getOrCreateSessionId, getSessionId } from "../utils/sessionManager";
-import searchIcon from "../assets/icons/search.svg";
+import { getOrCreateSessionId, getSessionId } from "./utils/sessionManager";
+import searchIcon from "../assets/search.svg";
 import "./style/select.css";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
-const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
 const MAX_COMPARISON = 5;
 const MODAL_PAGE_SIZE = 6;
 
@@ -60,20 +57,32 @@ export default function SelectPage() {
   }, []);
 
   const fetchAllCompanies = async () => {
-    if (USE_MOCK) {
-      setAllCompanies(MOCK_CORPS);
-      return;
-    }
-
     try {
-      const response = await fetch(`${API_BASE_URL}/corporations`);
-      if (!response.ok) throw new Error("기업 목록 조회 실패");
-      const payload = await response.json();
-      const data = Array.isArray(payload) ? payload : payload?.data;
-      setAllCompanies(Array.isArray(data) ? data : []);
+      let page = 1;
+      const limit = 100;
+      let hasNextPage = true;
+      const merged = [];
+
+      while (hasNextPage) {
+        const response = await fetch(
+          `${API_BASE_URL}/corporations?page=${page}&limit=${limit}`,
+        );
+        if (!response.ok) throw new Error("기업 목록 조회 실패");
+
+        const payload = await response.json();
+        const data = Array.isArray(payload) ? payload : payload?.data;
+        const pageData = Array.isArray(data) ? data : [];
+
+        merged.push(...pageData);
+
+        hasNextPage = Boolean(payload?.pagination?.hasNextPage);
+        page += 1;
+      }
+
+      setAllCompanies(merged);
     } catch (err) {
-      console.error("기업 목록 API 실패, 목업 데이터로 대체합니다.", err);
-      setAllCompanies(MOCK_CORPS);
+      console.error("기업 목록 API 실패", err);
+      setAllCompanies([]);
     }
   };
 
