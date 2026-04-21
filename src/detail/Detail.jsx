@@ -7,7 +7,7 @@ import { useModal } from "../context/ModalContext";
 import AuthenticationModal from "./AuthenticationModal.jsx";
 import Pagination from "../compare/components/Pagination.jsx";
 import EditInvestModal from "./components/EditInvestModal.jsx";
-import InvestModal from "../results/components/investModal.jsx";
+import InvestModal from "../results/components/InvestModal.jsx";
 import "./style/detail.css";
 import "../results/style/results.css";
 
