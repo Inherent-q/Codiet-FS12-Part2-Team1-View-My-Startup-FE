@@ -76,13 +76,7 @@ export default function Home() {
             <SkeletonTable /> // 최초 진입 or 정렬/검색 변경 시
           ) : (
             // 페이지 이동중
-            <table
-              className="company-table"
-              style={{
-                opacity: isLoading ? 0.4 : 1,
-                transition: "opacity 0.15s",
-              }}
-            >
+            <table className={`company-table${isLoading ? " is-loading" : ""}`}>
               <thead>
                 <tr>
                   <th className="th-rank">순위</th>

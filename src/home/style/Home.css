@@ -151,6 +151,10 @@
   border-spacing: 0;
   font-size: var(--text-14);
   font-family: var(--font-pretendard);
+  transition: opacity 0.15s;
+}
+.company-table.is-loading {
+  opacity: 0.4;
 }
 
 /* 컬럼 헤더 */
