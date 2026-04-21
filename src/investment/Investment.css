@@ -160,9 +160,20 @@ h1 {
 
 .table {
   width: 100%;
+  table-layout: auto;
   margin-top: 16px;
   border-collapse: separate;
   border-spacing: 0;
+}
+
+td {
+  white-space: nowrap;
+}
+
+td.corp-descrip {
+  max-width: 213px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .thead {
@@ -188,6 +199,7 @@ h1 {
 
 .tbody {
   width: 100%;
+  height: auto;
   flex: 1 0 0;
   text-align: center;
   color: #d8d8d8;
@@ -200,7 +212,6 @@ h1 {
 
 .tbody-tr td {
   border-bottom: 1px solid var(--gray-gray_300, #4b4b4b);
-  height: 64px;
   cursor: pointer;
   background: var(--black-black_200, #212121);
 }
@@ -254,14 +265,21 @@ td:nth-child(3) {
 
 th:nth-child(4),
 td:nth-child(4) {
-  width: 153px;
+  width: 154px;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+  width: 154px;
+}
+th:nth-child(6),
+td:nth-child(6) {
+  width: 154px;
 }
 
 .corp-name {
   display: flex;
-  padding-top: 11px;
-  padding-bottom: 11px;
-  padding-left: 24px;
+  padding: 11px 0 11px 24px;
   align-items: center;
   align-self: stretch;
   color: #fff;
@@ -272,18 +290,17 @@ td:nth-child(4) {
   gap: 12px;
 }
 
-.corp-descrip {
-  height: 64px;
-  padding: 15px 16px;
-  align-items: center;
-  text-align: start;
-  gap: 10px;
-}
-
 .corp-img {
   width: 32px;
   height: 32px;
   border-radius: 50%;
+}
+
+.corp-descrip {
+  padding: 15px 16px;
+  align-items: center;
+  text-align: start;
+  gap: 10px;
 }
 
 /* 테블릿 */
@@ -327,6 +344,11 @@ td:nth-child(4) {
 /* 모바일 */
 
 @media (max-width: 375px) {
+  .table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
   .no-data-h1 {
     display: flex;
     width: 343px;
@@ -376,7 +398,7 @@ td:nth-child(4) {
 
   th:nth-child(1),
   td:nth-child(1) {
-    width: 60px;
+    width: 64px;
   }
 
   th:nth-child(2),
@@ -390,7 +412,11 @@ td:nth-child(4) {
   }
 
   th:nth-child(4),
-  td:nth-child(4) {
-    width: 84px;
+  td:nth-child(4),
+  th:nth-child(5),
+  td:nth-child(5),
+  th:nth-child(6),
+  td:nth-child(6) {
+    display: none;
   }
 }

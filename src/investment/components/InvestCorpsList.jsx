@@ -35,9 +35,11 @@ const InvestCorpsList = ({ corps, curPage }) => {
             }}
           >
             <td className="rank">{(curPage - 1) * 10 + index + 1}위</td>
-            <td className="corp-name">
-              <img className="corp-img" src={c.img} />
-              {c.name}
+            <td>
+              <div className="corp-name">
+                <img className="corp-img" src={c.img} />
+                {c.name}
+              </div>
             </td>
             <td className="corp-descrip">{c.description}</td>
             <td className="category">{c.category}</td>
