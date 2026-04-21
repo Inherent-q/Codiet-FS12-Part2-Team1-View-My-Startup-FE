@@ -1,3 +1,5 @@
+import "../style/skeleton.css";
+
 export default function SkeletonTable({ rows = 10 }) {
   return (
     <table className="company-table">

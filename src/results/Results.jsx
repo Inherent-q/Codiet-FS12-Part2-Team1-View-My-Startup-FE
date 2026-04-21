@@ -4,7 +4,7 @@ import vectorIcon from "../assets/vector.png";
 import "./style/results.css";
 import { useNavigate } from "react-router-dom";
 import { formatAmount } from "../home/utils/format";
-import InvestModal from "./components/InvestModal";
+import InvestModal from "./components/InvestModal.jsx";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
