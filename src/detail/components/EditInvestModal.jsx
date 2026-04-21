@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "../style/editInvestModal.css";
-import icShow from "../../assets/onpassword.png";
-import icHide from "../../assets/offpassword.png";
-import vectorIcon from "../../assets/vector.png";
+import icShow from "../../assets/onpassword.svg";
+import icHide from "../../assets/offpassword.svg";
+import vectorIcon from "../../assets/ic_delete.svg";
 import { useModal } from "../../context/ModalContext";
 
 export default function EditModal({

@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { SORT_OPTIONS } from "../constants/sortOptions";
-import toggleIcon from "../assets/ic_toggle.svg";
+import toggleIcon from "../../assets/toggle.svg";
 
 // 부모에서 넘긴 ref를 컴포넌트 내부 DOM에 연결
 const SortDropdown = forwardRef(function SortDropdown(

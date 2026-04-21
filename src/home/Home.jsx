@@ -5,7 +5,7 @@ import SortDropdown from "./components/SortDropdown";
 import Pagination from "../components/Pagination";
 import SkeletonTable from "./components/SkeletonTable";
 import "./style/home.css";
-import searchIcon from "./assets/ic_search.svg";
+import searchIcon from "../assets/search.svg";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
