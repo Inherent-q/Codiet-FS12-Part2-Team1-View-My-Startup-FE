@@ -5,7 +5,7 @@ import Pagination from "../components/Pagination";
 import InvestTable from "./components/InvestTable";
 
 const Investment = () => {
-  const [corps, setCoprs] = useState([]);
+  const [corps, setCorps] = useState([]);
   const [none, setNone] = useState(false);
   const [loading, setLoading] = useState(true);
   const [curPage, setCurPage] = useState(1);
@@ -16,6 +16,8 @@ const Investment = () => {
   useEffect(
     function () {
       const fetchData = async function () {
+        //데이터 로딩 중일 때 상태값 변경
+        setLoading(true);
         const res = await fetch(
           `http://localhost:3000/api/corporations/list?sort=${sort}&order=${order}&page=${curPage}`,
         );
@@ -27,9 +29,8 @@ const Investment = () => {
         } else {
           setNone(false);
         }
-        //데이터 로딩 중일 때 상태값 변경
-        setLoading(true);
-        setCoprs(data.data);
+
+        setCorps(data.data);
         setTotalPage(data.totalPages);
         setLoading(false);
       };
