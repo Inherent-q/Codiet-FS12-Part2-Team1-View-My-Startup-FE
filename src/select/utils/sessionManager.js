@@ -1,15 +1,9 @@
-// 로컬스토리지 sessionId 저장
+﻿const SESSION_ID_KEY = "my_startup_session_id";
 
-const SESSION_ID_KEY = "my_startup_session_id";
-
-/**
- * 또는 이미 있으면 기존 ID 반환
- */
 export const getOrCreateSessionId = () => {
   let sessionId = localStorage.getItem(SESSION_ID_KEY);
 
   if (!sessionId) {
-    // 새로운 sessionId 생성 (UUID)
     sessionId = generateUUID();
     localStorage.setItem(SESSION_ID_KEY, sessionId);
   }
@@ -17,23 +11,14 @@ export const getOrCreateSessionId = () => {
   return sessionId;
 };
 
-/**
- * sessionId 가져오기
- */
 export const getSessionId = () => {
   return localStorage.getItem(SESSION_ID_KEY);
 };
 
-/**
- * sessionId 초기화 (로그아웃 등)
- */
 export const clearSessionId = () => {
   localStorage.removeItem(SESSION_ID_KEY);
 };
 
-/**
- * UUID 생성 함수
- */
 function generateUUID() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0;
