@@ -1,15 +1,15 @@
-// 로컬스토리지 sessionId 저장
+﻿// 濡쒖뺄?ㅽ넗由ъ? sessionId ???
 
 const SESSION_ID_KEY = "my_startup_session_id";
 
 /**
- * 또는 이미 있으면 기존 ID 반환
+ * ?먮뒗 ?대? ?덉쑝硫?湲곗〈 ID 諛섑솚
  */
 export const getOrCreateSessionId = () => {
   let sessionId = localStorage.getItem(SESSION_ID_KEY);
 
   if (!sessionId) {
-    // 새로운 sessionId 생성 (UUID)
+    // ?덈줈??sessionId ?앹꽦 (UUID)
     sessionId = generateUUID();
     localStorage.setItem(SESSION_ID_KEY, sessionId);
   }
@@ -18,21 +18,21 @@ export const getOrCreateSessionId = () => {
 };
 
 /**
- * sessionId 가져오기
+ * sessionId 媛?몄삤湲?
  */
 export const getSessionId = () => {
   return localStorage.getItem(SESSION_ID_KEY);
 };
 
 /**
- * sessionId 초기화 (로그아웃 등)
+ * sessionId 珥덇린??(濡쒓렇?꾩썐 ??
  */
 export const clearSessionId = () => {
   localStorage.removeItem(SESSION_ID_KEY);
 };
 
 /**
- * UUID 생성 함수
+ * UUID ?앹꽦 ?⑥닔
  */
 function generateUUID() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
@@ -41,3 +41,4 @@ function generateUUID() {
     return v.toString(16);
   });
 }
+
