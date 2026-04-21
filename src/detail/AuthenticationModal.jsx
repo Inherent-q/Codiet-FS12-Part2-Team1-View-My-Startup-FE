@@ -17,14 +17,13 @@ export default function AuthenticationModal({
 
   if (!isOpen) return null;
 
-  const handleAuth = () => {
-    if (delInvestor && delInvestor.password === password) {
-      showResult("삭제됩니다.", () => {
-        onDelete();
-        onClose();
-      });
+  const handleAuth = async () => {
+    if (password) {
+      await onDelete(password);
+      setPassword("");
+      onClose();
     } else {
-      showError("잘못된 비밀번호로 삭제에 실패하셨습니다.");
+      showError("비밀번호를 입력해주세요.");
     }
   };
 
