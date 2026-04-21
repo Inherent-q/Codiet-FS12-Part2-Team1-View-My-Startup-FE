@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: flex-start;
   margin: 40px auto;
-  width: 1200px;
+  max-width: 1200px;
 }
 
 .profile-section {
@@ -17,19 +17,46 @@
   border-bottom: solid 1px #2e2e2e;
 }
 
+.profile-name {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.profile-category {
+  color: #747474;
+  font-size: 20px;
+  font-weight: 500;
+}
+
 .profile-detail {
+  width: 100%;
   display: flex;
   gap: 24px;
 }
 
 .profile-box {
-  width: 385px;
-  height: 90px;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 100px;
+  min-height: 90px;
   display: flex;
   justify-content: space-between;
   padding: 36px 24px;
   background-color: #282828;
   border-radius: 10px;
+}
+
+.profilebox-label {
+  color: #d8d8d8;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.profilebox-context {
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .profile-description {
@@ -51,6 +78,12 @@
   border-bottom: solid 1px #2e2e2e;
   margin-bottom: 16px;
 }
+
+.addInvest-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
 .addInvest-btn {
   display: flex;
   justify-content: center;
@@ -71,6 +104,7 @@
   flex-direction: column;
   gap: 16px;
   font-size: 14px;
+  overflow-x: auto;
 }
 
 .table-header {
@@ -185,4 +219,21 @@
   height: 150px;
   text-align: center;
   color: #747474;
+}
+
+@media (max-width: 768px) {
+  .profile-box span:first-child {
+    font-size: 14px; /* '누적 투자 금액' 등 라벨 크기 축소 */
+  }
+  .profile-box span:last-child {
+    font-size: 14px; /* '00억 원' 등 수치 크기 축소 */
+  }
+
+  .addInvest-section span:first-child {
+    font-size: 16px; /* 'View My Startup에서 받은 투자' */
+  }
+
+  .addInvest-section button:last-child {
+    font-size: 14px; /* '기업 투자하기' 버튼 */
+  }
 }

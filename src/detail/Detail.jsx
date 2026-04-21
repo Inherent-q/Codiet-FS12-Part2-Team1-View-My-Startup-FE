@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useModal } from "../context/ModalContext";
 import AuthenticationModal from "./AuthenticationModal.jsx";
+import Pagination from "../compare/components/Pagination.jsx";
 import EditInvestModal from "./components/EditInvestModal.jsx";
 import "./style/detail.css";
 
@@ -48,6 +49,10 @@ export default function Detail() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editTarget, setEditTarget] = useState(null);
 
+  // 추가 모달 state
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [AddTarget, setAddTarget] = useState(null);
+
   const handleDeleteClick = (id, invest) => {
     setSelectedDelId(id); // 삭제할 ID 저장
     setIsDelModalOpen(true); // 모달 열기
@@ -63,6 +68,11 @@ export default function Detail() {
   const handleEditClick = (item) => {
     setEditTarget({ ...item });
     setIsEditModalOpen(true);
+  };
+
+  const handleAddClick = (item) => {
+    setAddTarget({ ...item });
+    setIsAddModalOpen(true);
   };
 
   const handleEditSubmit = async (password) => {
@@ -150,36 +160,28 @@ export default function Detail() {
             flexDirection: "column",
           }}
         >
-          <p style={{ fontSize: "24px", fontWeight: "700" }}>
-            {corpdata?.name}
-          </p>
-          <p style={{ color: "#747474", fontSize: "20px", fontWeight: "500" }}>
-            {corpdata?.category}
-          </p>
+          <p className="profile-name">{corpdata?.name}</p>
+          <p className="profile-category">{corpdata?.category}</p>
         </div>
       </div>
 
       {/* 상단 누적투자금액/매출액/고용인원 섹션 */}
       <div className="profile-detail">
         <p className="profile-box">
-          <span style={{ color: "#D8D8D8", fontWeight: "400" }}>
-            누적 투자 금액
-          </span>
-          <span style={{ color: "#FFF", fontWeight: "600" }}>
+          <span className="profilebox-label">누적 투자 금액</span>
+          <span className="profilebox-context">
             {Math.floor(corpdata?.accInvest / 100000000)}억 원
           </span>
         </p>
         <p className="profile-box">
-          <span style={{ color: "#D8D8D8", fontWeight: "400" }}>매출액</span>
-          <span style={{ color: "#FFF", fontWeight: "600" }}>
+          <span className="profilebox-label">매출액</span>
+          <span className="profilebox-context">
             {Math.floor(corpdata?.revenue / 100000000)}억 원
           </span>
         </p>
         <p className="profile-box">
-          <span style={{ color: "#D8D8D8", fontWeight: "400" }}>고용 인원</span>
-          <span style={{ color: "#FFF", fontWeight: "600" }}>
-            {corpdata?.hire}명
-          </span>
+          <span className="profilebox-label">고용 인원</span>
+          <span className="profilebox-context">{corpdata?.hire}명</span>
         </p>
       </div>
 
@@ -194,9 +196,7 @@ export default function Detail() {
       {/* 기업투자하기 섹션 */}
       <div style={{ width: "100%" }}>
         <div className="addInvest-section">
-          <span style={{ fontSize: "20px", fontWeight: "700" }}>
-            View My Startup에서 받은 투자
-          </span>
+          <span className="addInvest-title">View My Startup에서 받은 투자</span>
           <button className="addInvest-btn" onClick={() => addInvest}>
             기업투자하기
           </button>
@@ -269,80 +269,12 @@ export default function Detail() {
                 ))}
               </div>
 
-              {/* 3. 페이지네이션 UI */}
-              {totalPages > 0 && (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: "8px",
-                  }}
-                >
-                  <button
-                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "8px",
-                      border: "none",
-                      backgroundColor: "#2E2E2E",
-                      color: "#747474",
-                      fontSize: "18px",
-                      fontWeight: "400",
-                    }}
-                  >
-                    &lt;
-                  </button>
-                  {[...Array(totalPages)].map((_, i) => (
-                    <button
-                      key={i + 1}
-                      onClick={() => setCurrentPage(i + 1)}
-                      style={
-                        currentPage === i + 1
-                          ? {
-                              width: "48px",
-                              height: "48px",
-                              borderRadius: "8px",
-                              border: "none",
-                              backgroundColor: "#EB5230",
-                              color: "#FFF",
-                              fontSize: "18px",
-                              fontWeight: "400",
-                            }
-                          : {
-                              width: "48px",
-                              height: "48px",
-                              borderRadius: "8px",
-                              border: "none",
-                              backgroundColor: "#2E2E2E",
-                              color: "#747474",
-                              fontSize: "18px",
-                              fontWeight: "400",
-                            }
-                      }
-                    >
-                      {i + 1}
-                    </button>
-                  ))}
-                  <button
-                    onClick={() =>
-                      setCurrentPage((p) => Math.min(p + 1, totalPages))
-                    }
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "8px",
-                      border: "none",
-                      backgroundColor: "#2E2E2E",
-                      color: "#747474",
-                      fontSize: "18px",
-                      fontWeight: "400",
-                    }}
-                  >
-                    &gt;
-                  </button>
-                </div>
-              )}
+              {/* 3. 페이지네이션 UI : 컴포넌트 분리 */}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
             </>
           ) : (
             <div className="noinvest">
