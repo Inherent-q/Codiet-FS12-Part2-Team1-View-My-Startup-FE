@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ic_delete from "../assets/ic_delete.svg";
-import icShow from "../assets/onpassword.png";
-import icHide from "../assets/offpassword.png";
+import icShow from "../assets/onpassword.svg";
+import icHide from "../assets/offpassword.svg";
 import { useModal } from "../context/ModalContext";
 
 export default function AuthenticationModal({
