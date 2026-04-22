@@ -1,48 +1,25 @@
-function CompanyCard({ company, rank }) {
+import "../style/companyCard.css";
+
+export default function CompanyCard({ company, rank }) {
   return (
-    <tr className="cs-row">
-      <td className="col-rank">
-        <span className="rank">{rank}위</span>
-      </td>
-      <td className="col-name">
-        <div className="company-info">
-          {company.logo ? (
-            <div
-              className="company-logo"
-              style={company.logoBg ? { backgroundColor: company.logoBg } : {}}
-            >
-              <img
-                src={company.logo}
-                alt={company.name}
-                className={
-                  company.logoMax ? 'logo-max' :
-                  company.logoFull ? 'logo-full' :
-                  company.logoContain ? 'logo-contain' : ''
-                }
-              />
-            </div>
-          ) : (
-            <div className="company-logo">
-              {company.logoInitial}
-            </div>
-          )}
+    <tr className="company-row">
+      <td className="rank-cell">{rank}위</td>
+      <td className="name-cell">
+        <div className="name-inner">
+          <div className="company-logo">
+            {company.img ? (
+              <img src={company.img} alt={company.name} />
+            ) : (
+              <span>{company.name?.[0] ?? "?"}</span>
+            )}
+          </div>
           <span className="company-name">{company.name}</span>
         </div>
       </td>
-      <td className="col-desc">
-        <p className="company-desc">{company.description}</p>
-      </td>
-      <td className="col-category">
-        <span className="category-badge">{company.category}</span>
-      </td>
-      <td className="col-my">
-        <span className="count">{company.myCount.toLocaleString()}</span>
-      </td>
-      <td className="col-compare">
-        <span className="count">{company.compareCount.toLocaleString()}</span>
-      </td>
+      <td className="desc-cell">{company.description}</td>
+      <td className="category-cell">{company.category}</td>
+      <td className="count-cell">{company.myCount?.toLocaleString()}</td>
+      <td className="count-cell">{company.compareCount?.toLocaleString()}</td>
     </tr>
   );
 }
-
-export default CompanyCard;

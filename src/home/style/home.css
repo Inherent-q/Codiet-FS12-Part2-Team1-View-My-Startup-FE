@@ -5,9 +5,9 @@
 }
 
 .home-content {
-  max-width: 1920px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 40px;
+  padding: 40px 40px 0;
 }
 
 /* 헤더 */
@@ -15,8 +15,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 0px;
   gap: 16px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .list-title {
@@ -28,7 +30,7 @@
 
 .list-controls {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
 }
 
@@ -46,8 +48,8 @@
 }
 
 .search-icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
 }
 
@@ -77,9 +79,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  width: 264px;
+  width: 168px;
   height: 48px;
-  padding: 0 16px;
+  padding: 0 10px;
   background-color: var(--black-black_400);
   border: 1px solid var(--gray-gray_200);
   border-radius: 10px;
@@ -90,8 +92,8 @@
 }
 
 .sort-icon {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
 }
 
@@ -99,7 +101,7 @@
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
-  width: 264px;
+  width: 168px;
   z-index: 100;
   display: flex;
   flex-direction: column;
@@ -107,6 +109,7 @@
 
 /* 각 옵션 */
 .sort-option {
+  width: 168px;
   height: 40px;
   padding: 0 10px;
   background-color: var(--black-black_400);
@@ -147,6 +150,7 @@
 
 .company-table {
   width: 100%;
+  margin-top: 16px;
   border-collapse: separate;
   border-spacing: 0;
   font-size: var(--text-14);
@@ -160,6 +164,7 @@
 /* 컬럼 헤더 */
 .company-table thead tr {
   background-color: var(--black-black_100);
+  height: 39px;
 }
 
 .company-table tbody::before {
@@ -193,6 +198,12 @@
 }
 .th-desc {
   width: 304px;
+}
+.th-category {
+  width: 154px;
+}
+.th-number {
+  width: 154px;
 }
 
 /* 로딩/에러 */

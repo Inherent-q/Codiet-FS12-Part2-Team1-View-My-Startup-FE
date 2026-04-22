@@ -2,7 +2,7 @@
   background-color: var(--black-black_200);
   cursor: pointer;
   transition: filter 0.15s;
-  height: 64px;
+  height: 55px;
 }
 
 .company-row:hover {
@@ -10,7 +10,7 @@
 }
 
 .company-row td {
-  padding: 15px 16px;
+  padding: 11px 16px;
   color: var(--gray-gray_100);
   font-size: var(--text-14);
   font-family: var(--font-pretendard);
@@ -55,8 +55,8 @@
 }
 
 .company-logo {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   display: flex;
   align-items: center;

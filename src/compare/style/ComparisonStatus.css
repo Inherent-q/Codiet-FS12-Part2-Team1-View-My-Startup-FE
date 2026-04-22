@@ -1,312 +1,224 @@
-.comparison-status {
+.comparison-page {
+  min-height: 100vh;
+  background-color: var(--black-black_400);
+  color: var(--white);
+}
+
+.comparison-content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 40px 0;
 }
 
 /* 헤더 (제목 + 정렬) */
-.cs-header {
+.list-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 0;
+  gap: 16px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
-.cs-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
+.list-title {
+  font-size: var(--text-20);
+  font-weight: var(--weight-bold);
+  color: var(--white);
+  white-space: nowrap;
 }
 
 /* 정렬 드롭다운 */
-.sort-select {
-  appearance: none;
-  -webkit-appearance: none;
-  background-color: #404040;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 10px 36px 10px 14px;
+.sort-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.sort-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 220px;
+  height: 48px;
+  padding: 0 10px;
+  background-color: var(--black-black_400);
+  border: 1px solid var(--gray-gray_200);
+  border-radius: 10px;
+  color: var(--gray-gray_100);
+  font-size: var(--text-14);
+  font-family: var(--font-pretendard);
   cursor: pointer;
-  outline: none;
-  transition: border-color 0.2s;
-  min-width: 210px;
 }
 
-.sort-select:hover {
-  border-color: rgba(255, 255, 255, 0.3);
+.sort-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
-.sort-select:focus {
-  border-color: rgba(255, 255, 255, 0.5);
+.sort-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  width: 220px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
 }
 
-.sort-select option {
-  background-color: #404040;
-  color: #ffffff;
-}
-
-/* 테이블 */
-.cs-table-wrapper {
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.cs-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-/* 테이블 헤더 */
-.cs-table thead tr {
-  background-color: rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.cs-table th {
-  padding: 14px 20px;
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
-  text-align: left;
-  white-space: nowrap;
-}
-
-/* 테이블 바디 */
-.cs-row {
-  background-color: #404040;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.sort-option {
+  width: 220px;
+  height: 40px;
+  padding: 0 10px;
+  background-color: var(--black-black_400);
+  border: 1px solid var(--gray-gray_200);
+  border-top: none;
+  color: var(--gray-gray_100);
+  font-size: var(--text-14);
+  font-family: var(--font-pretendard);
+  text-align: center;
+  cursor: pointer;
   transition: background-color 0.15s;
 }
 
-.cs-row:last-child {
-  border-bottom: none;
+.sort-option.first {
+  border-top: 1px solid var(--gray-gray_200);
+  border-radius: 10px 10px 0 0;
 }
 
-.cs-row:hover {
-  background-color: #4a4a4a;
+.sort-option.last {
+  border-radius: 0 0 10px 10px;
 }
 
-.cs-table td {
-  padding: 16px 20px;
-  font-size: 14px;
-  color: #ffffff;
-  vertical-align: middle;
+.sort-option.selected {
+  color: var(--white);
+  font-weight: var(--weight-semibold);
 }
 
-/* 컬럼 너비 */
-.col-rank    { width: 80px; text-align: center; }
-.col-name    { width: 180px; }
-.col-desc    { width: auto; }
-.col-category{ width: 110px; }
-.col-my      { width: 160px; text-align: center; }
-.col-compare { width: 160px; text-align: center; }
-
-/* 순위 */
-.rank {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+.sort-option:hover {
+  background-color: var(--black-black_100);
+  color: var(--white);
 }
 
-/* 기업명 + 로고 */
-.company-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.company-logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden;
-  background-color: #ffffff;
-  /* 이니셜 텍스트 스타일 */
-  color: #333333;
-  font-family: 'Pretendard', sans-serif;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-}
-
-.company-logo img {
+/* 테이블 */
+.table-wrapper {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+  overflow-x: auto;
 }
 
-.company-logo img.logo-contain {
-  object-fit: contain;
-  padding: 4px;
+.company-table {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--text-14);
+  font-family: var(--font-pretendard);
+  transition: opacity 0.15s;
 }
 
-.company-logo img.logo-full {
-  object-fit: contain;
-  padding: 1px;
+.company-table.is-loading {
+  opacity: 0.4;
 }
 
-.company-logo img.logo-max {
-  object-fit: contain;
-  padding: 0;
+/* 컬럼 헤더 */
+.company-table thead tr {
+  background-color: var(--black-black_100);
+  height: 39px;
 }
 
-.company-name {
-  color: #FFF;
-  font-family: 'Pretendard', sans-serif;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.company-table tbody::before {
+  content: "";
+  display: table-row;
+  height: 16px;
 }
 
-/* 기업 소개 */
-.company-desc {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin: 0;
-}
-
-/* 카테고리 */
-.category-badge {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+.company-table th {
+  padding: 10px 16px;
+  text-align: center;
+  color: var(--white);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-14);
   white-space: nowrap;
 }
 
-/* 선택 횟수 */
-.count {
-  font-size: 14px;
-  font-weight: 600;
-  color: #ffffff;
+.company-table thead tr th:first-child { border-radius: 4px 0 0 4px; }
+.company-table thead tr th:last-child  { border-radius: 0 4px 4px 0; }
+
+.th-rank     { width: 68px; }
+.th-name     { width: 180px; }
+.th-desc     { width: 260px; }
+.th-category { width: 120px; }
+.th-count    { width: 160px; }
+
+/* 로딩/에러 */
+.loading,
+.error {
+  text-align: center;
+  padding: 60px;
+  color: var(--gray-gray_200);
+  font-size: var(--text-14);
 }
 
-/* iPad mini (744px) */
-@media (max-width: 768px) {
-  .comparison-status {
-    padding: 24px 24px 0;
+/* ===== Tablet (≤ 744px) ===== */
+@media (max-width: 744px) {
+  .comparison-content {
+    padding: 24px;
   }
 
-  .cs-table-wrapper {
-    overflow-x: auto;
+  .list-header {
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  .cs-table {
-    min-width: 680px;
+  .sort-trigger {
+    width: 190px;
+    height: 40px;
   }
 
-  .cs-table th {
-    padding: 12px 14px;
-    font-size: 12px;
+  .sort-dropdown,
+  .sort-option {
+    width: 190px;
   }
 
-  .cs-table td {
-    padding: 12px 14px;
-    font-size: 13px;
+  .th-rank,
+  .rank-cell {
+    display: none;
   }
 
-  .col-rank    { width: 60px; }
-  .col-name    { width: 150px; }
-  .col-category{ width: 90px; }
-  .col-my      { width: 130px; }
-  .col-compare { width: 130px; }
+  .th-name {
+    width: 140px;
+    border-radius: 4px 0 0 4px;
+  }
 
-  .sort-select {
-    font-size: 13px;
-    min-width: 180px;
-    padding: 8px 30px 8px 12px;
+  .th-desc {
+    width: 160px;
   }
 }
 
-/* Mobile (375px) */
-@media (max-width: 430px) {
-  .comparison-status {
-    padding: 16px 16px 0;
+/* ===== Mobile (≤ 375px) ===== */
+@media (max-width: 375px) {
+  .list-title {
+    font-size: var(--text-16);
   }
 
-  .cs-header {
+  .list-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 16px;
   }
 
-  .cs-title {
-    font-size: 16px;
-  }
-
-  .sort-select {
+  .sort-trigger {
     width: 100%;
-    min-width: unset;
-    font-size: 13px;
   }
 
-  .cs-table-wrapper {
-    overflow-x: auto;
+  .sort-dropdown,
+  .sort-option {
+    width: 100%;
   }
 
-  .cs-table {
-    min-width: 600px;
-  }
-
-  .cs-table th {
-    padding: 10px 12px;
-    font-size: 11px;
-  }
-
-  .cs-table td {
-    padding: 10px 12px;
-    font-size: 12px;
-  }
-
-  .col-rank    { width: 50px; }
-  .col-name    { width: 130px; }
-  .col-category{ width: 80px; }
-  .col-my      { width: 110px; }
-  .col-compare { width: 110px; }
-
-  .company-logo {
-    width: 28px;
-    height: 28px;
-    font-size: 11px;
-  }
-
-  .company-name {
-    font-size: 12px;
-  }
-
-  .rank {
-    font-size: 12px;
-  }
-
-  .count {
-    font-size: 12px;
+  .th-category,
+  .category-cell {
+    display: none;
   }
 }
+
