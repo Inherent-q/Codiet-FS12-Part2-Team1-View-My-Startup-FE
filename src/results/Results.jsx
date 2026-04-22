@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import toggleIcon from "../assets/togglebtn.svg";
-import vectorIcon from "../assets/ic_delete.svg";
 import "./style/results.css";
 import { useNavigate } from "react-router-dom";
 import { formatAmount } from "../home/utils/format";
 import InvestModal from "./components/InvestModal.jsx";
 import DropdownSort from "./components/DropdownSort.jsx";
+import { useModal } from "../context/ModalContext";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
@@ -15,13 +14,13 @@ function Results() {
   const returnSelect = function () {
     navigate("/select");
   };
+  const { showResult } = useModal();
 
   const [mySelection, setMySelection] = useState(null);
   const [comparisonSelections, setComparisonSelections] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [investModal, setInvestModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState("누적 투자금액 높은순");
   const sortOptions = [
@@ -43,8 +42,8 @@ function Results() {
     "고용 인원 적은순",
   ];
 
-  useEffect(() => {
-    const load = async () => {
+  useEffect(function () {
+    const load = async function () {
       try {
         setIsLoading(true);
         setError("");
@@ -86,7 +85,9 @@ function Results() {
 
   const myCorp = mySelection?.corp ?? null;
   const compareCorps = comparisonSelections
-    .map((item) => item.corp)
+    .map(function (item) {
+      return item.corp;
+    })
     .filter(Boolean);
 
   if (isLoading) return <div className="resultsContainer">불러오는 중...</div>;
@@ -102,16 +103,12 @@ function Results() {
         return a.accInvest - b.accInvest;
       case "매출액 높은순":
         return b.revenue - a.revenue;
-
       case "매출액 낮은순":
         return a.revenue - b.revenue;
-
       case "고용 인원 많은순":
         return b.hire - a.hire;
-
       case "고용 인원 적은순":
         return a.hire - b.hire;
-
       default:
         return 0;
     }
@@ -126,16 +123,12 @@ function Results() {
         return a.accInvest - b.accInvest;
       case "매출액 높은순":
         return b.revenue - a.revenue;
-
       case "매출액 낮은순":
         return a.revenue - b.revenue;
-
       case "고용 인원 많은순":
         return b.hire - a.hire;
-
       case "고용 인원 적은순":
         return a.hire - b.hire;
-
       default:
         return 0;
     }
@@ -215,24 +208,25 @@ function Results() {
             <th>고용 인원</th>
           </tr>
         </thead>
-
         <tbody>
           <tr className="spacer-row"></tr>
-          {sortData.map((corp) => (
-            <tr key={corp.id}>
-              <td>
-                <div className="imageName">
-                  <img src={corp.img} alt={corp.name} />
-                  {corp.name}
-                </div>
-              </td>
-              <td>{corp.description}</td>
-              <td>{corp.category}</td>
-              <td>{formatAmount(corp.accInvest)}</td>
-              <td>{formatAmount(corp.revenue)}</td>
-              <td>{corp.hire}명</td>
-            </tr>
-          ))}
+          {sortData.map(function (corp) {
+            return (
+              <tr key={corp.id}>
+                <td>
+                  <div className="imageName">
+                    <img src={corp.img} alt={corp.name} />
+                    {corp.name}
+                  </div>
+                </td>
+                <td>{corp.description}</td>
+                <td>{corp.category}</td>
+                <td>{formatAmount(corp.accInvest)}</td>
+                <td>{formatAmount(corp.revenue)}</td>
+                <td>{corp.hire}명</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
@@ -261,22 +255,24 @@ function Results() {
         </thead>
         <tbody>
           <tr className="spacer-row"></tr>
-          {sortData2.map((corp, idx) => (
-            <tr key={`rank-${corp.id}`}>
-              <td>{idx + 1}위</td>
-              <td>
-                <div className="imageName">
-                  <img src={corp.img} alt={corp.name} />
-                  {corp.name}
-                </div>
-              </td>
-              <td>{corp.description}</td>
-              <td>{corp.category}</td>
-              <td>{formatAmount(corp.accInvest)}</td>
-              <td>{formatAmount(corp.revenue)}</td>
-              <td>{corp.hire}명</td>
-            </tr>
-          ))}
+          {sortData2.map(function (corp, idx) {
+            return (
+              <tr key={`rank-${corp.id}`}>
+                <td>{idx + 1}위</td>
+                <td>
+                  <div className="imageName">
+                    <img src={corp.img} alt={corp.name} />
+                    {corp.name}
+                  </div>
+                </td>
+                <td>{corp.description}</td>
+                <td>{corp.category}</td>
+                <td>{formatAmount(corp.accInvest)}</td>
+                <td>{formatAmount(corp.revenue)}</td>
+                <td>{corp.hire}명</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
@@ -296,42 +292,14 @@ function Results() {
       {showModal && (
         <InvestModal
           myCorp={myCorp}
-          onClose={() => setShowModal(false)}
-          onInvestSuccess={() => {
+          onClose={function () {
             setShowModal(false);
-            setInvestModal(true);
+          }}
+          onInvestSuccess={function () {
+            setShowModal(false);
+            showResult("투자가 완료되었어요!");
           }}
         />
-      )}
-
-      {investModal && (
-        <div className="modalOverlay">
-          <div className="modalContent">
-            <img
-              src={vectorIcon}
-              alt="닫음"
-              style={{
-                width: "20.333px",
-                height: "20.333px",
-                alignSelf: "flex-end",
-              }}
-              onClick={function () {
-                setInvestModal(false);
-              }}
-            />
-            <div className="buttonGroup">
-              <h3 className="successMessage">투자가 완료되었어요!</h3>
-              <button
-                className="orangeButton"
-                onClick={function () {
-                  setInvestModal(false);
-                }}
-              >
-                확인
-              </button>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );
