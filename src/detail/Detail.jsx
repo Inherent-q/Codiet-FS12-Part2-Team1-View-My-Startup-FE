@@ -332,6 +332,7 @@ export default function Detail() {
           onInvestSuccess={() => {
             setIsAddModalOpen(false);
             setIsAddModalSuccess(true);
+            fetchinfo();
           }}
         />
       )}
