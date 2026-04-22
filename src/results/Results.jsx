@@ -5,6 +5,7 @@ import "./style/results.css";
 import { useNavigate } from "react-router-dom";
 import { formatAmount } from "../home/utils/format";
 import InvestModal from "./components/InvestModal.jsx";
+import DropdownSort from "./components/DropdownSort.jsx";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
@@ -194,39 +195,13 @@ function Results() {
 
       <div className="sectionTitle">
         <span className="mainTitle">비교 결과 확인하기</span>
-        <div
-          className="dropdownContainer"
-          onClick={function () {
-            setIsOpen(!isOpen);
-          }}
-        >
-          <span className="dropdownText">{selectedSort}</span>
-          <img
-            src={toggleIcon}
-            alt="Toggle Dropdown"
-            className="dropdownIcon"
-          />
-
-          {isOpen && (
-            <ul className="dropdownList">
-              {sortOptions.map(function (option) {
-                return (
-                  <li
-                    key={option}
-                    className="dropdownItem"
-                    onClick={function (e) {
-                      e.stopPropagation();
-                      setSelectedSort(option);
-                      setIsOpen(false);
-                    }}
-                  >
-                    {option}
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
+        <DropdownSort
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+          selectedSort={selectedSort}
+          sortOptions={sortOptions}
+          setSelectedSort={setSelectedSort}
+        />
       </div>
 
       <table className="tableWrapperCompare">
@@ -263,39 +238,13 @@ function Results() {
 
       <div className="sectionTitle" style={{ marginTop: "60px" }}>
         <span className="mainTitle">기업 순위 확인하기</span>
-        <div
-          className="dropdownContainer"
-          onClick={function () {
-            setIsOpen2(!isOpen2);
-          }}
-        >
-          <span className="dropdownText">{selectedSort2}</span>
-          <img
-            src={toggleIcon}
-            alt="Toggle Dropdown"
-            className="dropdownIcon"
-          />
-
-          {isOpen2 && (
-            <ul className="dropdownList">
-              {sortOptions2.map(function (option2) {
-                return (
-                  <li
-                    key={option2}
-                    className="dropdownItem"
-                    onClick={function (e) {
-                      e.stopPropagation();
-                      setSelectedSort2(option2);
-                      setIsOpen2(false);
-                    }}
-                  >
-                    {option2}
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </div>
+        <DropdownSort
+          setIsOpen={setIsOpen2}
+          isOpen={isOpen2}
+          selectedSort={selectedSort2}
+          sortOptions={sortOptions2}
+          setSelectedSort={setSelectedSort2}
+        />
       </div>
 
       <table className="tableWrapperRank">
