@@ -5,7 +5,7 @@ import icHide from "../assets/offpassword.svg";
 import { useParams } from "react-router-dom";
 import { useModal } from "../context/ModalContext";
 import AuthenticationModal from "./AuthenticationModal.jsx";
-import Pagination from "../compare/components/Pagination.jsx";
+import Pagination from "../components/Pagination.jsx";
 import EditInvestModal from "./components/EditInvestModal.jsx";
 import InvestModal from "../results/components/InvestModal.jsx";
 import "./style/detail.css";
@@ -291,7 +291,7 @@ export default function Detail() {
 
               {/* 3. 페이지네이션 UI : 컴포넌트 분리 */}
               <Pagination
-                currentPage={currentPage}
+                page={currentPage}
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
               />
