@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getOrCreateSessionId, getSessionId } from "./utils/sessionManager";
 import searchIcon from "../assets/search.svg";
 import "./style/select.css";
+import Pagination from "../components/Pagination";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
@@ -288,25 +289,6 @@ export default function SelectPage() {
     1,
     Math.ceil(filteredComparisonCandidates.length / MODAL_PAGE_SIZE),
   );
-
-  const visiblePageNumbers = useMemo(() => {
-    const maxVisible = 5;
-
-    if (comparisonTotalPages <= maxVisible) {
-      return Array.from({ length: comparisonTotalPages }, (_, i) => i + 1);
-    }
-
-    const half = Math.floor(maxVisible / 2);
-    let start = Math.max(1, comparisonModalPage - half);
-    let end = start + maxVisible - 1;
-
-    if (end > comparisonTotalPages) {
-      end = comparisonTotalPages;
-      start = end - maxVisible + 1;
-    }
-
-    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
-  }, [comparisonModalPage, comparisonTotalPages]);
 
   useEffect(() => {
     if (comparisonModalPage > comparisonTotalPages) {
@@ -730,39 +712,12 @@ export default function SelectPage() {
               </p>
 
               <div className="select-modal-footer">
-                <div className="select-pagination">
-                  <button
-                    type="button"
-                    className="select-page-btn"
-                    onClick={() =>
-                      setComparisonModalPage((prev) => Math.max(1, prev - 1))
-                    }
-                    disabled={comparisonModalPage === 1}
-                  >
-                    {"<"}
-                  </button>
-                  {visiblePageNumbers.map((page) => (
-                    <button
-                      key={page}
-                      type="button"
-                      className={`select-page-btn ${page === comparisonModalPage ? "select-is-active" : ""}`}
-                      onClick={() => setComparisonModalPage(page)}
-                    >
-                      {page}
-                    </button>
-                  ))}
-                  <button
-                    type="button"
-                    className="select-page-btn"
-                    onClick={() =>
-                      setComparisonModalPage((prev) =>
-                        Math.min(comparisonTotalPages, prev + 1),
-                      )
-                    }
-                    disabled={comparisonModalPage === comparisonTotalPages}
-                  >
-                    {">"}
-                  </button>
+                <div className="select-modal-pagination">
+                  <Pagination
+                    page={comparisonModalPage}
+                    totalPages={comparisonTotalPages}
+                    onPageChange={setComparisonModalPage}
+                  />
                 </div>
                 <button
                   type="button"
