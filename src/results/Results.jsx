@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import toggleIcon from "../assets/togglebtn.png";
-import vectorIcon from "../assets/vector.png";
+import toggleIcon from "../assets/togglebtn.svg";
+import vectorIcon from "../assets/ic_delete.svg";
 import "./style/results.css";
 import { useNavigate } from "react-router-dom";
 import { formatAmount } from "../home/utils/format";

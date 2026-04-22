@@ -1,7 +1,7 @@
 import { useState } from "react";
 import vectorIcon from "../../assets/ic_delete.svg";
-import togglepassword from "../../assets/onpassword.png";
-import toggleoffpassword from "../../assets/offpassword.png";
+import togglepassword from "../../assets/onpassword.svg";
+import toggleoffpassword from "../../assets/offpassword.svg";
 import { validateNewInvest } from "../../utils/validation";
 
 const API_BASE_URL =
