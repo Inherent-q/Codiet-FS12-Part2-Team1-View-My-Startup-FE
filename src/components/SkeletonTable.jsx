@@ -1,4 +1,4 @@
-import "../style/skeleton.css";
+import "./skeleton.css";
 
 export default function SkeletonTable({ rows = 10 }) {
   return (
