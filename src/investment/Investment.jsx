@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Investment.css";
+import "./style/investment.css";
 import "../components/Pagination.css";
 import Pagination from "../components/Pagination";
 import InvestTable from "./components/InvestTable";
