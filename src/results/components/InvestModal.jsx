@@ -1,5 +1,5 @@
 import { useState } from "react";
-import vectorIcon from "../../assets/vector.png";
+import vectorIcon from "../../assets/ic_delete.svg";
 import togglepassword from "../../assets/onpassword.png";
 import toggleoffpassword from "../../assets/offpassword.png";
 import { validateNewInvest } from "../../utils/validation";
@@ -72,7 +72,7 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
             src={vectorIcon}
             alt="닫음"
             onClick={onClose}
-            style={{ cursor: "pointer", width: "20.333px" }}
+            style={{ cursor: "pointer", width: "32px", height: "32px" }}
           />
         </div>
 
