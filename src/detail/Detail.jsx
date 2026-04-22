@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import ic_delete from "../assets/ic_delete.svg";
+import icShow from "../assets/onpassword.png";
+import icHide from "../assets/offpassword.png";
 import { useParams } from "react-router-dom";
 import { useModal } from "../context/ModalContext";
 import AuthenticationModal from "./AuthenticationModal.jsx";
 import Pagination from "../compare/components/Pagination.jsx";
 import EditInvestModal from "./components/EditInvestModal.jsx";
+import InvestModal from "../results/components/InvestModal.jsx";
 import "./style/detail.css";
+import "../results/style/results.css";
 
 export default function Detail() {
   const { showResult, showError } = useModal();
@@ -51,7 +56,7 @@ export default function Detail() {
 
   // 추가 모달 state
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [AddTarget, setAddTarget] = useState(null);
+  const [isAddModalSuccess, setIsAddModalSuccess] = useState(false);
 
   const handleDeleteClick = (id, invest) => {
     setSelectedDelId(id); // 삭제할 ID 저장
@@ -59,10 +64,12 @@ export default function Detail() {
     setSelectInvestor(invest); // 삭제할 투자 객체 전달
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async (password) => {
     console.log(`${selectedDelId} 삭제 진행됨`);
-    deleteInvest(selectedDelId);
-    setIsDelModalOpen(false); // 삭제 후 모달 닫기
+    const success = await deleteInvest(selectedDelId, password);
+    if (success) {
+      setIsDelModalOpen(false);
+    } // 삭제 성공 시 모달 닫기
   };
 
   const handleEditClick = (item) => {
@@ -126,19 +133,34 @@ export default function Detail() {
     fetchinfo();
   }, [id]);
 
-  const deleteInvest = (targetId) => {
+  const deleteInvest = async (targetId, password) => {
     try {
-      const res = fetch(`http://localhost:3000/api/investors/${targetId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `http://localhost:3000/api/investors/${targetId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password }), // 비밀번호 포함
+        },
+      );
 
       if (res.ok) {
-        fetchinfo();
-      } else {
-        console.error(res.status);
+        showResult("삭제가 완료되었습니다.", () => {
+          fetchinfo();
+        });
+        return true;
       }
+
+      if (res.status === 401) {
+        showError("잘못된 비밀번호로 삭제에 실패하셨습니다.");
+      } else {
+        showError("삭제에 실패했습니다.");
+      }
+      return false;
     } catch (error) {
       console.error(error.message);
+      showError("오류가 발생했습니다.");
+      return false;
     }
   };
 
@@ -197,7 +219,10 @@ export default function Detail() {
       <div style={{ width: "100%" }}>
         <div className="addInvest-section">
           <span className="addInvest-title">View My Startup에서 받은 투자</span>
-          <button className="addInvest-btn" onClick={() => addInvest}>
+          <button
+            className="addInvest-btn"
+            onClick={() => setIsAddModalOpen(true)}
+          >
             기업투자하기
           </button>
         </div>
@@ -303,6 +328,47 @@ export default function Detail() {
           }}
           onSubmit={handleEditSubmit}
         />
+      )}
+
+      {isAddModalOpen && (
+        <InvestModal
+          myCorp={corpdata}
+          onClose={() => setIsAddModalOpen(false)}
+          onInvestSuccess={() => {
+            setIsAddModalOpen(false);
+            setIsAddModalSuccess(true);
+          }}
+        />
+      )}
+
+      {isAddModalSuccess && (
+        <div className="modalOverlay">
+          <div className="modalContent">
+            <img
+              src={ic_delete}
+              alt="닫음"
+              style={{
+                width: "20.333px",
+                height: "20.333px",
+                alignSelf: "flex-end",
+              }}
+              onClick={function () {
+                setIsAddModalSuccess(false);
+              }}
+            />
+            <div className="buttonGroup">
+              <h3 className="successMessage">투자가 완료되었어요!</h3>
+              <button
+                className="orangeButton"
+                onClick={function () {
+                  setIsAddModalSuccess(false);
+                }}
+              >
+                확인
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

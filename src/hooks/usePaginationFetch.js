@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const DEBOUNCE_DELAY = 300;
 
@@ -36,7 +36,7 @@ export function usePaginationFetch(apiEndpoint) {
     setDisplayData([]);
   }, [apiEndpoint]);
 
-  // 정렬/검색 바뀌면 displayData 초기화 → 스켈레톤 표시
+  // 정렬/검색 바뀌면 displayData 초기화
   useEffect(() => {
     setDisplayData([]);
   }, [sortBy, sortOrder, debouncedSearch]);
@@ -61,11 +61,11 @@ export function usePaginationFetch(apiEndpoint) {
           limit,
           sortBy,
           sortOrder,
-          ...(debouncedSearch && { search: debouncedSearch }),
+          ...(debouncedSearch && { search: debouncedSearch }), // 검색어 있을 때만 파라미터에 포함
         });
 
         const res = await fetch(`${apiEndpoint}?${params}`, {
-          signal: abortController.signal,
+          signal: abortController.signal, // 위 요청 취소할 수 있게 연결
         });
 
         if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
@@ -80,6 +80,7 @@ export function usePaginationFetch(apiEndpoint) {
         if (err.name === "AbortError") return;
         setError(err.message);
       } finally {
+        // 취소된 요청 무시
         if (!abortController.signal.aborted) {
           setIsLoading(false);
         }
@@ -87,7 +88,7 @@ export function usePaginationFetch(apiEndpoint) {
     };
 
     fetchData();
-    return () => abortController.abort();
+    return () => abortController.abort(); // 이전 요청 취소
   }, [apiEndpoint, page, limit, debouncedSearch, sortBy, sortOrder]);
 
   const handleSearch = useCallback((value) => setSearch(value), []);

@@ -4,8 +4,8 @@ import CompanyRow from "./components/CompanyRow";
 import SortDropdown from "./components/SortDropdown";
 import Pagination from "../components/Pagination";
 import SkeletonTable from "./components/SkeletonTable";
-import "./style/Home.css";
-import searchIcon from "./assets/ic_search.svg";
+import "./style/home.css";
+import searchIcon from "../assets/search.svg";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
@@ -27,7 +27,7 @@ export default function Home() {
   } = usePaginationFetch(`${API_BASE_URL}/corporations`);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef(null); // 드롭다운 바깥 클릭 처리
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -75,13 +75,8 @@ export default function Home() {
           {isLoading && displayData.length === 0 ? (
             <SkeletonTable /> // 최초 진입 or 정렬/검색 변경 시
           ) : (
-            <table
-              className="company-table"
-              style={{
-                opacity: isLoading ? 0.4 : 1,
-                transition: "opacity 0.15s",
-              }}
-            >
+            // 페이지 이동중
+            <table className={`company-table${isLoading ? " is-loading" : ""}`}>
               <thead>
                 <tr>
                   <th className="th-rank">순위</th>
@@ -94,6 +89,7 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
+                {/* 리스트 렌더링 */}
                 {displayData.map((company, index) => (
                   <CompanyRow
                     key={company.id}
@@ -105,7 +101,7 @@ export default function Home() {
             </table>
           )}
         </div>
-
+        {/* 페이지네이션 */}
         {pagination && (
           <Pagination
             page={page}
