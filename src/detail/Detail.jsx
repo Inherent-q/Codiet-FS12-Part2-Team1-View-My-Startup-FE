@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ic_delete from "../assets/ic_delete.svg";
-import icShow from "../assets/onpassword.png";
-import icHide from "../assets/offpassword.png";
+import icShow from "../assets/onpassword.svg";
+import icHide from "../assets/offpassword.svg";
 import { useParams } from "react-router-dom";
 import { useModal } from "../context/ModalContext";
 import AuthenticationModal from "./AuthenticationModal.jsx";
@@ -10,6 +10,7 @@ import EditInvestModal from "./components/EditInvestModal.jsx";
 import InvestModal from "../results/components/InvestModal.jsx";
 import "./style/detail.css";
 import "../results/style/results.css";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function Detail() {
   const { showResult, showError } = useModal();
@@ -84,19 +85,16 @@ export default function Detail() {
 
   const handleEditSubmit = async (password) => {
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/investors/${editTarget.id}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: editTarget.name,
-            amount: editTarget.amount,
-            comment: editTarget.comment,
-            password: password,
-          }),
-        },
-      );
+      const res = await fetch(`${API_BASE_URL}/investors/${editTarget.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: editTarget.name,
+          amount: editTarget.amount,
+          comment: editTarget.comment,
+          password: password,
+        }),
+      });
 
       if (res.ok) {
         showResult("수정이 완료되었습니다.", () => {
@@ -116,13 +114,13 @@ export default function Detail() {
   };
 
   const fetchinfo = () => {
-    fetch(`http://localhost:3000/api/corporations/${id}`)
+    fetch(`${API_BASE_URL}/corporations/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setCorpdata(data);
       });
 
-    fetch(`http://localhost:3000/api/corporations/${id}/investors`)
+    fetch(`${API_BASE_URL}/corporations/${id}/investors`)
       .then((res) => res.json())
       .then((data) => {
         setInvestors(data);
@@ -135,14 +133,11 @@ export default function Detail() {
 
   const deleteInvest = async (targetId, password) => {
     try {
-      const res = await fetch(
-        `http://localhost:3000/api/investors/${targetId}`,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ password }), // 비밀번호 포함
-        },
-      );
+      const res = await fetch(`${API_BASE_URL}/investors/${targetId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }), // 비밀번호 포함
+      });
 
       if (res.ok) {
         showResult("삭제가 완료되었습니다.", () => {
