@@ -3,8 +3,8 @@ import { usePaginationFetch } from "../hooks/usePaginationFetch";
 import CompanyCard from "./components/CompanyCard";
 import SortDropdown from "./components/SortDropdown";
 import Pagination from "../components/Pagination";
-import SkeletonTable from "../components/SkeletonTable";
-import "./style/ComparisonStatus.css";
+import CompareSkeletonBody from "./components/CompareSkeletonTable";
+import "./style/comparisonStatus.css";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
@@ -24,7 +24,7 @@ export default function ComparisonStatus() {
   } = usePaginationFetch(`${API_BASE_URL}/comparison-status`);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null); // 드롭다운 바깥 클릭 처리
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -58,32 +58,36 @@ export default function ComparisonStatus() {
         </div>
 
         <div className="table-wrapper">
-          {isLoading && displayData.length === 0 ? (
-            <SkeletonTable /> // 최초 진입 or 정렬 변경 시
-          ) : (
-            // 페이지 이동 중
-            <table className={`company-table${isLoading ? " is-loading" : ""}`}>
-              <thead>
-                <tr>
-                  <th className="th-rank">순위</th>
-                  <th className="th-name">기업 명</th>
-                  <th className="th-desc">기업 소개</th>
-                  <th className="th-category">카테고리</th>
-                  <th className="th-count">나의 기업 선택 횟수</th>
-                  <th className="th-count">비교 기업 선택 횟수</th>
-                </tr>
-              </thead>
-              <tbody>
-                {displayData.map((company, index) => (
+          {/* thead는 로딩 여부와 무관하게 항상 유지 */}
+          <table
+            className={`company-table${isLoading && displayData.length > 0 ? " is-loading" : ""}`}
+          >
+            <thead>
+              <tr>
+                <th className="th-rank">순위</th>
+                <th className="th-name">기업 명</th>
+                <th className="th-desc">기업 소개</th>
+                <th className="th-category">카테고리</th>
+                <th className="th-count">나의 기업 선택 횟수</th>
+                <th className="th-count">비교 기업 선택 횟수</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading && displayData.length === 0 ? (
+                // 최초 진입 or 정렬 변경 시 -> 스켈레톤
+                <CompareSkeletonBody />
+              ) : (
+                // 페이지 이동 중 -> 기존 데이터 유지 (is-loading으로 밝기만 낮춤)
+                displayData.map((company, index) => (
                   <CompanyCard
                     key={company.id}
                     company={company}
                     rank={(page - 1) * 10 + index + 1}
                   />
-                ))}
-              </tbody>
-            </table>
-          )}
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
 
         {/* 페이지네이션 */}

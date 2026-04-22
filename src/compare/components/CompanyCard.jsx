@@ -1,8 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import "../style/companyCard.css";
 
 export default function CompanyCard({ company, rank }) {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`/detail/${company.id}`);
+  };
   return (
-    <tr className="company-row">
+    <tr
+      className="company-row"
+      onClick={handleNavigate}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && handleNavigate()}
+    >
       <td className="rank-cell">{rank}위</td>
       <td className="name-cell">
         <div className="name-inner">

@@ -3,7 +3,7 @@ import { usePaginationFetch } from "../hooks/usePaginationFetch";
 import CompanyRow from "./components/CompanyRow";
 import SortDropdown from "./components/SortDropdown";
 import Pagination from "../components/Pagination";
-import SkeletonTable from "../components/SkeletonTable";
+import HomeSkeletonTable from "./components/HomeSkeletonTable";
 import "./style/home.css";
 import searchIcon from "../assets/search.svg";
 
@@ -48,8 +48,8 @@ export default function Home() {
   return (
     <div className="home-page">
       <main className="home-content">
-        <div className="list-header">
-          <h1 className="list-title">전체 스타트업 목록</h1>
+        <div className="home-list-header">
+          <h1 className="home-list-title">전체 스타트업 목록</h1>
           <div className="list-controls">
             <div className="search-wrapper">
               <img src={searchIcon} alt="검색" className="search-icon" />
@@ -71,35 +71,35 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="table-wrapper">
-          {isLoading && displayData.length === 0 ? (
-            <SkeletonTable /> // 최초 진입 or 정렬/검색 변경 시
-          ) : (
-            // 페이지 이동중
-            <table className={`company-table${isLoading ? " is-loading" : ""}`}>
-              <thead>
-                <tr>
-                  <th className="th-rank">순위</th>
-                  <th className="th-name">기업 명</th>
-                  <th className="th-desc">기업 소개</th>
-                  <th className="th-category">카테고리</th>
-                  <th className="th-number">누적 투자 금액</th>
-                  <th className="th-number">매출액</th>
-                  <th className="th-number">고용 인원</th>
-                </tr>
-              </thead>
-              <tbody>
-                {/* 리스트 렌더링 */}
-                {displayData.map((company, index) => (
+        <div className="home-table-wrapper">
+          <table
+            className={`home-company-table${isLoading && displayData.length > 0 ? " is-loading" : ""}`}
+          >
+            <thead>
+              <tr>
+                <th className="home-th-rank">순위</th>
+                <th className="home-th-name">기업 명</th>
+                <th className="home-th-desc">기업 소개</th>
+                <th className="home-th-category">카테고리</th>
+                <th className="home-th-number">누적 투자 금액</th>
+                <th className="home-th-number">매출액</th>
+                <th className="home-th-number">고용 인원</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading && displayData.length === 0 ? (
+                <HomeSkeletonTable />
+              ) : (
+                displayData.map((company, index) => (
                   <CompanyRow
                     key={company.id}
                     company={company}
                     rank={(page - 1) * 10 + index + 1}
                   />
-                ))}
-              </tbody>
-            </table>
-          )}
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
         {/* 페이지네이션 */}
         {pagination && (

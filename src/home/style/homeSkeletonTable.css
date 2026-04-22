@@ -1,0 +1,109 @@
+@keyframes home-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.home-skeleton-cell {
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #2e2e2e 25%, #3a3a3a 50%, #2e2e2e 75%);
+  background-size: 200% 100%;
+  animation: home-shimmer 1.2s infinite;
+}
+
+.home-skeleton-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, #2e2e2e 25%, #3a3a3a 50%, #2e2e2e 75%);
+  background-size: 200% 100%;
+  animation: home-shimmer 1.2s infinite;
+}
+
+.w-50 {
+  width: 50px;
+}
+.w-60 {
+  width: 60px;
+}
+.w-80 {
+  width: 80px;
+}
+.w-full {
+  width: 100%;
+}
+
+/* 테이블 구조 */
+.home-skeleton-row {
+  background-color: var(--black-black_200);
+  height: 55px;
+}
+
+.home-skeleton-row td {
+  padding: 11px 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--gray-gray_300);
+}
+
+.home-skeleton-row .home-name-cell {
+  padding-left: 24px;
+}
+
+.home-name-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.home-skeleton-row .home-rank-cell,
+.home-skeleton-row .home-category-cell,
+.home-skeleton-row .home-number-cell {
+  text-align: center;
+}
+
+/* 컬럼 너비 */
+.home-th-rank {
+  width: 68px;
+}
+.home-th-name {
+  width: 213px;
+}
+.home-th-desc {
+  width: 304px;
+}
+.home-th-category {
+  width: 154px;
+}
+.home-th-number {
+  width: 154px;
+}
+
+/* ===== Tablet (≤ 744px) ===== */
+@media (max-width: 744px) {
+  .home-skeleton-row .home-rank-cell,
+  .home-skeleton-table .home-th-rank {
+    display: none;
+  }
+
+  .home-th-name {
+    width: 150px;
+  }
+  .home-th-desc {
+    width: 180px;
+  }
+}
+
+/* ===== Mobile (≤ 375px) ===== */
+@media (max-width: 375px) {
+  .home-skeleton-table .home-th-category,
+  .home-skeleton-row .home-category-cell,
+  .home-skeleton-table .home-th-number,
+  .home-skeleton-row .home-number-cell {
+    display: none;
+  }
+}

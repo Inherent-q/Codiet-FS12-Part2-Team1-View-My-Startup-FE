@@ -115,6 +115,7 @@
   font-size: var(--text-14);
   font-family: var(--font-pretendard);
   transition: opacity 0.15s;
+  table-layout: fixed;
 }
 
 .company-table.is-loading {
@@ -142,22 +143,27 @@
   white-space: nowrap;
 }
 
-.company-table thead tr th:first-child { border-radius: 4px 0 0 4px; }
-.company-table thead tr th:last-child  { border-radius: 0 4px 4px 0; }
+.company-table thead tr th:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.company-table thead tr th:last-child {
+  border-radius: 0 4px 4px 0;
+}
 
-.th-rank     { width: 68px; }
-.th-name     { width: 180px; }
-.th-desc     { width: 260px; }
-.th-category { width: 120px; }
-.th-count    { width: 160px; }
-
-/* 로딩/에러 */
-.loading,
-.error {
-  text-align: center;
-  padding: 60px;
-  color: var(--gray-gray_200);
-  font-size: var(--text-14);
+.th-rank {
+  min-width: 68px;
+}
+.th-name {
+  min-width: 180px;
+}
+.th-desc {
+  min-width: 260px;
+}
+.th-category {
+  min-width: 120px;
+}
+.th-count {
+  min-width: 160px;
 }
 
 /* ===== Tablet (≤ 744px) ===== */
@@ -221,4 +227,3 @@
     display: none;
   }
 }
-

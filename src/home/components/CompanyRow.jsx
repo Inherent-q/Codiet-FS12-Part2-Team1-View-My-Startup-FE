@@ -11,30 +11,30 @@ export default function CompanyRow({ company, rank }) {
 
   return (
     <tr
-      className="company-row"
+      className="home-company-row"
       onClick={handleNavigate}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && handleNavigate()}
     >
-      <td className="rank-cell">{rank}위</td>
-      <td className="name-cell">
-        <div className="name-inner">
-          <div className="company-logo">
+      <td className="home-rank-cell">{rank}위</td>
+      <td className="home-name-cell">
+        <div className="home-name-inner">
+          <div className="home-company-logo">
             {company.img ? (
               <img src={company.img} alt={company.name} />
             ) : (
               <span>{company.name?.[0] ?? "?"}</span>
             )}
           </div>
-          <span className="company-name">{company.name}</span>
+          <span className="home-company-name">{company.name}</span>
         </div>
       </td>
-      <td className="desc-cell">{company.description}</td>
-      <td className="category-cell">{company.category}</td>
-      <td className="number-cell">{formatAmount(company.accInvest)}</td>
-      <td className="number-cell">{formatAmount(company.revenue)}</td>
-      <td className="number-cell">{company.hire}명</td>
+      <td className="home-desc-cell">{company.description}</td>
+      <td className="home-category-cell">{company.category}</td>
+      <td className="home-number-cell">{formatAmount(company.accInvest)}</td>
+      <td className="home-number-cell">{formatAmount(company.revenue)}</td>
+      <td className="home-number-cell">{company.hire}명</td>
     </tr>
   );
 }

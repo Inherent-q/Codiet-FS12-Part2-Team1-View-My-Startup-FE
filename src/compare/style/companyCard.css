@@ -1,15 +1,14 @@
-.home-company-row {
+.company-row {
   background-color: var(--black-black_200);
-  cursor: pointer;
   transition: filter 0.15s;
   height: 55px;
 }
 
-.home-company-row:hover {
+.company-row:hover {
   filter: brightness(1.2);
 }
 
-.home-company-row td {
+.company-row td {
   padding: 11px 16px;
   color: var(--gray-gray_100);
   font-size: var(--text-14);
@@ -18,21 +17,21 @@
   border-bottom: 1px solid var(--gray-gray_300);
 }
 
-.home-company-row:first-child td:first-child {
+.company-row:first-child td:first-child {
   border-radius: 4px 0 0 0;
 }
-.home-company-row:first-child td:last-child {
+.company-row:first-child td:last-child {
   border-radius: 0 4px 0 0;
 }
-.home-company-row:last-child td:first-child {
+.company-row:last-child td:first-child {
   border-radius: 0 0 0 4px;
 }
-.home-company-row:last-child td:last-child {
+.company-row:last-child td:last-child {
   border-radius: 0 0 4px 0;
 }
 
 /* 순위 */
-.home-rank-cell {
+.rank-cell {
   color: var(--gray-gray_200);
   font-size: var(--text-14);
   white-space: nowrap;
@@ -40,18 +39,18 @@
 }
 
 /* 기업명 */
-.home-name-cell {
+.name-cell {
   white-space: nowrap;
   padding-left: 24px;
 }
 
-.home-name-inner {
+.name-inner {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.home-company-logo {
+.company-logo {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -65,83 +64,83 @@
   overflow: hidden;
 }
 
-.home-company-logo img {
+.company-logo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
 }
 
-.home-company-name {
+.company-name {
   font-weight: var(--weight-medium);
   color: var(--white);
   font-size: var(--text-14);
 }
 
 /* 기업 소개 */
-.home-desc-cell {
+.desc-cell {
   color: var(--gray-gray_200);
-  max-width: 320px;
+  max-width: 280px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 /* 카테고리 */
-.home-category-cell {
+.category-cell {
   color: var(--gray-gray_100);
   white-space: nowrap;
   text-align: center;
 }
 
-/* 금액/인원 */
-.home-number-cell {
+/* 선택 횟수 */
+.count-cell {
   text-align: center;
-  color: var(--gray-gray_100);
+  color: var(--white);
+  font-weight: var(--weight-semibold);
   white-space: nowrap;
 }
 
 /* ===== Tablet (≤ 744px) ===== */
 @media (max-width: 744px) {
-  .home-rank-cell {
+  .rank-cell {
     display: none;
   }
 
-  .home-company-row:first-child .home-name-cell {
+  .company-row:first-child .name-cell {
     border-radius: 4px 0 0 0;
   }
-  .home-company-row:last-child .home-name-cell {
+  .company-row:last-child .name-cell {
     border-radius: 0 0 0 4px;
   }
 }
 
 /* ===== Mobile (≤ 375px) ===== */
 @media (max-width: 375px) {
-  .home-name-cell {
+  .name-cell {
     padding: 11px 29px 11px 16px;
   }
 
-  .home-name-inner {
+  .name-inner {
     gap: 8px;
   }
 
-  .home-category-cell,
-  .home-number-cell {
+  .category-cell {
     display: none;
   }
 
-  .home-company-row:first-child .home-desc-cell {
+  .company-row:first-child .desc-cell {
     border-radius: 0 4px 0 0;
   }
-  .home-company-row:last-child .home-desc-cell {
+  .company-row:last-child .desc-cell {
     border-radius: 0 0 4px 0;
   }
 
-  .home-company-row {
+  .company-row {
     height: 56px;
   }
 
-  .home-desc-cell {
-    max-width: 160px;
+  .desc-cell {
+    max-width: 120px;
   }
 }
