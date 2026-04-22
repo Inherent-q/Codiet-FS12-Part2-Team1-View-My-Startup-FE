@@ -1,7 +1,7 @@
 import { useState } from "react";
-import vectorIcon from "../../assets/vector.png";
-import togglepassword from "../../assets/onpassword.png";
-import toggleoffpassword from "../../assets/offpassword.png";
+import vectorIcon from "../../assets/ic_delete.svg";
+import togglepassword from "../../assets/onpassword.svg";
+import toggleoffpassword from "../../assets/offpassword.svg";
 import { validateNewInvest } from "../../utils/validation";
 
 const API_BASE_URL =
@@ -24,7 +24,7 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
-  const handleInvest = () => {
+  const handleInvest = function () {
     const error = validateNewInvest({
       name: investorName,
       amount,
@@ -72,7 +72,7 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
             src={vectorIcon}
             alt="닫음"
             onClick={onClose}
-            style={{ cursor: "pointer", width: "20.333px" }}
+            style={{ cursor: "pointer", width: "32px", height: "32px" }}
           />
         </div>
 
@@ -95,7 +95,9 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
             className="modalInput"
             type="text"
             value={investorName}
-            onChange={(e) => setInvestorName(e.target.value)}
+            onChange={function (e) {
+              setInvestorName(e.target.value);
+            }}
             placeholder="투자자 이름을 입력해 주세요"
           />
         </div>
@@ -106,7 +108,9 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
             className="modalInput"
             type="text"
             value={amount}
-            onChange={(e) => setAmount(e.target.value.replace(/[^0-9]/g, ""))}
+            onChange={function (e) {
+              setAmount(e.target.value.replace(/[^0-9]/g, ""));
+            }}
             placeholder="투자 금액을 입력해 주세요"
           />
         </div>
@@ -116,7 +120,9 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
           <textarea
             className="modalInput2"
             value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            onChange={function (e) {
+              setComment(e.target.value);
+            }}
             placeholder="투자 코멘트를 입력해 주세요"
           />
         </div>
@@ -128,7 +134,9 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
               className="modalInput"
               type={passwordVisible ? "text" : "password"}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={function (e) {
+                setPassword(e.target.value);
+              }}
               placeholder="비밀번호를 입력해 주세요"
             />
             <img
@@ -147,7 +155,9 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
               className="modalInput"
               type={passwordVisible2 ? "text" : "password"}
               value={passwordConfirm}
-              onChange={(e) => setPasswordConfirm(e.target.value)}
+              onChange={function (e) {
+                setPasswordConfirm(e.target.value);
+              }}
               placeholder="비밀번호를 다시 한 번 입력해주세요"
             />
             <img
