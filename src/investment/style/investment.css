@@ -1,13 +1,13 @@
 .all-wrapper {
   width: 100%;
-  max-width: 1199px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 .no-data-h1 {
   display: flex;
   width: 100%;
-  max-width: 1199px;
+  max-width: 1200px;
   height: 24px;
   align-items: center;
   margin-top: 40px;
@@ -60,7 +60,7 @@ h1 {
   height: 48px;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
   flex-shrink: 0;
   border-radius: 10px;
@@ -76,7 +76,7 @@ h1 {
   height: 24px;
   align-items: center;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .sort-btn {
@@ -185,6 +185,9 @@ td.corp-descrip {
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
+}
+
+.thead th {
   color: #fff;
   font-size: 14px;
   font-style: normal;
@@ -270,11 +273,11 @@ td:nth-child(4) {
 
 th:nth-child(5),
 td:nth-child(5) {
-  width: 154px;
+  width: auto;
 }
 th:nth-child(6),
 td:nth-child(6) {
-  width: 154px;
+  width: auto;
 }
 
 .corp-name {

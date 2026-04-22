@@ -1,6 +1,8 @@
 import React from "react";
 import DropdownSort from "./DropdownSort";
 import InvestCorpsList from "./InvestCorpsList";
+import "../style/investSkeleton.css";
+import InvestSkeletonTable from "./InvestSkeletonTable";
 
 const InvestTable = ({
   sort,
@@ -11,13 +13,6 @@ const InvestTable = ({
   setSort,
   setOrder,
 }) => {
-  // 데이터 로딩 중일 때 문구
-  const loadingData = function () {
-    if (loading) {
-      return <div className="loading-message">데이터를 로딩 중입니다.</div>;
-    }
-  };
-
   return (
     <div className="all-wrapper">
       <div className="title-sort-wrapper">
@@ -31,7 +26,7 @@ const InvestTable = ({
       </div>
       <div>
         {loading ? (
-          loadingData()
+          <InvestSkeletonTable />
         ) : (
           <div className="table-wrapper">
             <table className="table">
