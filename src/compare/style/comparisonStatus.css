@@ -1,83 +1,45 @@
-.home-page {
+.comparison-page {
   min-height: 100vh;
   background-color: var(--black-black_400);
   color: var(--white);
 }
 
-.home-content {
+.comparison-content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 40px 0;
 }
 
-/* 헤더 */
-.home-list-header {
+/* 헤더 (제목 + 정렬) */
+.list-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   gap: 16px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
-.home-list-title {
+.list-title {
   font-size: var(--text-20);
   font-weight: var(--weight-bold);
   color: var(--white);
   white-space: nowrap;
 }
 
-.list-controls {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-/* 검색 */
-.search-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: var(--black-black_400);
-  border-radius: 10px;
-  border: 1px solid var(--gray-gray_200);
-  padding: 10px 16px;
-  width: 448px;
-  height: 48px;
-}
-
-.search-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.search-input {
-  background: none;
-  border: none;
-  outline: none;
-  color: var(--white);
-  font-size: var(--text-14);
-  font-family: var(--font-pretendard);
-  width: 100%;
-}
-
-.search-input::placeholder {
-  color: var(--gray-gray_100);
-}
-
-/* 정렬 */
+/* 정렬 드롭다운 */
 .sort-wrapper {
   position: relative;
   display: inline-block;
 }
 
-/* 트리거 버튼 */
 .sort-trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  width: 168px;
+  width: 220px;
   height: 48px;
   padding: 0 10px;
   background-color: var(--black-black_400);
@@ -99,15 +61,14 @@
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
-  width: 168px;
+  width: 220px;
   z-index: 100;
   display: flex;
   flex-direction: column;
 }
 
-/* 각 옵션 */
 .sort-option {
-  width: 168px;
+  width: 220px;
   height: 40px;
   padding: 0 10px;
   background-color: var(--black-black_400);
@@ -141,12 +102,12 @@
 }
 
 /* 테이블 */
-.home-table-wrapper {
+.table-wrapper {
   width: 100%;
   overflow-x: auto;
 }
 
-.home-company-table {
+.company-table {
   width: 100%;
   margin-top: 16px;
   border-collapse: separate;
@@ -157,37 +118,23 @@
   table-layout: fixed;
 }
 
-.home-company-table th {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  background-color: var(--black-black_100); 
-
-  padding: 10px 16px;
-  text-align: center;
-  color: var(--white);
-  font-weight: var(--weight-medium);
-  font-size: var(--text-14);
-  white-space: nowrap;
-}
-
-.home-company-table.is-loading {
+.company-table.is-loading {
   opacity: 0.4;
 }
 
 /* 컬럼 헤더 */
-.home-company-table thead tr {
+.company-table thead tr {
   background-color: var(--black-black_100);
   height: 39px;
 }
 
-.home-company-table tbody::before {
+.company-table tbody::before {
   content: "";
   display: table-row;
   height: 16px;
 }
 
-.home-company-table th {
+.company-table th {
   padding: 10px 16px;
   text-align: center;
   color: var(--white);
@@ -196,101 +143,87 @@
   white-space: nowrap;
 }
 
-.home-company-table thead tr th:first-child {
+.company-table thead tr th:first-child {
   border-radius: 4px 0 0 4px;
 }
-
-.home-company-table thead tr th:last-child {
+.company-table thead tr th:last-child {
   border-radius: 0 4px 4px 0;
 }
 
-.home-th-rank {
-  width: 68px;
+.th-rank {
+  min-width: 68px;
 }
-.home-th-name {
-  width: 213px;
+.th-name {
+  min-width: 180px;
 }
-.home-th-desc {
-  width: 304px;
+.th-desc {
+  min-width: 260px;
 }
-.home-th-category {
-  width: 154px;
+.th-category {
+  min-width: 120px;
 }
-.home-th-number {
-  width: 154px;
+.th-count {
+  min-width: 160px;
 }
 
 /* ===== Tablet (≤ 744px) ===== */
 @media (max-width: 744px) {
-  .home-content {
+  .comparison-content {
     padding: 24px;
   }
 
-  .list-controls {
-    gap: 12px;
+  .list-header {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .sort-trigger {
-    width: 146px;
+    width: 190px;
     height: 40px;
   }
-  .sort-dropdown {
-    width: 146px;
+
+  .sort-dropdown,
+  .sort-option {
+    width: 190px;
   }
 
-  .home-rank-cell,
-  .home-th-rank {
+  .th-rank,
+  .rank-cell {
     display: none;
   }
 
-  .home-th-name {
-    width: 150px;
+  .th-name {
+    width: 140px;
     border-radius: 4px 0 0 4px;
   }
 
-  .home-th-desc {
-    width: 180px;
-  }
-
-  .home-list-header {
-    padding-left: 0;
-    padding-right: 0;
+  .th-desc {
+    width: 160px;
   }
 }
 
 /* ===== Mobile (≤ 375px) ===== */
 @media (max-width: 375px) {
-  .home-list-title {
+  .list-title {
     font-size: var(--text-16);
   }
 
-  .home-list-header {
+  .list-header {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .list-controls {
-    width: 100%;
-    flex-direction: row;
-  }
-
-  .search-wrapper {
-    flex: 1;
-    width: auto;
-    min-width: 0;
-  }
-
   .sort-trigger {
-    width: 130px;
-  }
-  .sort-dropdown {
-    width: 130px;
+    width: 100%;
   }
 
-  .home-category-cell,
-  .home-th-category,
-  .home-number-cell,
-  .home-th-number {
+  .sort-dropdown,
+  .sort-option {
+    width: 100%;
+  }
+
+  .th-category,
+  .category-cell {
     display: none;
   }
 }
