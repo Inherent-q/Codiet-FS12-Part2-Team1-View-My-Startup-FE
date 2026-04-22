@@ -25,10 +25,11 @@ const InvestTable = ({
         />
       </div>
       <div>
-        {loading ? (
-          <InvestSkeletonTable />
-        ) : (
-          <div className="table-wrapper">
+        <div className={`table-wrapper${loading ? "loading" : ""}`}>
+          {loading && <div className="table-overlay" />}
+          {loading ? (
+            <InvestSkeletonTable />
+          ) : (
             <table className="table">
               <thead className="thead">
                 <tr>
@@ -46,8 +47,8 @@ const InvestTable = ({
               </thead>
               <InvestCorpsList corps={corps} curPage={curPage} />
             </table>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
