@@ -1,0 +1,446 @@
+.resultsContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 0;
+  font-family: "Pretendard", sans-serif;
+  min-height: calc(100vh - 60px);
+  box-sizing: border-box;
+}
+
+.sectionTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.mainTitle {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.dropdownContainer {
+  position: relative;
+  width: 168px;
+  height: 48px;
+  background: var(--black-black_400, #131313);
+  border: 1px solid var(--gray-gray_200, #747474);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px 0 16px;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 14px;
+}
+
+.dropdownText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdownIcon {
+  width: 21.5px;
+  height: 21.5px;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  width: 100%;
+  background: #131313;
+  border: 1px solid #747474;
+  border-radius: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.dropdownItem {
+  padding: 12px 16px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  border-bottom: 1px solid #333;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.dropdownItem:hover {
+  background: #252525;
+}
+
+.selectedCard {
+  width: 100%;
+  height: 300px;
+  background: var(--black-black_300, #212121);
+  border: 1px solid #333;
+  border-radius: 4px;
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.tableWrapperCompare {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 60px;
+}
+.tableWrapperRank {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 60px;
+}
+
+.tableHeader {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-bottom: 10px;
+}
+
+.tableWrapperCompare tbody td {
+  background-color: #212121;
+  color: #fff;
+  padding: 16px;
+  height: 64px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tableWrapperRank tbody td {
+  background-color: #212121;
+  color: #fff;
+  padding: 16px;
+  height: 64px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.spacer-row {
+  height: 20px;
+}
+
+.imageName {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tableWrapperCompare tbody td,
+.tableWrapperRank tbody td {
+  border-bottom: 1px solid #4b4b4b;
+  border-top: none;
+}
+
+.tableWrapperCompare tbody tr:last-child td,
+.tableWrapperRank tbody tr:last-child td {
+  border-bottom: none;
+  border-top: none;
+}
+
+.tableWrapperCompare tbody tr:first-child td {
+  border-top: none;
+}
+
+.tableWrapperCompare tbody tr:first-child td:first-child {
+  border-top-left-radius: 4px;
+}
+
+.tableWrapperCompare tbody tr:first-child td:last-child {
+  border-top-right-radius: 4px;
+}
+
+.tableWrapperCompare tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 4px;
+}
+
+.tableWrapperCompare tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 4px;
+}
+
+.tableWrapperRank tbody tr:first-child td:first-child {
+  border-top-left-radius: 4px;
+}
+
+.tableWrapperRank tbody tr:first-child td:last-child {
+  border-top-right-radius: 4px;
+}
+
+.tableWrapperRank tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 4px;
+}
+
+.tableWrapperRank tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 4px;
+}
+
+.tableWrapperCompare tbody td:first-child img {
+  width: 32.492px;
+  height: 32.492px;
+  border-radius: 50px;
+}
+
+.tableWrapperRank tbody td:nth-child(2) img {
+  width: 32.492px;
+  height: 32.492px;
+  border-radius: 50px;
+}
+
+.compareHeader th:nth-child(1) {
+  width: 15%;
+}
+.compareHeader th:nth-child(2) {
+  width: 35%;
+}
+.compareHeader th:nth-child(3),
+.compareHeader th:nth-child(4),
+.compareHeader th:nth-child(5),
+.compareHeader th:nth-child(6) {
+  width: 12.5%;
+}
+
+.rankHeader th:nth-child(1) {
+  width: 60px;
+}
+.rankHeader th:nth-child(2) {
+  width: 15%;
+}
+.rankHeader th:nth-child(3) {
+  width: 27%;
+}
+.rankHeader th:nth-child(4),
+.rankHeader th:nth-child(5),
+.rankHeader th:nth-child(6),
+.rankHeader th:nth-child(7) {
+  width: 13%;
+}
+
+.tableHeader tr {
+  background: #2e2e2e;
+}
+
+.tableHeader th:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.tableHeader th:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.tableHeader th {
+  padding: 10px 20px;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+/* 여기부턴 모달 스타일입니다! */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modalContentlarge {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 24px;
+  border-radius: 16px;
+  background: #212121;
+  width: 100%;
+  max-width: 500px;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background-color: #eb5230;
+}
+
+.largemodalTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.investInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.infoContainer {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.inputLabel {
+  color: #fff;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.modalInput {
+  width: 100%;
+  padding: 16px 20px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: #212121;
+  border: 1px solid var(--gray-gray_200, #747474);
+  padding-right: 48px;
+  box-sizing: border-box;
+}
+
+.modalInput2 {
+  width: 100%;
+  height: 108px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  background: #212121;
+  border: 1px solid #747474;
+  resize: none;
+  box-sizing: border-box;
+  font-family: "Pretendard", sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+
+.modalTextarea {
+  height: 108px;
+  width: 100%;
+  padding: 16px 20px;
+  background: #212121;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-left: 27.5px;
+  margin-right: 27.5px;
+}
+
+.orangeButton {
+  background-color: #eb5230;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 13px 48px;
+  font-weight: 600;
+  cursor: pointer;
+  width: max-content;
+  height: 48px;
+  flex-shrink: 0;
+  min-width: 180px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.orangeButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cancel {
+  border: 1px solid #eb5230;
+  background-color: #212121;
+  color: #eb5230;
+}
+
+.modalContent {
+  padding: 24px;
+  background-color: #212121;
+  border-radius: 16px;
+  width: 448px;
+  height: auto;
+  gap: 8px;
+}
+.buttonGroup {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.successMessage {
+  color: #fff;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

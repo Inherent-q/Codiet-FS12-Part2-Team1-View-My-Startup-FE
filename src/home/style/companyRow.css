@@ -1,0 +1,150 @@
+.company-row {
+  background-color: var(--black-black_200);
+  cursor: pointer;
+  transition: filter 0.15s;
+  height: 64px;
+}
+
+.company-row:hover {
+  filter: brightness(1.2);
+}
+
+.company-row td {
+  padding: 15px 16px;
+  color: var(--gray-gray_100);
+  font-size: var(--text-14);
+  font-family: var(--font-pretendard);
+  vertical-align: middle;
+  border-bottom: 1px solid var(--gray-gray_300);
+}
+
+.company-row:first-child td:first-child {
+  border-radius: 4px 0 0 0;
+}
+
+.company-row:first-child td:last-child {
+  border-radius: 0 4px 0 0;
+}
+
+.company-row:last-child td:first-child {
+  border-radius: 0 0 0 4px;
+}
+
+.company-row:last-child td:last-child {
+  border-radius: 0 0 4px 0;
+}
+
+/* 순위 */
+.rank-cell {
+  color: var(--gray-gray_200);
+  font-size: var(--text-14);
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* 기업명 */
+.name-cell {
+  white-space: nowrap;
+  padding-left: 24px;
+}
+
+.name-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.company-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: var(--text-14);
+  font-weight: var(--weight-bold);
+  color: var(--white);
+  overflow: hidden;
+}
+
+.company-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.company-name {
+  font-weight: var(--weight-medium);
+  color: var(--white);
+  font-size: var(--text-14);
+}
+
+/* 기업 소개 */
+.desc-cell {
+  color: var(--gray-gray_200);
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 카테고리 */
+.category-cell {
+  color: var(--gray-gray_100);
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* 금액/인원 */
+.number-cell {
+  text-align: center;
+  color: var(--gray-gray_100);
+  white-space: nowrap;
+}
+
+/* ===== Tablet (≤ 744px) ===== */
+@media (max-width: 744px) {
+  .rank-cell {
+    display: none; /* 순위 숨김 */
+  }
+
+  .company-row:first-child .name-cell {
+    border-radius: 4px 0 0 0;
+  }
+  .company-row:last-child .name-cell {
+    border-radius: 0 0 0 4px;
+  }
+}
+
+/* ===== Mobile (≤ 375px) ===== */
+@media (max-width: 375px) {
+  .name-cell {
+    padding: 11px 29px 11px 16px;
+  }
+
+  .name-inner {
+    gap: 8px;
+  }
+
+  .category-cell,
+  .number-cell {
+    display: none;
+  }
+
+  .company-row:first-child .desc-cell {
+    border-radius: 0 4px 0 0;
+  }
+  .company-row:last-child .desc-cell {
+    border-radius: 0 0 4px 0;
+  }
+
+  .company-row {
+    height: 56px;
+  }
+
+  .desc-cell {
+    max-width: 160px;
+  }
+}
