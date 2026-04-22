@@ -1,4 +1,4 @@
-@keyframes shimmer {
+@keyframes compare-shimmer {
   0% {
     background-position: 200% 0;
   }
@@ -7,33 +7,33 @@
   }
 }
 
-.skeleton-cell {
+.compare-skeleton-cell {
   height: 14px;
   border-radius: 4px;
   background: linear-gradient(90deg, #2e2e2e 25%, #3a3a3a 50%, #2e2e2e 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+  animation: compare-shimmer 1.2s infinite;
 }
 
-.skeleton-circle {
+.compare-skeleton-circle {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   flex-shrink: 0;
   background: linear-gradient(90deg, #2e2e2e 25%, #3a3a3a 50%, #2e2e2e 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+  animation: compare-shimmer 1.2s infinite;
 }
 
-.w-50 {
+.compare-sk-w-50 {
   width: 50px;
 }
-.w-60 {
+.compare-sk-w-60 {
   width: 60px;
 }
-.w-80 {
+.compare-sk-w-80 {
   width: 80px;
 }
-.w-full {
+.compare-sk-w-full {
   width: 100%;
 }

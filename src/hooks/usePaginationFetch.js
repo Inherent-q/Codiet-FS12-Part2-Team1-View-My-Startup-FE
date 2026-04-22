@@ -41,12 +41,12 @@ export function usePaginationFetch(apiEndpoint) {
     setDisplayData([]);
   }, [sortBy, sortOrder, debouncedSearch]);
 
-  // 새 데이터 도착하면 displayData 교체
-  useEffect(() => {
-    if (!isLoading && data.length > 0) {
-      setDisplayData(data);
-    }
-  }, [isLoading, data]);
+  // // 새 데이터 도착하면 displayData 교체
+  // useEffect(() => {
+  //   if (!isLoading && data.length > 0) {
+  //     setDisplayData(data);
+  //   }
+  // }, [isLoading, data]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -75,6 +75,7 @@ export function usePaginationFetch(apiEndpoint) {
         if (!json.success) throw new Error("데이터를 불러오지 못했습니다.");
 
         setData(json.data);
+        setDisplayData(json.data);
         setPagination(json.pagination);
       } catch (err) {
         if (err.name === "AbortError") return;

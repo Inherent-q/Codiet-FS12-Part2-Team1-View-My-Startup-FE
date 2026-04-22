@@ -1,6 +1,6 @@
 ﻿.select-page {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 24px 40px 56px;
   color: #ffffff;
@@ -515,41 +515,46 @@
   color: #eb5230;
 }
 
+/* select 모달에서만 페이지네이션 축소 */
 .select-modal-footer {
-  margin-top: 10px;
+  margin-top: 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  gap: 6px;
 }
 
-.select-pagination {
+.select-modal-pagination {
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 4px;
-  justify-self: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.select-page-btn {
-  width: 22px;
-  height: 22px;
-  border: 0;
-  border-radius: 6px;
-  background: #323740;
-  color: #a8aeb7;
-  font-size: 11px;
-  cursor: pointer;
+.select-modal-pagination .pagination-wrapper {
+  margin-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
-.select-page-btn.select-is-active {
-  background: #eb5230;
-  color: #ffffff;
+.select-modal-pagination .pagination {
+  padding: 0 !important;
+  gap: 4px !important;
 }
 
-.select-page-btn:disabled {
-  background: #262a31;
-  color: #666b74;
-  cursor: not-allowed;
+.select-modal-pagination .page-btn,
+.select-modal-pagination .page-arrow {
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+}
+
+.select-modal-pagination .page-arrow img {
+  width: 14px !important;
+  height: 14px !important;
 }
 
 .confirm-add-btn {
@@ -563,6 +568,9 @@
   font-weight: 700;
   cursor: pointer;
   min-width: 118px;
+  display: block;
+  margin: 0 auto;
+  flex-shrink: 0;
 }
 
 .confirm-add-btn:hover:not(:disabled) {
