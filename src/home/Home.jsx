@@ -3,7 +3,7 @@ import { usePaginationFetch } from "../hooks/usePaginationFetch";
 import CompanyRow from "./components/CompanyRow";
 import SortDropdown from "./components/SortDropdown";
 import Pagination from "../components/Pagination";
-import SkeletonTable from "./components/SkeletonTable";
+import SkeletonTable from "../components/SkeletonTable";
 import "./style/home.css";
 import searchIcon from "../assets/search.svg";
 
