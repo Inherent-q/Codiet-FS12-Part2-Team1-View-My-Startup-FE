@@ -1,8 +1,8 @@
 import React from "react";
 import DropdownSort from "./DropdownSort";
 import InvestCorpsList from "./InvestCorpsList";
-import SkeletonTable from "../../components/SkeletonTable";
-import "../../components/skeleton.css";
+import "../style/investSkeleton.css";
+import InvestSkeletonTable from "./InvestSkeletonTable";
 
 const InvestTable = ({
   sort,
@@ -26,7 +26,7 @@ const InvestTable = ({
       </div>
       <div>
         {loading ? (
-          <SkeletonTable />
+          <InvestSkeletonTable />
         ) : (
           <div className="table-wrapper">
             <table className="table">
