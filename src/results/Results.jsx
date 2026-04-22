@@ -297,7 +297,9 @@ function Results() {
           }}
           onInvestSuccess={function () {
             setShowModal(false);
-            showResult("투자가 완료되었어요!");
+            showResult("투자가 완료되었어요!", function () {
+              window.location.reload();
+            });
           }}
         />
       )}
