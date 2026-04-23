@@ -57,7 +57,6 @@ export default function Detail() {
 
   // 추가 모달 state
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isAddModalSuccess, setIsAddModalSuccess] = useState(false);
 
   const handleDeleteClick = (id, invest) => {
     setSelectedDelId(id); // 삭제할 ID 저장
@@ -66,9 +65,9 @@ export default function Detail() {
   };
 
   const confirmDelete = async (password) => {
-    console.log(`${selectedDelId} 삭제 진행됨`);
     const success = await deleteInvest(selectedDelId, password);
     if (success) {
+      console.log(`${selectedDelId} 삭제 완료됨`);
       setIsDelModalOpen(false);
     } // 삭제 성공 시 모달 닫기
   };
@@ -248,7 +247,15 @@ export default function Detail() {
                       {(currentPage - 1) * itemsPerPage + index + 1}위
                     </span>
                     <span className="table-row">
-                      {Math.floor(item.amount / 100000000)}억 원
+                      {item.amount >= 100000000
+                        ? `${Math.floor(item.amount / 100000000)}억 원`
+                        : item.amount >= 10000000
+                          ? `${Math.floor(item.amount / 10000000)}천만원`
+                          : item.amount >= 1000000
+                            ? `${Math.floor(item.amount / 1000000)}백만원`
+                            : item.amount >= 100000
+                              ? `${Math.floor(item.amount / 100000)}십만원`
+                              : `${Math.floor(item.amount / 10000)}만원`}
                     </span>
                     <span className="table-row2">{item.comment}</span>
 
@@ -329,42 +336,13 @@ export default function Detail() {
         <InvestModal
           myCorp={corpdata}
           onClose={() => setIsAddModalOpen(false)}
-          onInvestSuccess={() => {
+          onInvestSuccess={function () {
             setIsAddModalOpen(false);
-            setIsAddModalSuccess(true);
+            showResult("투자가 완료되었어요!", () => {
+              fetchinfo();
+            });
           }}
         />
-      )}
-
-      {isAddModalSuccess && (
-        <div className="modalOverlay">
-          <div className="modalContent">
-            <img
-              src={ic_delete}
-              alt="닫음"
-              style={{
-                width: "20.333px",
-                height: "20.333px",
-                alignSelf: "flex-end",
-              }}
-              onClick={function () {
-                setIsAddModalSuccess(false);
-              }}
-            />
-            <div className="buttonGroup">
-              <h3 className="successMessage">투자가 완료되었어요!</h3>
-              <button
-                className="orangeButton"
-                onClick={function () {
-                  setIsAddModalSuccess(false);
-                  fetchinfo();
-                }}
-              >
-                확인
-              </button>
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );
