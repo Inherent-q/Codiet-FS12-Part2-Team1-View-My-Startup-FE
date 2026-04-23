@@ -49,6 +49,14 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+}
+
+.name-inner span { 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .company-logo {
@@ -81,7 +89,6 @@
 /* 기업 소개 */
 .desc-cell {
   color: var(--gray-gray_200);
-  max-width: 280px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -102,15 +109,8 @@
   white-space: nowrap;
 }
 
-/* ===== Tablet (≤ 744px) ===== */
+/* ===== Mobile (≤ 744px) ===== */
 @media (max-width: 744px) {
-  .rank-cell {
-    width: 64px;
-  }
-}
-
-/* ===== Mobile (≤ 375px) ===== */
-@media (max-width: 375px) {
   .name-cell {
     padding: 11px 29px 11px 16px;
   }
@@ -128,9 +128,5 @@
 
   .company-row {
     height: 56px;
-  }
-
-  .desc-cell {
-    max-width: 120px;
   }
 }
