@@ -357,6 +357,7 @@ export default function Detail() {
                 className="orangeButton"
                 onClick={function () {
                   setIsAddModalSuccess(false);
+                  fetchinfo();
                 }}
               >
                 확인
