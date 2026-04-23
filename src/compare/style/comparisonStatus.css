@@ -180,11 +180,7 @@
     width: 190px;
   }
 
-  .th-rank,
-  .rank-cell {
-    width: 64px;
-    border-radius: 4px 0 0 4px;
-  }
+  .th-rank { width: 64px; }
 
   .th-name {
     width: 140px;

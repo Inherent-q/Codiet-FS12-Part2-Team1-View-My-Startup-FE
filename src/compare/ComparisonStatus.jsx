@@ -19,12 +19,11 @@ export default function ComparisonStatus() {
     sortBy,
     sortOrder,
     setPage,
-    handleSortBy,
-    handleSortOrder,
-  } = usePaginationFetch(`${API_BASE_URL}/comparison-status`);
-
-  if (error)
-    return <div className="error-message">데이터를 불러오지 못했습니다.</div>;
+    handleSort,
+  } = usePaginationFetch(`${API_BASE_URL}/comparison-status`, {
+    initialSortBy: "myCount",
+    initialSortOrder: "desc",
+  });
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -39,9 +38,11 @@ export default function ComparisonStatus() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  if (error)
+    return <div className="error-message">데이터를 불러오지 못했습니다.</div>;
+
   const handleSortSelect = (opt) => {
-    handleSortBy(opt.sortBy);
-    handleSortOrder(opt.sortOrder);
+    handleSort(opt.sortBy, opt.sortOrder);
     setIsDropdownOpen(false);
   };
 

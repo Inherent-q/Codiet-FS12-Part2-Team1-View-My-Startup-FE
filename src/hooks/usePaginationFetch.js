@@ -2,12 +2,15 @@ import { useState, useEffect, useCallback } from "react";
 
 const DEBOUNCE_DELAY = 300;
 
-export function usePaginationFetch(apiEndpoint) {
+export function usePaginationFetch(
+  apiEndpoint,
+  { initialSortBy = "createdAt", initialSortOrder = "desc" } = {},
+) {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("createdAt");
-  const [sortOrder, setSortOrder] = useState("desc");
+  const [sortBy, setSortBy] = useState(initialSortBy);
+  const [sortOrder, setSortOrder] = useState(initialSortOrder);
 
   const [data, setData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
@@ -31,8 +34,8 @@ export function usePaginationFetch(apiEndpoint) {
     setPage(1);
     setSearch("");
     setDebouncedSearch("");
-    setSortBy("createdAt");
-    setSortOrder("desc");
+    setSortBy(initialSortBy);
+    setSortOrder(initialSortOrder);
     setDisplayData([]);
   }, [apiEndpoint]);
 
@@ -40,13 +43,6 @@ export function usePaginationFetch(apiEndpoint) {
   useEffect(() => {
     setDisplayData([]);
   }, [sortBy, sortOrder, debouncedSearch]);
-
-  // // 새 데이터 도착하면 displayData 교체
-  // useEffect(() => {
-  //   if (!isLoading && data.length > 0) {
-  //     setDisplayData(data);
-  //   }
-  // }, [isLoading, data]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -101,6 +97,11 @@ export function usePaginationFetch(apiEndpoint) {
     setSortOrder(value);
     setPage(1);
   }, []);
+  const handleSort = useCallback((by, order) => {
+    setSortBy(by);
+    setSortOrder(order);
+    setPage(1);
+  }, []);
 
   return {
     data,
@@ -118,5 +119,6 @@ export function usePaginationFetch(apiEndpoint) {
     handleSearch,
     handleSortBy,
     handleSortOrder,
+    handleSort,
   };
 }

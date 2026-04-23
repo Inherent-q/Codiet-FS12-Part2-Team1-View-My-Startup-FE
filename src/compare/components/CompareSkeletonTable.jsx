@@ -3,7 +3,7 @@ import "../style/compareSkeletonTable.css";
 export default function CompareSkeletonBody({ rows = 10 }) {
   return (
     <>
-      {Array.from({ length: rows }).map((_, i) => (
+      {Array.from({ length: rows }, (_, i) => (
         <tr key={`skeleton-row-${i}`} className="skeleton-row">
           <td className="rank-cell">
             <div className="compare-skeleton-cell compare-sk-w-50" />

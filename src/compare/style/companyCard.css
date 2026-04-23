@@ -102,6 +102,13 @@
   white-space: nowrap;
 }
 
+/* ===== Tablet (≤ 744px) ===== */
+@media (max-width: 744px) {
+  .rank-cell {
+    width: 64px;
+  }
+}
+
 /* ===== Mobile (≤ 375px) ===== */
 @media (max-width: 375px) {
   .name-cell {
