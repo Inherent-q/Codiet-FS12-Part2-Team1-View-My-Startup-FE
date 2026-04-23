@@ -153,16 +153,13 @@ h1 {
 }
 
 .table-wrapper {
-  position: relative;
   width: 100%;
   padding: 0 40px;
   box-sizing: border-box;
-  min-height: 200px;
 }
 
 .table {
   width: 100%;
-  position: relative;
   table-layout: auto;
   margin-top: 16px;
   border-collapse: separate;
@@ -170,32 +167,10 @@ h1 {
   transition: opacity 0.15s;
 }
 
-.table-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.15);
-  z-index: 999;
-  pointer-events: all;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
-
-.table-wrapper.loading .table {
+.table.loading {
   pointer-events: none;
   user-select: none;
   opacity: 0.4;
-}
-
-.table-overlay::after {
-  content: "Loading...";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 14px;
 }
 
 td {
