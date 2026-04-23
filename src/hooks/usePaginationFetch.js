@@ -1,13 +1,16 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const DEBOUNCE_DELAY = 300;
 
-export function usePaginationFetch(apiEndpoint) {
+export function usePaginationFetch(
+  apiEndpoint,
+  { initialSortBy = "createdAt", initialSortOrder = "desc" } = {},
+) {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("createdAt");
-  const [sortOrder, setSortOrder] = useState("desc");
+  const [sortBy, setSortBy] = useState(initialSortBy);
+  const [sortOrder, setSortOrder] = useState(initialSortOrder);
 
   const [data, setData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
@@ -16,6 +19,9 @@ export function usePaginationFetch(apiEndpoint) {
   const [error, setError] = useState(null);
 
   const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  const initialSortByRef = useRef(initialSortBy);
+  const initialSortOrderRef = useRef(initialSortOrder);
 
   // search debounce
   useEffect(() => {
@@ -31,8 +37,8 @@ export function usePaginationFetch(apiEndpoint) {
     setPage(1);
     setSearch("");
     setDebouncedSearch("");
-    setSortBy("createdAt");
-    setSortOrder("desc");
+    setSortBy(initialSortByRef.current);
+    setSortOrder(initialSortOrderRef.current);
     setDisplayData([]);
   }, [apiEndpoint]);
 
@@ -40,13 +46,6 @@ export function usePaginationFetch(apiEndpoint) {
   useEffect(() => {
     setDisplayData([]);
   }, [sortBy, sortOrder, debouncedSearch]);
-
-  // // 새 데이터 도착하면 displayData 교체
-  // useEffect(() => {
-  //   if (!isLoading && data.length > 0) {
-  //     setDisplayData(data);
-  //   }
-  // }, [isLoading, data]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -92,6 +91,11 @@ export function usePaginationFetch(apiEndpoint) {
     return () => abortController.abort(); // 이전 요청 취소
   }, [apiEndpoint, page, limit, debouncedSearch, sortBy, sortOrder]);
 
+  // 페이지 이동시 스크롤 최상단
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
+
   const handleSearch = useCallback((value) => setSearch(value), []);
   const handleSortBy = useCallback((value) => {
     setSortBy(value);
@@ -99,6 +103,11 @@ export function usePaginationFetch(apiEndpoint) {
   }, []);
   const handleSortOrder = useCallback((value) => {
     setSortOrder(value);
+    setPage(1);
+  }, []);
+  const handleSort = useCallback((by, order) => {
+    setSortBy(by);
+    setSortOrder(order);
     setPage(1);
   }, []);
 
@@ -118,5 +127,6 @@ export function usePaginationFetch(apiEndpoint) {
     handleSearch,
     handleSortBy,
     handleSortOrder,
+    handleSort,
   };
 }
