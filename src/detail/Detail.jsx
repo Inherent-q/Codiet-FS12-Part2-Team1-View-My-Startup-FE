@@ -332,7 +332,6 @@ export default function Detail() {
           onInvestSuccess={() => {
             setIsAddModalOpen(false);
             setIsAddModalSuccess(true);
-            fetchinfo();
           }}
         />
       )}
@@ -358,6 +357,7 @@ export default function Detail() {
                 className="orangeButton"
                 onClick={function () {
                   setIsAddModalSuccess(false);
+                  fetchinfo();
                 }}
               >
                 확인
