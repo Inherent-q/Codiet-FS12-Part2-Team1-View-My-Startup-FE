@@ -7,7 +7,7 @@
 .comparison-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 40px 0;
+  padding: 40px 0 0;
 }
 
 /* 헤더 (제목 + 정렬) */
@@ -105,6 +105,8 @@
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
+  padding: 0 40px;
+  box-sizing: border-box;
 }
 
 .company-table {
@@ -169,14 +171,17 @@
 /* ===== Tablet (≤ 744px) ===== */
 @media (max-width: 744px) {
   .comparison-content {
-    padding: 24px;
+    padding: 24px 0 0;
   }
 
   .list-header {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 
+  .table-wrapper {
+    padding: 0 24px;
+  }
   .sort-trigger {
     width: 190px;
     height: 40px;
