@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./Investment.css";
+import "./style/investment.css";
 import "../components/Pagination.css";
 import Pagination from "../components/Pagination";
 import InvestTable from "./components/InvestTable";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const Investment = () => {
   const [corps, setCorps] = useState([]);
@@ -19,7 +21,7 @@ const Investment = () => {
         //데이터 로딩 중일 때 상태값 변경
         setLoading(true);
         const res = await fetch(
-          `http://localhost:3000/api/corporations/list?sort=${sort}&order=${order}&page=${curPage}`,
+          `${API_BASE_URL}/corporations/list?sort=${sort}&order=${order}&page=${curPage}`,
         );
         const data = await res.json();
 
