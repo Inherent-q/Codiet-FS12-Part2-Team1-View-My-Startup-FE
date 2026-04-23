@@ -91,6 +91,11 @@ export function usePaginationFetch(
     return () => abortController.abort(); // 이전 요청 취소
   }, [apiEndpoint, page, limit, debouncedSearch, sortBy, sortOrder]);
 
+  // 페이지 이동시 스크롤 최상단
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
+
   const handleSearch = useCallback((value) => setSearch(value), []);
   const handleSortBy = useCallback((value) => {
     setSortBy(value);
