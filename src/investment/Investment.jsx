@@ -27,7 +27,7 @@ const Investment = () => {
 
         //투자현황 없을 때 상태값 변경
         if (data.data.length === 0) {
-          return setNone(true);
+          setNone(true);
         } else {
           setNone(false);
         }
