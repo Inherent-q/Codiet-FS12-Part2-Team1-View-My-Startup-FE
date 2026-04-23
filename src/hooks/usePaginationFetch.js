@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const DEBOUNCE_DELAY = 300;
 
@@ -20,6 +20,9 @@ export function usePaginationFetch(
 
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
+  const initialSortByRef = useRef(initialSortBy);
+  const initialSortOrderRef = useRef(initialSortOrder);
+
   // search debounce
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -34,8 +37,8 @@ export function usePaginationFetch(
     setPage(1);
     setSearch("");
     setDebouncedSearch("");
-    setSortBy(initialSortBy);
-    setSortOrder(initialSortOrder);
+    setSortBy(initialSortByRef.current);
+    setSortOrder(initialSortOrderRef.current);
     setDisplayData([]);
   }, [apiEndpoint]);
 

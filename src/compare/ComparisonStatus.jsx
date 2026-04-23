@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { usePaginationFetch } from "../hooks/usePaginationFetch";
 import CompanyCard from "./components/CompanyCard";
 import SortDropdown from "./components/SortDropdown";
@@ -38,13 +38,28 @@ export default function ComparisonStatus() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleSortSelect = useCallback(
+    (opt) => {
+      handleSort(opt.sortBy, opt.sortOrder);
+      setIsDropdownOpen(false);
+    },
+    [handleSort],
+  );
+
+  const tableClassName = [
+    "company-table",
+    isLoading && displayData.length > 0 && "is-loading",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const handleToggleDropdown = useCallback(
+    () => setIsDropdownOpen((prev) => !prev),
+    [],
+  );
+
   if (error)
     return <div className="error-message">데이터를 불러오지 못했습니다.</div>;
-
-  const handleSortSelect = (opt) => {
-    handleSort(opt.sortBy, opt.sortOrder);
-    setIsDropdownOpen(false);
-  };
 
   return (
     <main className="comparison-page">
@@ -54,7 +69,7 @@ export default function ComparisonStatus() {
           <SortDropdown
             ref={dropdownRef}
             isOpen={isDropdownOpen}
-            onToggle={() => setIsDropdownOpen((prev) => !prev)}
+            onToggle={handleToggleDropdown}
             sortBy={sortBy}
             sortOrder={sortOrder}
             onSelect={handleSortSelect}
@@ -62,9 +77,7 @@ export default function ComparisonStatus() {
         </div>
 
         <div className="table-wrapper">
-          <table
-            className={`company-table${isLoading && displayData.length > 0 ? " is-loading" : ""}`}
-          >
+          <table className={tableClassName}>
             <thead>
               <tr>
                 <th className="th-rank">순위</th>
@@ -80,13 +93,13 @@ export default function ComparisonStatus() {
                 // 최초 진입 or 정렬 변경 시 -> 스켈레톤
                 <CompareSkeletonBody />
               ) : (
-                // 페이지 이동 중 -> 기존 데이터 유지 (is-loading으로 밝기만 낮춤)
                 <>
                   {!isLoading && displayData.length === 0 && (
                     <tr>
                       <td colSpan={6}>비교 현황이 없습니다.</td>
                     </tr>
                   )}
+                  {/* 페이지 이동 중 -> 기존 데이터 유지 (is-loading으로 밝기만 낮춤) */}
                   {displayData.map((company, index) => (
                     <CompanyCard
                       key={company.id}
