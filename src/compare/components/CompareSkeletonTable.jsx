@@ -4,7 +4,7 @@ export default function CompareSkeletonBody({ rows = 10 }) {
   return (
     <>
       {Array.from({ length: rows }).map((_, i) => (
-        <tr key={i} className="company-row">
+        <tr key={`skeleton-row-${i}`} className="skeleton-row">
           <td className="rank-cell">
             <div className="compare-skeleton-cell compare-sk-w-50" />
           </td>

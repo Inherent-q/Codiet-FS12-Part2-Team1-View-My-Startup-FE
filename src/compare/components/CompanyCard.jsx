@@ -30,8 +30,10 @@ export default function CompanyCard({ company, rank }) {
       </td>
       <td className="desc-cell">{company.description}</td>
       <td className="category-cell">{company.category}</td>
-      <td className="count-cell">{company.myCount?.toLocaleString()}</td>
-      <td className="count-cell">{company.compareCount?.toLocaleString()}</td>
+      <td className="count-cell">{company.myCount?.toLocaleString() ?? "-"}</td>
+      <td className="count-cell">
+        {company.compareCount?.toLocaleString() ?? "-"}
+      </td>
     </tr>
   );
 }

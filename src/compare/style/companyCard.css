@@ -2,6 +2,7 @@
   background-color: var(--black-black_200);
   transition: filter 0.15s;
   height: 55px;
+  cursor: pointer;
 }
 
 .company-row:hover {
@@ -17,10 +18,10 @@
   border-bottom: 1px solid var(--gray-gray_300);
 }
 
-.company-row:first-child td:first-child {
+.company-row:nth-child(2) td:first-child {
   border-radius: 4px 0 0 0;
 }
-.company-row:first-child td:last-child {
+.company-row:nth-child(2) td:last-child {
   border-radius: 0 4px 0 0;
 }
 .company-row:last-child td:first-child {
@@ -101,20 +102,6 @@
   white-space: nowrap;
 }
 
-/* ===== Tablet (≤ 744px) ===== */
-@media (max-width: 744px) {
-  .rank-cell {
-    display: none;
-  }
-
-  .company-row:first-child .name-cell {
-    border-radius: 4px 0 0 0;
-  }
-  .company-row:last-child .name-cell {
-    border-radius: 0 0 0 4px;
-  }
-}
-
 /* ===== Mobile (≤ 375px) ===== */
 @media (max-width: 375px) {
   .name-cell {
@@ -123,10 +110,6 @@
 
   .name-inner {
     gap: 8px;
-  }
-
-  .category-cell {
-    display: none;
   }
 
   .company-row:first-child .desc-cell {

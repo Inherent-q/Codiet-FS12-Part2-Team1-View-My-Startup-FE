@@ -7,6 +7,17 @@
   }
 }
 
+.skeleton-row {
+  background-color: var(--black-black_200);
+  height: 55px;
+}
+
+.skeleton-row td {
+  padding: 11px 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--gray-gray_300);
+}
+
 .compare-skeleton-cell {
   height: 14px;
   border-radius: 4px;

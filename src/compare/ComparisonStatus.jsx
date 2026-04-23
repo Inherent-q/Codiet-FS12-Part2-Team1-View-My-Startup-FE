@@ -23,6 +23,9 @@ export default function ComparisonStatus() {
     handleSortOrder,
   } = usePaginationFetch(`${API_BASE_URL}/comparison-status`);
 
+  if (error)
+    return <div className="error-message">데이터를 불러오지 못했습니다.</div>;
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -43,8 +46,8 @@ export default function ComparisonStatus() {
   };
 
   return (
-    <div className="comparison-page">
-      <main className="comparison-content">
+    <main className="comparison-page">
+      <div className="comparison-content">
         <div className="list-header">
           <h1 className="list-title">비교 현황</h1>
           <SortDropdown
@@ -58,7 +61,6 @@ export default function ComparisonStatus() {
         </div>
 
         <div className="table-wrapper">
-          {/* thead는 로딩 여부와 무관하게 항상 유지 */}
           <table
             className={`company-table${isLoading && displayData.length > 0 ? " is-loading" : ""}`}
           >
@@ -78,13 +80,20 @@ export default function ComparisonStatus() {
                 <CompareSkeletonBody />
               ) : (
                 // 페이지 이동 중 -> 기존 데이터 유지 (is-loading으로 밝기만 낮춤)
-                displayData.map((company, index) => (
-                  <CompanyCard
-                    key={company.id}
-                    company={company}
-                    rank={(page - 1) * 10 + index + 1}
-                  />
-                ))
+                <>
+                  {!isLoading && displayData.length === 0 && (
+                    <tr>
+                      <td colSpan={6}>비교 현황이 없습니다.</td>
+                    </tr>
+                  )}
+                  {displayData.map((company, index) => (
+                    <CompanyCard
+                      key={company.id}
+                      company={company}
+                      rank={(page - 1) * 10 + index + 1}
+                    />
+                  ))}
+                </>
               )}
             </tbody>
           </table>
@@ -98,7 +107,7 @@ export default function ComparisonStatus() {
             onPageChange={setPage}
           />
         )}
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }
