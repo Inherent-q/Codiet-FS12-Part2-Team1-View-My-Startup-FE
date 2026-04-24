@@ -10,6 +10,7 @@ const Investment = () => {
   const [corps, setCorps] = useState([]);
   const [none, setNone] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [curPage, setCurPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [sort, setSort] = useState("vms");
@@ -18,23 +19,36 @@ const Investment = () => {
   useEffect(
     function () {
       const fetchData = async function () {
-        //데이터 로딩 중일 때 상태값 변경
+        //데이터 로딩중, 에러, 데이터 없을 때 상태값 변경
         setLoading(true);
-        const res = await fetch(
-          `${API_BASE_URL}/corporations/list?sort=${sort}&order=${order}&page=${curPage}`,
-        );
-        const data = await res.json();
+        setError(false);
+        setNone(false);
 
-        //투자현황 없을 때 상태값 변경
-        if (data.data.length === 0) {
-          setNone(true);
-        } else {
-          setNone(false);
+        try {
+          const res = await fetch(
+            `${API_BASE_URL}/corporations/list?sort=${sort}&order=${order}&page=${curPage}`,
+          );
+          const data = await res.json();
+
+          // 데이터 없을 때 에러 발생하도록
+          if (!data.data) {
+            return setError(true);
+          }
+
+          //투자현황 없을 때 상태값 변경
+          if (data.data.length === 0) {
+            setNone(true);
+          } else {
+            setNone(false);
+          }
+
+          setCorps(data.data);
+          setTotalPage(data.totalPages);
+        } catch (error) {
+          setError(true);
+        } finally {
+          setLoading(false);
         }
-
-        setCorps(data.data);
-        setTotalPage(data.totalPages);
-        setLoading(false);
       };
       fetchData();
     },
@@ -48,6 +62,11 @@ const Investment = () => {
     },
     [sort, order],
   );
+
+  // 페이지네이션 바뀌면 스크롤 위로 올라가기
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [curPage]);
 
   // 투자 현황 없을 떄 문구
 
@@ -63,9 +82,14 @@ const Investment = () => {
   };
 
   //페이지네이션 - 컴포넌트 연결
-
   const handlePageChange = function (p) {
     setCurPage(p);
+  };
+
+  // 데이터 못 불러올 때 나오는 문구
+  const failedLoading = function () {
+    if (error)
+      return <div className="error-message">데이터를 불러오지 못했습니다.</div>;
   };
 
   return (
@@ -74,15 +98,19 @@ const Investment = () => {
         noData()
       ) : (
         <div>
-          <InvestTable
-            sort={sort}
-            order={order}
-            loading={loading}
-            corps={corps}
-            curPage={curPage}
-            setSort={setSort}
-            setOrder={setOrder}
-          />
+          {error ? (
+            failedLoading()
+          ) : (
+            <InvestTable
+              sort={sort}
+              order={order}
+              loading={loading}
+              corps={corps}
+              curPage={curPage}
+              setSort={setSort}
+              setOrder={setOrder}
+            />
+          )}
           <Pagination
             page={curPage}
             totalPages={totalPage}

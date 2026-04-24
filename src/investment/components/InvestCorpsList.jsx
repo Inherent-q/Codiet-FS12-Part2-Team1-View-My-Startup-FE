@@ -23,22 +23,22 @@ const InvestCorpsList = ({ corps, curPage }) => {
   };
 
   return (
-    <tbody className="tbody">
-      <tr className="gap"></tr>
+    <>
+      <tr className="invest-gap"></tr>
       {corps.map(function (c, index) {
         return (
           <tr
-            className="tbody-tr"
+            className="invest-tbody-tr"
             key={c.id}
             onClick={function () {
               handleNavigate(c);
             }}
           >
             <td className="rank">{(curPage - 1) * 10 + index + 1}위</td>
-            <td>
-              <div className="corp-name">
+            <td className="corp-name">
+              <div className="corp-name-inner">
                 <img className="corp-img" src={c.img} />
-                {c.name}
+                <span>{c.name}</span>
               </div>
             </td>
             <td className="corp-descrip">{c.description}</td>
@@ -48,7 +48,7 @@ const InvestCorpsList = ({ corps, curPage }) => {
           </tr>
         );
       })}
-    </tbody>
+    </>
   );
 };
 

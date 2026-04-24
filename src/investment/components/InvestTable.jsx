@@ -18,7 +18,7 @@ const InvestTable = ({
   return (
     <div className="all-wrapper">
       <div className="title-sort-wrapper">
-        <h1>투자 현황</h1>
+        <h1 className="title">투자 현황</h1>
         <DropdownSort
           sort={sort}
           order={order}
@@ -28,26 +28,28 @@ const InvestTable = ({
       </div>
       <div>
         <div className="table-wrapper">
-          <table className={`table ${loading ? "loading" : ""}`}>
-            <thead className="thead">
+          <table className="invest-table">
+            <thead className="invest-thead">
               <tr>
-                <th>순위</th>
-                <th>기업명</th>
-                <th>기업 소개</th>
-                <th>카테고리</th>
-                <th>
+                <th className="rank-th">순위</th>
+                <th className="corp-name-th">기업 명</th>
+                <th className="corp-descrip-th">기업 소개</th>
+                <th className="category-th">카테고리</th>
+                <th className="vms-th">
                   View My Startup
                   <br />
                   투자 금액
                 </th>
-                <th>실제 누적 투자 금액</th>
+                <th className="accinvest-th">실제 누적 투자 금액</th>
               </tr>
             </thead>
-            {loading && !hasData ? (
-              <InvestSkeletonTable />
-            ) : (
-              <InvestCorpsList corps={corps} curPage={curPage} />
-            )}
+            <tbody className={`invest-tbody ${loading ? "loading" : ""} `}>
+              {loading && !hasData ? (
+                <InvestSkeletonTable />
+              ) : (
+                <InvestCorpsList corps={corps} curPage={curPage} />
+              )}
+            </tbody>
           </table>
         </div>
       </div>
