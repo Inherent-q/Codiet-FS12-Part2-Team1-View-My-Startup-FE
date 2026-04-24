@@ -18,6 +18,7 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
     setpasswordVisible2(!passwordVisible2);
   }
 
+  const [fieldError, setFieldError] = useState(null);
   const [investorName, setInvestorName] = useState("");
   const [amount, setAmount] = useState("");
   const [comment, setComment] = useState("");
@@ -34,7 +35,7 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
       myCorp,
     });
     if (error) {
-      alert(error);
+      setFieldError(error);
       return;
     }
 
@@ -92,7 +93,7 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
         <div className="inputGroup">
           <label className="inputLabel">투자자 이름</label>
           <input
-            className="modalInput"
+            className={`modalInput ${fieldError?.field === "name" ? "errorInput" : ""}`}
             type="text"
             value={investorName}
             onChange={function (e) {
@@ -101,11 +102,14 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
             placeholder="투자자 이름을 입력해 주세요"
           />
         </div>
+        {fieldError?.field === "name" && (
+          <p className="errorMessage">{fieldError.message}</p>
+        )}
 
         <div className="inputGroup">
           <label className="inputLabel">투자 금액</label>
           <input
-            className="modalInput"
+            className={`modalInput ${fieldError?.field === "amount" ? "errorInput" : ""}`}
             type="text"
             value={amount}
             onChange={function (e) {
@@ -114,11 +118,14 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
             placeholder="투자 금액을 입력해 주세요"
           />
         </div>
+        {fieldError?.field === "amount" && (
+          <p className="errorMessage">{fieldError.message}</p>
+        )}
 
         <div className="inputGroup">
           <label className="inputLabel">투자 코멘트</label>
           <textarea
-            className="modalInput2"
+            className={`modalInput2 ${fieldError?.field === "comment" ? "errorInput" : ""}`}
             value={comment}
             onChange={function (e) {
               setComment(e.target.value);
@@ -126,12 +133,15 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
             placeholder="투자 코멘트를 입력해 주세요"
           />
         </div>
+        {fieldError?.field === "comment" && (
+          <p className="errorMessage">{fieldError.message}</p>
+        )}
 
         <div className="inputGroup">
           <label className="inputLabel">비밀번호</label>
           <div className="inputContainer">
             <input
-              className="modalInput"
+              className={`modalInput ${fieldError?.field === "password" ? "errorInput" : ""}`}
               type={passwordVisible ? "text" : "password"}
               value={password}
               onChange={function (e) {
@@ -147,12 +157,15 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
             />
           </div>
         </div>
+        {fieldError?.field === "password" && (
+          <p className="errorMessage">{fieldError.message}</p>
+        )}
 
         <div className="inputGroup">
           <label className="inputLabel">비밀번호 확인</label>
           <div className="inputContainer">
             <input
-              className="modalInput"
+              className={`modalInput ${fieldError?.field === "passwordConfirm" ? "errorInput" : ""}`}
               type={passwordVisible2 ? "text" : "password"}
               value={passwordConfirm}
               onChange={function (e) {
@@ -168,6 +181,9 @@ const investModal = ({ myCorp, onClose, onInvestSuccess }) => {
             />
           </div>
         </div>
+        {fieldError?.field === "passwordConfirm" && (
+          <p className="errorMessage">{fieldError.message}</p>
+        )}
 
         <div className="modalFooter">
           <button className="orangeButton cancel" onClick={onClose}>
