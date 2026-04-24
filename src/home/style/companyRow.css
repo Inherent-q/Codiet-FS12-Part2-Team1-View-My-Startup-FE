@@ -18,16 +18,17 @@
   border-bottom: 1px solid var(--gray-gray_300);
 }
 
-.home-company-row:first-child td:first-child {
+/* radius — 클래스 기반으로 명시적 관리 */
+.home-company-row:first-child .home-rank-cell {
   border-radius: 4px 0 0 0;
 }
-.home-company-row:first-child td:last-child {
+.home-company-row:first-child .home-hire-cell {
   border-radius: 0 4px 0 0;
 }
-.home-company-row:last-child td:first-child {
+.home-company-row:last-child .home-rank-cell {
   border-radius: 0 0 0 4px;
 }
-.home-company-row:last-child td:last-child {
+.home-company-row:last-child .home-hire-cell {
   border-radius: 0 0 4px 0;
 }
 
@@ -94,8 +95,15 @@
   text-align: center;
 }
 
-/* 금액/인원 */
+/* 금액 */
 .home-number-cell {
+  text-align: center;
+  color: var(--gray-gray_100);
+  white-space: nowrap;
+}
+
+/* 고용인원 */
+.home-hire-cell {
   text-align: center;
   color: var(--gray-gray_100);
   white-space: nowrap;
@@ -107,6 +115,7 @@
     display: none;
   }
 
+  /* rank 숨김 → name이 첫 번째 */
   .home-company-row:first-child .home-name-cell {
     border-radius: 4px 0 0 0;
   }
@@ -121,27 +130,13 @@
     padding: 11px 29px 11px 16px;
   }
 
-  .home-name-inner {
+  /* .home-name-inner {
     gap: 8px;
-  }
+  } */
 
-  .home-category-cell,
-  .home-number-cell {
+  /* .home-category-cell,
+  .home-number-cell,
+  .home-hire-cell {
     display: none;
-  }
-
-  .home-company-row:first-child .home-desc-cell {
-    border-radius: 0 4px 0 0;
-  }
-  .home-company-row:last-child .home-desc-cell {
-    border-radius: 0 0 4px 0;
-  }
-
-  .home-company-row {
-    height: 56px;
-  }
-
-  .home-desc-cell {
-    max-width: 160px;
-  }
+  } */
 }

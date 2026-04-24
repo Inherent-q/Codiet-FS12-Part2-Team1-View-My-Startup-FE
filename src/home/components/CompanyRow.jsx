@@ -34,7 +34,7 @@ export default function CompanyRow({ company, rank }) {
       <td className="home-category-cell">{company.category}</td>
       <td className="home-number-cell">{formatAmount(company.accInvest)}</td>
       <td className="home-number-cell">{formatAmount(company.revenue)}</td>
-      <td className="home-number-cell">{company.hire}명</td>
+      <td className="home-hire-cell">{company.hire}명</td>
     </tr>
   );
 }

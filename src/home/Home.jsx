@@ -90,13 +90,22 @@ export default function Home() {
               {isLoading && displayData.length === 0 ? (
                 <HomeSkeletonTable />
               ) : (
-                displayData.map((company, index) => (
-                  <CompanyRow
-                    key={company.id}
-                    company={company}
-                    rank={(page - 1) * 10 + index + 1}
-                  />
-                ))
+                <>
+                  {!isLoading && displayData.length === 0 && (
+                    <tr>
+                      <td colSpan={7} className="home-empty-cell">
+                        검색 결과가 없습니다.
+                      </td>
+                    </tr>
+                  )}
+                  {displayData.map((company, index) => (
+                    <CompanyRow
+                      key={company.id}
+                      company={company}
+                      rank={(page - 1) * 10 + index + 1}
+                    />
+                  ))}
+                </>
               )}
             </tbody>
           </table>
