@@ -68,10 +68,8 @@ const DropdownSort = ({ sort, order, setSort, setOrder }) => {
 
   return (
     <div className="dropdown-wrapper">
-      <div className="dropdown-board">
-        <button className="sort-btn" onClick={handleToggle}>
-          {sortText()}
-        </button>
+      <div className="dropdown-board" onClick={handleToggle}>
+        <span className="sort-text">{sortText()}</span>
         <button className="dropdown-toggle" onClick={handleToggle}>
           <img src={toggleImage} />
         </button>
