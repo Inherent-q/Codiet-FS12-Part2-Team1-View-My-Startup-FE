@@ -20,6 +20,9 @@
   background: #212121;
   width: 100%;
   max-width: 500px;
+  /* 스크롤 추가 */
+  max-height: 90vh; 
+  overflow-y: auto;
 }
 
 .editModal-header {
@@ -51,8 +54,8 @@
 }
 
 .editModal-closeIcon {
-  width: 20.333px;
-  height: 20.333px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
 }
 

@@ -21,17 +21,8 @@ const SortDropdown = forwardRef(function SortDropdown(
 
       {isOpen && (
         <div className="sort-dropdown">
-          {SORT_OPTIONS.map((opt, index) => {
-            const className = [
-              "sort-option",
-              index === 0 && "first",
-              index === SORT_OPTIONS.length - 1 && "last",
-              opt.sortBy === sortBy &&
-                opt.sortOrder === sortOrder &&
-                "selected",
-            ]
-              .filter(Boolean)
-              .join(" ");
+          {SORT_OPTIONS.map((opt) => {
+            const className = `sort-option${opt.sortBy === sortBy && opt.sortOrder === sortOrder ? " selected" : ""}`;
 
             return (
               <button

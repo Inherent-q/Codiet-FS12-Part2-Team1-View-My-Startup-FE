@@ -21,7 +21,6 @@ export default function AuthenticationModal({
     if (password) {
       await onDelete(password);
       setPassword("");
-      onClose();
     } else {
       showError("비밀번호를 입력해주세요.");
     }
