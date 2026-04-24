@@ -15,7 +15,9 @@ export default function CompanyCard({ company, rank }) {
       role="button"
       tabIndex={0}
       aria-label={`${company.name} 상세 페이지로 이동`}
-      onKeyDown={(e) => e.key === "Enter" && handleNavigate()}
+      onKeyDown={(e) =>
+        (e.key === "Enter" || e.key === " ") && handleNavigate()
+      }
     >
       <td className="rank-cell">{rank}위</td>
       <td className="name-cell">

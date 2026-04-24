@@ -16,8 +16,8 @@
 }
 
 .home-skeleton-circle {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   flex-shrink: 0;
   background: linear-gradient(90deg, #2e2e2e 25%, #3a3a3a 50%, #2e2e2e 75%);
@@ -54,56 +54,25 @@
   padding-left: 24px;
 }
 
-.home-name-inner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 .home-skeleton-row .home-rank-cell,
 .home-skeleton-row .home-category-cell,
 .home-skeleton-row .home-number-cell {
   text-align: center;
 }
 
-/* 컬럼 너비 */
-.home-th-rank {
-  width: 68px;
-}
-.home-th-name {
-  width: 213px;
-}
-.home-th-desc {
-  width: 304px;
-}
-.home-th-category {
-  width: 154px;
-}
-.home-th-number {
-  width: 154px;
-}
-
-/* ===== Tablet (≤ 744px) ===== */
-@media (max-width: 744px) {
-  .home-skeleton-row .home-rank-cell,
-  .home-skeleton-table .home-th-rank {
+/* ===== Tablet (≤ 850px) ===== */
+@media (max-width: 850px) {
+  .home-skeleton-row .home-rank-cell {
     display: none;
-  }
-
-  .home-th-name {
-    width: 150px;
-  }
-  .home-th-desc {
-    width: 180px;
   }
 }
 
 /* ===== Mobile (≤ 375px) ===== */
 @media (max-width: 375px) {
-  .home-skeleton-table .home-th-category,
   .home-skeleton-row .home-category-cell,
-  .home-skeleton-table .home-th-number,
-  .home-skeleton-row .home-number-cell {
+  .home-skeleton-row .home-number-cell,
+  .home-th-category,
+  .home-th-number {
     display: none;
   }
 }

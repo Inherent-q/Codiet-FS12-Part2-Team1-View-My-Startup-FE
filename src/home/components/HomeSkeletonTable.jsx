@@ -1,6 +1,6 @@
 import "../style/homeSkeletonTable.css";
 
-export default function HomeSkeletonBody({ rows = 10 }) {
+export default function HomeSkeletonTable({ rows = 10 }) {
   return (
     <>
       {Array.from({ length: rows }).map((_, i) => (
@@ -20,13 +20,13 @@ export default function HomeSkeletonBody({ rows = 10 }) {
           <td className="home-category-cell">
             <div className="home-skeleton-cell w-60" />
           </td>
-          <td className="home-number-cell">
+          <td className="home-number-cell home-accinvest-cell">
             <div className="home-skeleton-cell w-60" />
           </td>
-          <td className="home-number-cell">
+          <td className="home-number-cell home-revenue-cell">
             <div className="home-skeleton-cell w-60" />
           </td>
-          <td className="home-number-cell">
+          <td className="home-hire-cell">
             <div className="home-skeleton-cell w-50" />
           </td>
         </tr>
