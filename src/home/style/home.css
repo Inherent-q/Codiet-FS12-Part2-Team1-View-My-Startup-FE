@@ -1,6 +1,4 @@
 .home-page {
-  min-height: 100vh;
-  background-color: var(--black-black_400);
   color: var(--white);
 }
 
@@ -10,12 +8,18 @@
   padding: 40px 24px 0px;
 }
 
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* 헤더 */
 .home-list-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   gap: 16px;
 }
 
@@ -183,7 +187,6 @@
   top: 0;
   z-index: 2;
   background-color: var(--black-black_100);
-
   padding: 10px 16px;
   text-align: center;
   color: var(--white);
@@ -206,15 +209,6 @@
   content: "";
   display: table-row;
   height: 16px;
-}
-
-.home-company-table th {
-  padding: 10px 16px;
-  text-align: center;
-  color: var(--white);
-  font-weight: var(--weight-medium);
-  font-size: var(--text-14);
-  white-space: nowrap;
 }
 
 /* 컬럼 너비(반응형)*/
@@ -257,14 +251,6 @@
 .home-company-table th:nth-child(7),
 .home-company-table td:nth-child(7) {
   width: 12%;
-}
-
-/* 검색 결과 없음 */
-.home-empty-cell {
-  text-align: center;
-  padding: 40px 16px;
-  color: var(--gray-gray_100);
-  font-size: var(--text-14);
 }
 
 /* ===== Tablet (≤ 850px) ===== */
@@ -458,12 +444,5 @@
   .sort-dropdown,
   .sort-option {
     width: 130px;
-  }
-
-  .home-category-cell,
-  .home-th-category,
-  .home-number-cell,
-  .home-th-number {
-    display: none;
   }
 }

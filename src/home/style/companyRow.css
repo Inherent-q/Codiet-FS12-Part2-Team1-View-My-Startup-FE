@@ -18,7 +18,6 @@
   border-bottom: 1px solid var(--gray-gray_300);
 }
 
-/* radius — 클래스 기반으로 명시적 관리 */
 .home-company-row:first-child .home-rank-cell {
   border-radius: 4px 0 0 0;
 }
@@ -82,7 +81,6 @@
 /* 기업 소개 */
 .home-desc-cell {
   color: var(--gray-gray_200);
-  max-width: 320px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -109,18 +107,70 @@
   white-space: nowrap;
 }
 
-/* ===== Tablet (≤ 744px) ===== */
-@media (max-width: 744px) {
+/* ===== Tablet (≤ 850px) ===== */
+@media (max-width: 850px) {
   .home-rank-cell {
     display: none;
   }
-
-  /* rank 숨김 → name이 첫 번째 */
+  .home-company-row:first-child .home-rank-cell {
+    border-radius: 0;
+  }
   .home-company-row:first-child .home-name-cell {
     border-radius: 4px 0 0 0;
   }
+  .home-company-row:last-child .home-rank-cell {
+    border-radius: 0;
+  }
   .home-company-row:last-child .home-name-cell {
     border-radius: 0 0 0 4px;
+  }
+}
+
+/* 780px↓: hire 숨김 -> revenue가 마지막 */
+@media (max-width: 780px) {
+  .home-company-row:first-child .home-hire-cell {
+    border-radius: 0;
+  }
+  .home-company-row:first-child .home-revenue-cell {
+    border-radius: 0 4px 0 0;
+  }
+  .home-company-row:last-child .home-hire-cell {
+    border-radius: 0;
+  }
+  .home-company-row:last-child .home-revenue-cell {
+    border-radius: 0 0 4px 0;
+  }
+}
+
+/* 610px↓: revenue 숨김 -> accinvest가 마지막 */
+@media (max-width: 610px) {
+  .home-company-row:first-child .home-revenue-cell {
+    border-radius: 0;
+  }
+  .home-company-row:first-child .home-accinvest-cell {
+    border-radius: 0 4px 0 0;
+  }
+  .home-company-row:last-child .home-revenue-cell {
+    border-radius: 0;
+  }
+  .home-company-row:last-child .home-accinvest-cell {
+    border-radius: 0 0 4px 0;
+  }
+}
+
+/* 520px↓: accinvest 숨김 -> category가 마지막 */
+@media (max-width: 520px) {
+  .home-company-row:first-child .home-accinvest-cell {
+    border-radius: 0;
+  }
+  .home-company-row:first-child .home-category-cell {
+    border-radius: 0 4px 0 0;
+  }
+  .home-company-row:last-child .home-accinvest-cell {
+    border-radius: 0;
+  }
+  .home-company-row:last-child .home-category-cell {
+    border-radius: 0 0 4px 0;
   }
 }
 
@@ -130,13 +180,20 @@
     padding: 11px 29px 11px 16px;
   }
 
-  /* .home-name-inner {
-    gap: 8px;
-  } */
-
-  /* .home-category-cell,
-  .home-number-cell,
-  .home-hire-cell {
+  .home-category-cell,
+  .home-number-cell {
     display: none;
-  } */
+  }
+  .home-company-row:first-child .home-category-cell {
+    border-radius: 0;
+  }
+  .home-company-row:first-child .home-desc-cell {
+    border-radius: 0 4px 0 0;
+  }
+  .home-company-row:last-child .home-category-cell {
+    border-radius: 0;
+  }
+  .home-company-row:last-child .home-desc-cell {
+    border-radius: 0 0 4px 0;
+  }
 }

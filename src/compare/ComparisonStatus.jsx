@@ -14,6 +14,7 @@ export default function ComparisonStatus() {
     displayData,
     pagination,
     isLoading,
+    limit,
     error,
     page,
     sortBy,
@@ -58,9 +59,6 @@ export default function ComparisonStatus() {
     [],
   );
 
-  if (error)
-    return <div className="error-message">데이터를 불러오지 못했습니다.</div>;
-
   return (
     <main className="comparison-page">
       <div className="comparison-content">
@@ -77,40 +75,42 @@ export default function ComparisonStatus() {
         </div>
 
         <div className="table-wrapper">
-          <table className={tableClassName}>
-            <thead>
-              <tr>
-                <th className="th-rank">순위</th>
-                <th className="th-name">기업 명</th>
-                <th className="th-desc">기업 소개</th>
-                <th className="th-category">카테고리</th>
-                <th className="th-count">나의 기업 선택 횟수</th>
-                <th className="th-count">비교 기업 선택 횟수</th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading && displayData.length === 0 ? (
-                // 최초 진입 or 정렬 변경 시 -> 스켈레톤
-                <CompareSkeletonBody />
-              ) : (
-                <>
-                  {!isLoading && displayData.length === 0 && (
-                    <tr>
-                      <td colSpan={6}>비교 현황이 없습니다.</td>
-                    </tr>
-                  )}
-                  {/* 페이지 이동 중 -> 기존 데이터 유지 (is-loading으로 밝기만 낮춤) */}
-                  {displayData.map((company, index) => (
-                    <CompanyCard
-                      key={company.id}
-                      company={company}
-                      rank={(page - 1) * 10 + index + 1}
-                    />
-                  ))}
-                </>
-              )}
-            </tbody>
-          </table>
+          {error ? (
+            <div className="error-message">데이터를 불러오지 못했습니다.</div>
+          ) : (
+            <table className={tableClassName}>
+              <thead>
+                <tr>
+                  <th className="th-rank">순위</th>
+                  <th className="th-name">기업 명</th>
+                  <th className="th-desc">기업 소개</th>
+                  <th className="th-category">카테고리</th>
+                  <th className="th-count">나의 기업 선택 횟수</th>
+                  <th className="th-count">비교 기업 선택 횟수</th>
+                </tr>
+              </thead>
+              <tbody>
+                {isLoading && displayData.length === 0 ? (
+                  <CompareSkeletonBody />
+                ) : (
+                  <>
+                    {!isLoading && displayData.length === 0 && (
+                      <tr>
+                        <td colSpan={6}>비교 현황이 없습니다.</td>
+                      </tr>
+                    )}
+                    {displayData.map((company, index) => (
+                      <CompanyCard
+                        key={company.id}
+                        company={company}
+                        rank={(page - 1) * limit + index + 1}
+                      />
+                    ))}
+                  </>
+                )}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* 페이지네이션 */}

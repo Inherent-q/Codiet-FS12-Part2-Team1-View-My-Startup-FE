@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { usePaginationFetch } from "../hooks/usePaginationFetch";
 import CompanyRow from "./components/CompanyRow";
 import SortDropdown from "./components/SortDropdown";
@@ -10,11 +10,26 @@ import searchIcon from "../assets/search.svg";
 const API_BASE_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
+const TableHead = () => (
+  <thead>
+    <tr>
+      <th className="home-th-rank">순위</th>
+      <th className="home-th-name">기업 명</th>
+      <th className="home-th-desc">기업 소개</th>
+      <th className="home-th-category">카테고리</th>
+      <th className="home-th-number">누적 투자 금액</th>
+      <th className="home-th-number">매출액</th>
+      <th className="home-th-number">고용 인원</th>
+    </tr>
+  </thead>
+);
+
 export default function Home() {
   const {
     displayData,
     pagination,
     isLoading,
+    limit,
     error,
     page,
     search,
@@ -22,9 +37,11 @@ export default function Home() {
     sortOrder,
     setPage,
     handleSearch,
-    handleSortBy,
-    handleSortOrder,
-  } = usePaginationFetch(`${API_BASE_URL}/corporations`);
+    handleSort,
+  } = usePaginationFetch(`${API_BASE_URL}/corporations`, {
+    initialSortBy: "revenue",
+    initialSortOrder: "desc",
+  });
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null); // 드롭다운 바깥 클릭 처리
@@ -39,11 +56,18 @@ export default function Home() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSortSelect = (opt) => {
-    handleSortBy(opt.sortBy);
-    handleSortOrder(opt.sortOrder);
-    setIsDropdownOpen(false);
-  };
+  const handleSortSelect = useCallback(
+    (opt) => {
+      handleSort(opt.sortBy, opt.sortOrder);
+      setIsDropdownOpen(false);
+    },
+    [handleSort],
+  );
+
+  const handleToggleDropdown = useCallback(
+    () => setIsDropdownOpen((prev) => !prev),
+    [],
+  );
 
   return (
     <div className="home-page">
@@ -63,7 +87,7 @@ export default function Home() {
             <SortDropdown
               ref={dropdownRef}
               isOpen={isDropdownOpen}
-              onToggle={() => setIsDropdownOpen((prev) => !prev)}
+              onToggle={handleToggleDropdown}
               sortBy={sortBy}
               sortOrder={sortOrder}
               onSelect={handleSortSelect}
@@ -72,43 +96,35 @@ export default function Home() {
         </div>
 
         <div className="home-table-wrapper">
-          <table
-            className={`home-company-table${isLoading && displayData.length > 0 ? " is-loading" : ""}`}
-          >
-            <thead>
-              <tr>
-                <th className="home-th-rank">순위</th>
-                <th className="home-th-name">기업 명</th>
-                <th className="home-th-desc">기업 소개</th>
-                <th className="home-th-category">카테고리</th>
-                <th className="home-th-number">누적 투자 금액</th>
-                <th className="home-th-number">매출액</th>
-                <th className="home-th-number">고용 인원</th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading && displayData.length === 0 ? (
+          {error ? (
+            <div className="error-message">데이터를 불러오지 못했습니다.</div>
+          ) : isLoading && displayData.length === 0 ? (
+            <table className="home-company-table">
+              <TableHead />
+              <tbody>
                 <HomeSkeletonTable />
-              ) : (
-                <>
-                  {!isLoading && displayData.length === 0 && (
-                    <tr>
-                      <td colSpan={7} className="home-empty-cell">
-                        검색 결과가 없습니다.
-                      </td>
-                    </tr>
-                  )}
-                  {displayData.map((company, index) => (
-                    <CompanyRow
-                      key={company.id}
-                      company={company}
-                      rank={(page - 1) * 10 + index + 1}
-                    />
-                  ))}
-                </>
-              )}
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          ) : displayData.length === 0 ? (
+            <div className="error-message">
+              {search ? "검색 결과가 없습니다." : "기업 데이터가 없습니다."}
+            </div>
+          ) : (
+            <table
+              className={`home-company-table${isLoading ? " is-loading" : ""}`}
+            >
+              <TableHead />
+              <tbody>
+                {displayData.map((company, index) => (
+                  <CompanyRow
+                    key={company.id}
+                    company={company}
+                    rank={(page - 1) * limit + index + 1}
+                  />
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
         {/* 페이지네이션 */}
         {pagination && (

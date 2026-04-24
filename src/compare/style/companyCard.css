@@ -52,7 +52,7 @@
   min-width: 0;
 }
 
-.name-inner span { 
+.name-inner span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

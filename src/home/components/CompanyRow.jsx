@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 import { formatAmount } from "../utils/format";
 import "../style/companyRow.css";
 
 export default function CompanyRow({ company, rank }) {
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
+  const handleNavigate = useCallback(() => {
     navigate(`/detail/${company.id}`);
-  };
+  }, [navigate, company.id]);
 
   return (
     <tr
@@ -15,7 +16,9 @@ export default function CompanyRow({ company, rank }) {
       onClick={handleNavigate}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === "Enter" && handleNavigate()}
+      onKeyDown={(e) =>
+        (e.key === "Enter" || e.key === " ") && handleNavigate()
+      }
     >
       <td className="home-rank-cell">{rank}위</td>
       <td className="home-name-cell">
@@ -32,9 +35,15 @@ export default function CompanyRow({ company, rank }) {
       </td>
       <td className="home-desc-cell">{company.description}</td>
       <td className="home-category-cell">{company.category}</td>
-      <td className="home-number-cell">{formatAmount(company.accInvest)}</td>
-      <td className="home-number-cell">{formatAmount(company.revenue)}</td>
-      <td className="home-hire-cell">{company.hire}명</td>
+      <td className="home-number-cell home-accinvest-cell">
+        {formatAmount(company.accInvest)}
+      </td>
+      <td className="home-number-cell home-revenue-cell">
+        {formatAmount(company.revenue)}
+      </td>
+      <td className="home-hire-cell">
+        {company.hire != null ? `${company.hire}명` : "-"}
+      </td>
     </tr>
   );
 }
