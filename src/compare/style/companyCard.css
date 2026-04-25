@@ -2,6 +2,7 @@
   background-color: var(--black-black_200);
   transition: filter 0.15s;
   height: 55px;
+  cursor: pointer;
 }
 
 .company-row:hover {
@@ -17,10 +18,10 @@
   border-bottom: 1px solid var(--gray-gray_300);
 }
 
-.company-row:first-child td:first-child {
+.company-row:nth-child(2) td:first-child {
   border-radius: 4px 0 0 0;
 }
-.company-row:first-child td:last-child {
+.company-row:nth-child(2) td:last-child {
   border-radius: 0 4px 0 0;
 }
 .company-row:last-child td:first-child {
@@ -48,6 +49,14 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+}
+
+.name-inner span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .company-logo {
@@ -80,7 +89,6 @@
 /* 기업 소개 */
 .desc-cell {
   color: var(--gray-gray_200);
-  max-width: 280px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -101,22 +109,8 @@
   white-space: nowrap;
 }
 
-/* ===== Tablet (≤ 744px) ===== */
+/* ===== Mobile (≤ 744px) ===== */
 @media (max-width: 744px) {
-  .rank-cell {
-    display: none;
-  }
-
-  .company-row:first-child .name-cell {
-    border-radius: 4px 0 0 0;
-  }
-  .company-row:last-child .name-cell {
-    border-radius: 0 0 0 4px;
-  }
-}
-
-/* ===== Mobile (≤ 375px) ===== */
-@media (max-width: 375px) {
   .name-cell {
     padding: 11px 29px 11px 16px;
   }
@@ -125,11 +119,7 @@
     gap: 8px;
   }
 
-  .category-cell {
-    display: none;
-  }
-
-  .company-row:first-child .desc-cell {
+  .company-row:nth-child(2) .desc-cell {
     border-radius: 0 4px 0 0;
   }
   .company-row:last-child .desc-cell {
@@ -138,9 +128,5 @@
 
   .company-row {
     height: 56px;
-  }
-
-  .desc-cell {
-    max-width: 120px;
   }
 }

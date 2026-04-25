@@ -1,13 +1,19 @@
 .comparison-page {
-  min-height: 100vh;
-  background-color: var(--black-black_400);
   color: var(--white);
 }
 
 .comparison-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 40px 0;
+  padding: 40px 0 0;
+}
+
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
 }
 
 /* 헤더 (제목 + 정렬) */
@@ -15,7 +21,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0;
   gap: 16px;
   padding-left: 40px;
   padding-right: 40px;
@@ -82,12 +87,12 @@
   transition: background-color 0.15s;
 }
 
-.sort-option.first {
+.sort-dropdown .sort-option:first-child {
   border-top: 1px solid var(--gray-gray_200);
   border-radius: 10px 10px 0 0;
 }
 
-.sort-option.last {
+.sort-dropdown .sort-option:last-child {
   border-radius: 0 0 10px 10px;
 }
 
@@ -105,6 +110,8 @@
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
+  padding: 0 40px;
+  box-sizing: border-box;
 }
 
 .company-table {
@@ -150,36 +157,49 @@
   border-radius: 0 4px 4px 0;
 }
 
-.th-rank {
-  min-width: 68px;
+/* 컬럼 너비 */
+/* 순위는 text-overflow 제외 */
+.company-table td:not(:nth-child(1)) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.th-name {
-  min-width: 180px;
-}
-.th-desc {
-  min-width: 260px;
-}
-.th-category {
-  min-width: 120px;
-}
-.th-count {
-  min-width: 160px;
+.company-table th:nth-child(1),
+.company-table td:nth-child(1) {
+  width: 7%;
 }
 
-/* ===== Tablet (≤ 744px) ===== */
-@media (max-width: 744px) {
-  .comparison-content {
-    padding: 24px;
-  }
+.company-table th:nth-child(2),
+.company-table td:nth-child(2) {
+  width: 19%;
+}
 
-  .list-header {
-    padding-left: 0;
-    padding-right: 0;
-  }
+.company-table th:nth-child(3),
+.company-table td:nth-child(3) {
+  width: 27%;
+}
 
+.company-table th:nth-child(4),
+.company-table td:nth-child(4) {
+  width: 13%;
+}
+
+.company-table th:nth-child(5),
+.company-table td:nth-child(5) {
+  width: 17%;
+}
+
+.company-table th:nth-child(6),
+.company-table td:nth-child(6) {
+  width: 17%;
+}
+
+/* ===== Tablet (≤ 780px) ===== */
+@media (max-width: 800px) {
   .sort-trigger {
-    width: 190px;
-    height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .sort-dropdown,
@@ -187,18 +207,111 @@
     width: 190px;
   }
 
-  .th-rank,
-  .rank-cell {
+  .company-table th:nth-child(1),
+  .company-table td:nth-child(1) {
+    width: 8%;
+  }
+
+  .company-table th:nth-child(2),
+  .company-table td:nth-child(2) {
+    width: 18%;
+  }
+
+  .company-table th:nth-child(3),
+  .company-table td:nth-child(3) {
+    width: 23%;
+  }
+
+  .company-table th:nth-child(4),
+  .company-table td:nth-child(4) {
+    width: 11%;
+  }
+
+  .company-table th:nth-child(5),
+  .company-table td:nth-child(5) {
+    width: 20%;
+  }
+
+  .company-table th:nth-child(6),
+  .company-table td:nth-child(6) {
+    width: 20%;
+  }
+}
+
+/* ===== 700px 이하: 비교 기업 선택 횟수(6열) 숨김 ===== */
+@media (max-width: 700px) {
+  .company-table th:nth-child(1),
+  .company-table td:nth-child(1) {
+    width: 10%;
+  }
+
+  .company-table th:nth-child(2),
+  .company-table td:nth-child(2) {
+    width: 22%;
+  }
+
+  .company-table th:nth-child(3),
+  .company-table td:nth-child(3) {
+    width: 29%;
+  }
+
+  .company-table th:nth-child(4),
+  .company-table td:nth-child(4) {
+    width: 14%;
+  }
+
+  .company-table th:nth-child(5),
+  .company-table td:nth-child(5) {
+    width: 25%;
+  }
+
+  .company-table th:nth-child(6),
+  .company-table td:nth-child(6) {
     display: none;
   }
 
-  .th-name {
-    width: 140px;
-    border-radius: 4px 0 0 4px;
+  /* 6열 사라짐 -> 5열이 마지막 */
+  .company-table thead tr th:nth-child(6) {
+    border-radius: 0;
+  }
+  .company-table thead tr th:nth-child(5) {
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+/* ===== 580px 이하: 나의 기업 선택 횟수(5열)도 숨김 ===== */
+@media (max-width: 580px) {
+  .company-table th:nth-child(1),
+  .company-table td:nth-child(1) {
+    width: 11%;
   }
 
-  .th-desc {
-    width: 160px;
+  .company-table th:nth-child(2),
+  .company-table td:nth-child(2) {
+    width: 26%;
+  }
+
+  .company-table th:nth-child(3),
+  .company-table td:nth-child(3) {
+    width: 37%;
+  }
+
+  .company-table th:nth-child(4),
+  .company-table td:nth-child(4) {
+    width: 26%;
+  }
+
+  .company-table th:nth-child(5),
+  .company-table td:nth-child(5) {
+    display: none;
+  }
+
+  /* 5열 사라짐 -> 4열이 마지막 */
+  .company-table thead tr th:nth-child(5) {
+    border-radius: 0;
+  }
+  .company-table thead tr th:nth-child(4) {
+    border-radius: 0 4px 4px 0;
   }
 }
 
@@ -209,8 +322,14 @@
   }
 
   .list-header {
+    padding-left: 16px;
+    padding-right: 16px;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .table-wrapper {
+    padding: 0 16px;
   }
 
   .sort-trigger {
@@ -222,8 +341,33 @@
     width: 100%;
   }
 
+  .company-table th:nth-child(1),
+  .company-table td:nth-child(1) {
+    width: 18%;
+  }
+
+  .company-table th:nth-child(2),
+  .company-table td:nth-child(2) {
+    width: 49%;
+  }
+
+  .company-table th:nth-child(3),
+  .company-table td:nth-child(3) {
+    width: 33%;
+  }
+
   .th-category,
-  .category-cell {
+  .category-cell,
+  .th-count,
+  .count-cell {
     display: none;
+  }
+
+  /* 4열 사라짐 -> 3열이 마지막 */
+  .company-table thead tr th:nth-child(4) {
+    border-radius: 0;
+  }
+  .company-table thead tr th:nth-child(3) {
+    border-radius: 0 4px 4px 0;
   }
 }

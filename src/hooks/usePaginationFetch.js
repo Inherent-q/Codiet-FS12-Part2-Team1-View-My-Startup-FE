@@ -1,21 +1,32 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const DEBOUNCE_DELAY = 300;
 
-export function usePaginationFetch(apiEndpoint) {
+export function usePaginationFetch(
+  apiEndpoint,
+  { initialSortBy = "createdAt", initialSortOrder = "desc" } = {},
+) {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState("createdAt");
-  const [sortOrder, setSortOrder] = useState("desc");
+  const [sortBy, setSortBy] = useState(initialSortBy);
+  const [sortOrder, setSortOrder] = useState(initialSortOrder);
 
-  const [data, setData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [pagination, setPagination] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  // apiEndpoint 변경 시 초기 sort 값으로 리셋하기 위해 ref에 보관
+  const initialSortByRef = useRef(initialSortBy);
+  const initialSortOrderRef = useRef(initialSortOrder);
+
+  const handleLimit = useCallback((value) => {
+    setLimit(value);
+    setPage(1);
+  }, []);
 
   // search debounce
   useEffect(() => {
@@ -29,24 +40,14 @@ export function usePaginationFetch(apiEndpoint) {
   // apiEndpoint 바뀌면 전체 초기화
   useEffect(() => {
     setPage(1);
+    setLimit(10);
     setSearch("");
-    setDebouncedSearch("");
-    setSortBy("createdAt");
-    setSortOrder("desc");
+    setDebouncedSearch(""); // debounce delay 없이 즉시 초기화
+    setSortBy(initialSortByRef.current);
+    setSortOrder(initialSortOrderRef.current);
     setDisplayData([]);
+    setPagination(null);
   }, [apiEndpoint]);
-
-  // 정렬/검색 바뀌면 displayData 초기화
-  useEffect(() => {
-    setDisplayData([]);
-  }, [sortBy, sortOrder, debouncedSearch]);
-
-  // // 새 데이터 도착하면 displayData 교체
-  // useEffect(() => {
-  //   if (!isLoading && data.length > 0) {
-  //     setDisplayData(data);
-  //   }
-  // }, [isLoading, data]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -68,13 +69,18 @@ export function usePaginationFetch(apiEndpoint) {
           signal: abortController.signal, // 위 요청 취소할 수 있게 연결
         });
 
-        if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
+        if (!res.ok) {
+          const message =
+            res.status >= 500
+              ? `서버 오류: ${res.status}`
+              : `요청 오류: ${res.status}`;
+          throw new Error(message);
+        }
 
         const json = await res.json();
 
         if (!json.success) throw new Error("데이터를 불러오지 못했습니다.");
 
-        setData(json.data);
         setDisplayData(json.data);
         setPagination(json.pagination);
       } catch (err) {
@@ -92,18 +98,21 @@ export function usePaginationFetch(apiEndpoint) {
     return () => abortController.abort(); // 이전 요청 취소
   }, [apiEndpoint, page, limit, debouncedSearch, sortBy, sortOrder]);
 
-  const handleSearch = useCallback((value) => setSearch(value), []);
-  const handleSortBy = useCallback((value) => {
-    setSortBy(value);
-    setPage(1);
+  // 페이지 이동시 스크롤 최상단
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
+
+  const handleSearch = useCallback((value) => {
+    setSearch(value);
   }, []);
-  const handleSortOrder = useCallback((value) => {
-    setSortOrder(value);
+  const handleSort = useCallback((by, order) => {
+    setSortBy(by);
+    setSortOrder(order);
     setPage(1);
   }, []);
 
   return {
-    data,
     displayData,
     pagination,
     isLoading,
@@ -114,9 +123,8 @@ export function usePaginationFetch(apiEndpoint) {
     sortBy,
     sortOrder,
     setPage,
-    setLimit,
+    handleLimit,
     handleSearch,
-    handleSortBy,
-    handleSortOrder,
+    handleSort,
   };
 }

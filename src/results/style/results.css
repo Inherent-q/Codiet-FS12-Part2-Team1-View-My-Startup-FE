@@ -463,3 +463,13 @@
   font-weight: 400;
   line-height: normal;
 }
+
+.errorMessage {
+  color: red;
+  font-size: 13px;
+  margin-top: -10px;
+}
+
+.errorInput {
+  border: 1px solid #ff4d4d;
+}

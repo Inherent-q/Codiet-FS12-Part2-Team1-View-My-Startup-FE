@@ -1,19 +1,23 @@
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/companyCard.css";
 
 export default function CompanyCard({ company, rank }) {
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
+  const handleNavigate = useCallback(() => {
     navigate(`/detail/${company.id}`);
-  };
+  }, [navigate, company.id]);
   return (
     <tr
       className="company-row"
       onClick={handleNavigate}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === "Enter" && handleNavigate()}
+      aria-label={`${company.name} 상세 페이지로 이동`}
+      onKeyDown={(e) =>
+        (e.key === "Enter" || e.key === " ") && handleNavigate()
+      }
     >
       <td className="rank-cell">{rank}위</td>
       <td className="name-cell">
@@ -30,8 +34,10 @@ export default function CompanyCard({ company, rank }) {
       </td>
       <td className="desc-cell">{company.description}</td>
       <td className="category-cell">{company.category}</td>
-      <td className="count-cell">{company.myCount?.toLocaleString()}</td>
-      <td className="count-cell">{company.compareCount?.toLocaleString()}</td>
+      <td className="count-cell">{company.myCount?.toLocaleString() ?? "-"}</td>
+      <td className="count-cell">
+        {company.compareCount?.toLocaleString() ?? "-"}
+      </td>
     </tr>
   );
 }

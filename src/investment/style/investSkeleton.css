@@ -7,6 +7,17 @@
   }
 }
 
+.tbody-tr {
+  background-color: var(--black-black_200);
+  height: 55px;
+}
+
+.tbody-tr td {
+  padding: 11px 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--gray-gray_300);
+}
+
 .skeleton-cell {
   width: 50%;
   height: 14px;
@@ -26,8 +37,18 @@
   animation: shimmer 1.2s infinite;
 }
 
-/* @media (max-width: 744px) {
+.skeleton-w-50 {
+  width: 50px;
 }
 
-@media (max-width: 375px) {
-} */
+.skeleton-w-80 {
+  width: 60px;
+}
+
+.skeleton-w-full {
+  width: 80px;
+}
+
+.skeleton-w-60 {
+  width: 100%;
+}
