@@ -14,11 +14,15 @@ export function validateNewInvest({
     };
   if (name.trim().length > 5)
     return { field: "name", message: "이름은 6글자 이하입니다." };
+  if (/[0-9]/.test(name))
+    return { field: "name", message: "이름에 숫자는 들어갈 수 없습니다.." };
   if (!amount || isNaN(amount) || Number(amount) <= 0)
     return {
       field: "amount",
       message: "투자 금액은 숫자만 입력 가능하며, 0보다 커야 합니다!",
     };
+  if (Number(amount) > 9999999999)
+    return { field: "amount", message: "금액은 99억이 최대입니다." };
   if (!comment?.trim())
     return {
       field: "comment",
